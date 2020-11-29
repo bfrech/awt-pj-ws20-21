@@ -1,21 +1,44 @@
 # AWT PJ dash.js 2
 
-description of project 
+TODO description of project 
 
 ## Installation
+To install Angular on your local system, you need the following:
 
-Use the package manager [npms](https://pip.pypa.io/en/stable/) to install awt pj dash.js 2.
+*Node.js
+
+*npm package manager
+
+To install the Angular CLI, open a terminal window and run the following command:
+```bash
+npm install -g @angular/cli
+```
+
 
 ```bash
-npm install projectname
+git clone https://gitlab.tubit.tu-berlin.de/annasophiem/awt-pj-ws20-21-dashjs-2.git
 ```
+
 
 ## Usage
+To run the Project locally do the following:
+go to 'dash-if-reference-player' and type
 
-```javascript
-code
+```bash
+npm install
 ```
+
+```bash
+ng serve
+```
+the project should start now.
+
+While developing on your branch, the changes should appear automatically in the browser
 
 ## Authors
 
-...
+Berit Frech
+
+Johannes Beyer
+
+Anna Mockenhaupt
