@@ -1,3 +1,4 @@
+/**test
 /**
  * The copyright in this software is being made available under the BSD License,
  * included below. This software may be subject to other third party and contributor
@@ -28,12 +29,13 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
+/**
 import FactoryMaker from './FactoryMaker';
 import Utils from './Utils.js';
 import Debug from '../core/Debug';
 import Constants from '../streaming/constants/Constants';
 import {HTTPRequest} from '../streaming/vo/metrics/HTTPRequest';
-
+*/
 /** @module Settings
  * @description Define the configuration parameters of Dash.js MediaPlayer.
  * @see {@link module:Settings~PlayerSettings PlayerSettings} for further information about the supported configuration properties
@@ -387,165 +389,168 @@ import {HTTPRequest} from '../streaming/vo/metrics/HTTPRequest';
  * @class
  * @ignore
  */
+
+/**
 function Settings() {
-    let instance;
+  let instance;
 
-    /**
-     * @const {PlayerSettings} defaultSettings
-     * @ignore
-     */
-    const defaultSettings = {
-        debug: {
-            logLevel: Debug.LOG_LEVEL_WARNING
-        },
-        streaming: {
-            metricsMaxListDepth: 1000,
-            abandonLoadTimeout: 10000,
-            liveDelayFragmentCount: NaN,
-            liveDelay: null,
-            scheduleWhilePaused: true,
-            fastSwitchEnabled: false,
-            flushBufferAtTrackSwitch: false,
-            calcSegmentAvailabilityRangeFromTimeline: false,
-            bufferPruningInterval: 10,
-            bufferToKeep: 20,
-            jumpGaps: true,
-            jumpLargeGaps: true,
-            smallGapLimit: 1.5,
-            stableBufferTime: 12,
-            bufferTimeAtTopQuality: 30,
-            bufferTimeAtTopQualityLongForm: 60,
-            longFormContentDurationThreshold: 600,
-            wallclockTimeUpdateInterval: 50,
-            lowLatencyEnabled: false,
-            keepProtectionMediaKeys: false,
-            useManifestDateHeaderTimeSource: true,
-            useSuggestedPresentationDelay: true,
-            useAppendWindow: true,
-            manifestUpdateRetryInterval: 100,
-            liveCatchup: {
-                minDrift: 0.02,
-                maxDrift: 0,
-                playbackRate: 0.5,
-                latencyThreshold: NaN,
-                enabled: false
-            },
-            lastBitrateCachingInfo: { enabled: true, ttl: 360000 },
-            lastMediaSettingsCachingInfo: { enabled: true, ttl: 360000 },
-            cacheLoadThresholds: { video: 50, audio: 5 },
-            trackSwitchMode: {
-                audio: Constants.TRACK_SWITCH_MODE_ALWAYS_REPLACE,
-                video: Constants.TRACK_SWITCH_MODE_NEVER_REPLACE
-            },
-            selectionModeForInitialTrack: Constants.TRACK_SELECTION_MODE_HIGHEST_BITRATE,
-            fragmentRequestTimeout: 0,
-            retryIntervals: {
-                [HTTPRequest.MPD_TYPE]: 500,
-                [HTTPRequest.XLINK_EXPANSION_TYPE]: 500,
-                [HTTPRequest.MEDIA_SEGMENT_TYPE]: 1000,
-                [HTTPRequest.INIT_SEGMENT_TYPE]: 1000,
-                [HTTPRequest.BITSTREAM_SWITCHING_SEGMENT_TYPE]: 1000,
-                [HTTPRequest.INDEX_SEGMENT_TYPE]: 1000,
-                [HTTPRequest.OTHER_TYPE]: 1000,
-                lowLatencyReductionFactor: 10
-            },
-            retryAttempts: {
-                [HTTPRequest.MPD_TYPE]: 3,
-                [HTTPRequest.XLINK_EXPANSION_TYPE]: 1,
-                [HTTPRequest.MEDIA_SEGMENT_TYPE]: 3,
-                [HTTPRequest.INIT_SEGMENT_TYPE]: 3,
-                [HTTPRequest.BITSTREAM_SWITCHING_SEGMENT_TYPE]: 3,
-                [HTTPRequest.INDEX_SEGMENT_TYPE]: 3,
-                [HTTPRequest.OTHER_TYPE]: 3,
-                lowLatencyMultiplyFactor: 5
-            },
-            abr: {
-                movingAverageMethod: Constants.MOVING_AVERAGE_SLIDING_WINDOW,
-                ABRStrategy: Constants.ABR_STRATEGY_DYNAMIC,
-                bandwidthSafetyFactor: 0.9,
-                useDefaultABRRules: true,
-                useDeadTimeLatency: true,
-                limitBitrateByPortal: false,
-                usePixelRatioInLimitBitrateByPortal: false,
-                maxBitrate: { audio: -1, video: -1 },
-                minBitrate: { audio: -1, video: -1 },
-                maxRepresentationRatio: { audio: 1, video: 1 },
-                initialBitrate: { audio: -1, video: -1 },
-                initialRepresentationRatio: { audio: -1, video: -1 },
-                autoSwitchBitrate: { audio: true, video: true }
-            },
-            cmcd: {
-                enabled: false,
-                sid: null,
-                cid: null
-            }
+  /**
+   * @const {PlayerSettings} defaultSettings
+   * @ignore
+
+  const defaultSettings = {
+    debug: {
+      logLevel: Debug.LOG_LEVEL_WARNING
+    },
+    streaming: {
+      metricsMaxListDepth: 1000,
+      abandonLoadTimeout: 10000,
+      liveDelayFragmentCount: NaN,
+      liveDelay: null,
+      scheduleWhilePaused: true,
+      fastSwitchEnabled: false,
+      flushBufferAtTrackSwitch: false,
+      calcSegmentAvailabilityRangeFromTimeline: false,
+      bufferPruningInterval: 10,
+      bufferToKeep: 20,
+      jumpGaps: true,
+      jumpLargeGaps: true,
+      smallGapLimit: 1.5,
+      stableBufferTime: 12,
+      bufferTimeAtTopQuality: 30,
+      bufferTimeAtTopQualityLongForm: 60,
+      longFormContentDurationThreshold: 600,
+      wallclockTimeUpdateInterval: 50,
+      lowLatencyEnabled: false,
+      keepProtectionMediaKeys: false,
+      useManifestDateHeaderTimeSource: true,
+      useSuggestedPresentationDelay: true,
+      useAppendWindow: true,
+      manifestUpdateRetryInterval: 100,
+      liveCatchup: {
+        minDrift: 0.02,
+        maxDrift: 0,
+        playbackRate: 0.5,
+        latencyThreshold: NaN,
+        enabled: false
+      },
+      lastBitrateCachingInfo: {enabled: true, ttl: 360000},
+      lastMediaSettingsCachingInfo: {enabled: true, ttl: 360000},
+      cacheLoadThresholds: {video: 50, audio: 5},
+      trackSwitchMode: {
+        audio: Constants.TRACK_SWITCH_MODE_ALWAYS_REPLACE,
+        video: Constants.TRACK_SWITCH_MODE_NEVER_REPLACE
+      },
+      selectionModeForInitialTrack: Constants.TRACK_SELECTION_MODE_HIGHEST_BITRATE,
+      fragmentRequestTimeout: 0,
+      retryIntervals: {
+        [HTTPRequest.MPD_TYPE]: 500,
+        [HTTPRequest.XLINK_EXPANSION_TYPE]: 500,
+        [HTTPRequest.MEDIA_SEGMENT_TYPE]: 1000,
+        [HTTPRequest.INIT_SEGMENT_TYPE]: 1000,
+        [HTTPRequest.BITSTREAM_SWITCHING_SEGMENT_TYPE]: 1000,
+        [HTTPRequest.INDEX_SEGMENT_TYPE]: 1000,
+        [HTTPRequest.OTHER_TYPE]: 1000,
+        lowLatencyReductionFactor: 10
+      },
+      retryAttempts: {
+        [HTTPRequest.MPD_TYPE]: 3,
+        [HTTPRequest.XLINK_EXPANSION_TYPE]: 1,
+        [HTTPRequest.MEDIA_SEGMENT_TYPE]: 3,
+        [HTTPRequest.INIT_SEGMENT_TYPE]: 3,
+        [HTTPRequest.BITSTREAM_SWITCHING_SEGMENT_TYPE]: 3,
+        [HTTPRequest.INDEX_SEGMENT_TYPE]: 3,
+        [HTTPRequest.OTHER_TYPE]: 3,
+        lowLatencyMultiplyFactor: 5
+      },
+      abr: {
+        movingAverageMethod: Constants.MOVING_AVERAGE_SLIDING_WINDOW,
+        ABRStrategy: Constants.ABR_STRATEGY_DYNAMIC,
+        bandwidthSafetyFactor: 0.9,
+        useDefaultABRRules: true,
+        useDeadTimeLatency: true,
+        limitBitrateByPortal: false,
+        usePixelRatioInLimitBitrateByPortal: false,
+        maxBitrate: {audio: -1, video: -1},
+        minBitrate: {audio: -1, video: -1},
+        maxRepresentationRatio: {audio: 1, video: 1},
+        initialBitrate: {audio: -1, video: -1},
+        initialRepresentationRatio: {audio: -1, video: -1},
+        autoSwitchBitrate: {audio: true, video: true}
+      },
+      cmcd: {
+        enabled: false,
+        sid: null,
+        cid: null
+      }
+    }
+  };
+
+  let settings = Utils.clone(defaultSettings);
+
+  //Merge in the settings. If something exists in the new config that doesn't match the schema of the default config,
+  //regard it as an error and log it.
+  function mixinSettings(source, dest, path) {
+    for (let n in source) {
+      if (source.hasOwnProperty(n)) {
+        if (dest.hasOwnProperty(n)) {
+          if (typeof source[n] === 'object' && source[n] !== null) {
+            mixinSettings(source[n], dest[n], path.slice() + n + '.');
+          } else {
+            dest[n] = Utils.clone(source[n]);
+          }
         }
-    };
-
-    let settings = Utils.clone(defaultSettings);
-
-    //Merge in the settings. If something exists in the new config that doesn't match the schema of the default config,
-    //regard it as an error and log it.
-    function mixinSettings(source, dest, path) {
-        for (let n in source) {
-            if (source.hasOwnProperty(n)) {
-                if (dest.hasOwnProperty(n)) {
-                    if (typeof source[n] === 'object' && source[n] !== null) {
-                        mixinSettings(source[n], dest[n], path.slice() + n + '.');
-                    } else {
-                        dest[n] = Utils.clone(source[n]);
-                    }
-                }
-            }
-        }
+      }
     }
+  }
 
-    /**
-     * Return the settings object. Don't copy/store this object, you won't get updates.
-     * @func
-     * @instance
-     */
-    function get() {
-        return settings;
+  /**
+   * Return the settings object. Don't copy/store this object, you won't get updates.
+   * @func
+   * @instance
+
+  function get() {
+    return settings;
+  }
+
+  /**
+   * @func
+   * @instance
+   * @param {object} settingsObj - This should be a partial object of the Settings.Schema type. That is, fields defined should match the path (e.g.
+   * settingsObj.streaming.abr.autoSwitchBitrate.audio -> defaultSettings.streaming.abr.autoSwitchBitrate.audio). Where an element's path does
+   * not match it is ignored, and a warning is logged.
+   *
+   * Use to change the settings object. Any new values defined will overwrite the settings and anything undefined will not change.
+   * Implementers of new settings should add it in an approriate namespace to the defaultSettings object and give it a default value (that is not undefined).
+   *
+   */
+  function update(settingsObj) {
+    if (typeof settingsObj === 'object') {
+      mixinSettings(settingsObj, settings, '');
     }
+  }
 
-    /**
-     * @func
-     * @instance
-     * @param {object} settingsObj - This should be a partial object of the Settings.Schema type. That is, fields defined should match the path (e.g.
-     * settingsObj.streaming.abr.autoSwitchBitrate.audio -> defaultSettings.streaming.abr.autoSwitchBitrate.audio). Where an element's path does
-     * not match it is ignored, and a warning is logged.
-     *
-     * Use to change the settings object. Any new values defined will overwrite the settings and anything undefined will not change.
-     * Implementers of new settings should add it in an approriate namespace to the defaultSettings object and give it a default value (that is not undefined).
-     *
-     */
-    function update(settingsObj) {
-        if (typeof settingsObj === 'object') {
-            mixinSettings(settingsObj, settings, '');
-        }
-    }
+  /**
+   * Resets the settings object. Everything is set to its default value.
+   * @func
+   * @instance
+   *
 
-    /**
-     * Resets the settings object. Everything is set to its default value.
-     * @func
-     * @instance
-     *
-     */
-    function reset() {
-        settings = Utils.clone(defaultSettings);
-    }
+  function reset() {
+    settings = Utils.clone(defaultSettings);
+  }
 
-    instance = {
-        get: get,
-        update: update,
-        reset: reset
-    };
+  instance = {
+    get: get,
+    update: update,
+    reset: reset
+  };
 
-    return instance;
+  return instance;
 }
 
 
-Settings.__dashjs_factory_name = 'Settings';
-let factory = FactoryMaker.getSingletonFactory(Settings);
-export default factory;
+//Settings.__dashjs_factory_name = 'Settings';
+//let factory = FactoryMaker.getSingletonFactory(Settings);
+//export default factory;
+*/

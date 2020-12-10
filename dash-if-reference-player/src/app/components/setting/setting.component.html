@@ -1,0 +1,10 @@
+<div class="settings-frame col-3">
+  <h4>Playback</h4>
+  <div class="singleSetting" *ngFor="let item of playbackSettings$ | keyvalue">
+    <p>{{item.key}}</p>
+    <mat-checkbox *ngIf=isBoolean(item.value) (click)="updateSettings(item.key, item.value)"></mat-checkbox>
+    <input *ngIf=!isBoolean(item.value) value="{{item.value}}">
+  </div>
+
+</div>
+
