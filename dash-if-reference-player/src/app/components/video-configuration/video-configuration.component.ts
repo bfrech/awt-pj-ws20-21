@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerService } from '../../player.service';
+import * as sources from '../../../sources.json';
+
+
 
 @Component({
   selector: 'app-video-configuration',
@@ -8,18 +11,14 @@ import { PlayerService } from '../../player.service';
 })
 export class VideoConfigurationComponent implements OnInit {
 
-  // TODO: Use sources.json instead
-  listOfStreams = [
-    'https://dash.akamaized.net/envivio/Envivio-dash2/manifest.mpd',
-    'https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd',
-    'https://media.axprod.net/TestVectors/v7-Clear/Manifest_1080p.mpd'
-  ];
+  srcProvider = sources.provider;
+  srcItems = sources.items;
   inputVarStreamAddr: string | undefined;
 
   constructor(private playerService: PlayerService) { }
 
   ngOnInit(): void {
-    this.inputVarStreamAddr = 'https://dash.akamaized.net/envivio/Envivio-dash2/manifest.mpd';
+    this.inputVarStreamAddr = this.srcItems[0].submenu[0].url;
   }
 
   stop(): void {

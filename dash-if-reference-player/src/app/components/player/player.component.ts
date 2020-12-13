@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MediaPlayer } from 'dashjs';
 
 import { PlayerService } from '../../player.service';
+import * as sources from '../../../sources.json';
 
 
 @Component({
@@ -10,8 +11,10 @@ import { PlayerService } from '../../player.service';
   styleUrls: ['./player.component.css']
 })
 export class PlayerComponent implements OnInit {
-  // Default still hardcoded, see also video-configuration.component.ts
-  streamAddr = 'https://dash.akamaized.net/envivio/Envivio-dash2/manifest.mpd';
+
+  // srcProvider = sources.provider;
+  srcItems = sources.items;
+  streamAddr = this.srcItems[0].submenu[0].url;
   player = MediaPlayer().create();
 
   constructor(private playerService: PlayerService) {

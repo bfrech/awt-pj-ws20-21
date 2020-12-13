@@ -1,3 +1,35 @@
 .dropdown-item {
   cursor: pointer;
 }
+
+.dropdown-submenu>.dropdown-menu {
+  position: static;
+  border: none;
+}
+
+.dropdown-submenu>ul {
+  margin: 0;
+  padding-left: 0.75rem;
+}
+
+.dropdown-submenu>ul>li {
+  list-style-type: none;
+}
+
+.dropdown-submenu .customActive {
+  border-left: 1px solid #007bff !important;
+}
+
+.dropdown-submenu>a::after {
+  float: right;
+  padding-left: 0.5rem;
+  border: none;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: darkgrey;
+  content: "\f0d7";
+}
+
+.dropdown-submenu .badge {
+  vertical-align: text-top;
+}

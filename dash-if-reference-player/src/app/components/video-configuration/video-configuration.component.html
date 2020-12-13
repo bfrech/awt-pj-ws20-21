@@ -1,20 +1,38 @@
 <div class="container">
   <form class="form-inline">
     <div class="form-group col-12 p-0">
+
       <div class="input-group flex-grow-1">
-        <input [(ngModel)]="inputVarStreamAddr" name="inputNameStreamAddr" type="text" class="form-control" placeholder="Stream Address" aria-label="Text input with dropdown button">
-        <div class="input-group-append">
-          <!-- TODO: Multilevel Dropdown menu with all sources found in sources.json // -->
+        <div class="input-group-prepend dropdown-container">
           <button class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Stream</button>
-          <div class="dropdown-menu dropdown-menu-right">
-            <a *ngFor="let item of listOfStreams" (click)="inputVarStreamAddr = item" class="dropdown-item">{{ item }}</a>
-          </div>
+          <ul class="dropdown-menu">
+
+            <!-- Begin items of main-menu -->
+            <li *ngFor="let item of srcItems; let i = index" class="dropdown-submenu">
+              <a id="{{ 'dropdownMenu' + i }}" class="dropdown-item" role="button" data-toggle="collapse" href="{{ '#collapseBox' + i }}" attr.aria-controls="{{ 'collapseBox' + i }}" attr.aria-expanded="false">{{ item['name'] }}</a>
+              <ul id="{{ 'collapseBox' + i }}" class="collapse" attr.aria-labelledby="{{ 'dropdownMenu' + i }}">
+                <!-- Begin items of sub-menu -->
+                <li *ngFor="let subItem of item['submenu']">
+                  <a (click)="inputVarStreamAddr = subItem['url']" class="dropdown-item text-truncate" [class.customActive]="inputVarStreamAddr === subItem['url']">
+                    <span class="badge badge-pill badge-secondary" data-toggle="tooltip" data-placement="top" title="{{ srcProvider[subItem['provider']]['name'] }}">{{ srcProvider[subItem['provider']]['acronym'] }}</span>
+                    {{ subItem['name'] }}
+                  </a>
+                </li>
+                <!-- End items of sub-menu // -->
+              </ul>
+            </li>
+            <!-- End items of main-menu // -->
+
+          </ul>
         </div>
+        <input [(ngModel)]="inputVarStreamAddr" name="inputNameStreamAddr" type="text" class="form-control" placeholder="Stream Address" aria-label="Stream Address">
       </div>
+
       <div class="ml-1 btn-group">
         <button (click)="stop()" class="btn btn-secondary">Stop</button>
         <button (click)="load()" class="btn btn-primary">Load</button>
       </div>
+
     </div>
   </form>
 </div>

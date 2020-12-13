@@ -28,7 +28,4 @@ export class PlayerService {
     this.playerLoadCallSource.next(streamAddr);
   }
 
-  getStreamAddr(): void {
-    //
-  }
 }
