@@ -4,21 +4,20 @@
 
       <div class="input-group flex-grow-1">
         <div class="input-group-prepend dropdown-container">
-          <button class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false">Stream</button>
+          <button (click)="toggleMainMenu($event)" class="btn btn-outline-secondary dropdown-toggle"
+                  aria-haspopup="true" aria-expanded="false">Stream</button>
           <ul class="dropdown-menu">
 
             <!-- Begin items of main-menu -->
-            <li *ngFor="let item of srcItems; let i = index" class="dropdown-submenu">
-              <a id="{{ 'dropdownMenu' + i }}" class="dropdown-item" role="button" data-toggle="collapse"
-                 href="{{ '#collapseBox' + i }}" attr.aria-controls="{{ 'collapseBox' + i }}"
-                 attr.aria-expanded="false">
+            <li *ngFor="let item of srcItems; let i = index" class="vc-dropdown-submenu">
+              <a (click)="toggleSubMenu($event)" id="{{ 'vcDropdownMenu' + i }}" class="dropdown-item" role="button"
+                 attr.aria-controls="{{ 'vcCollapseBox' + i }}" attr.aria-expanded="false">
                 {{ item['name'] }}
               </a>
-              <ul id="{{ 'collapseBox' + i }}" class="collapse" attr.aria-labelledby="{{ 'dropdownMenu' + i }}">
+              <ul id="{{ 'vcCollapseBox' + i }}" class="vc-collapse" attr.aria-labelledby="{{ 'vcDropdownMenu' + i }}">
                 <!-- Begin items of sub-menu -->
                 <li *ngFor="let subItem of item['submenu']">
-                  <a (click)="inputVarStreamAddr = subItem['url']" class="dropdown-item text-truncate"
+                  <a (click)="selectStream($event, subItem['url'])" class="dropdown-item text-truncate"
                      [class.customActive]="inputVarStreamAddr === subItem['url']">
                     <span class="badge badge-pill badge-secondary" data-toggle="tooltip" data-placement="top"
                           title="{{ srcProvider[subItem['provider']]['name'] }}">

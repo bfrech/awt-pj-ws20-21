@@ -35,9 +35,9 @@ export class PlayerComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const videoElement = document.getElementById('videoPlayer');       // Better way to bind HTMLElement?
+    const videoElement = document.getElementById('videoPlayer');
 
-    if (videoElement) {                                                         // Make sure it is not null
+    if (videoElement) {
       this.player.initialize(videoElement, this.streamAddr, true);
     }
 
