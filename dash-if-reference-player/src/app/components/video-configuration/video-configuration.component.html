@@ -4,17 +4,26 @@
 
       <div class="input-group flex-grow-1">
         <div class="input-group-prepend dropdown-container">
-          <button class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Stream</button>
+          <button class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">Stream</button>
           <ul class="dropdown-menu">
 
             <!-- Begin items of main-menu -->
             <li *ngFor="let item of srcItems; let i = index" class="dropdown-submenu">
-              <a id="{{ 'dropdownMenu' + i }}" class="dropdown-item" role="button" data-toggle="collapse" href="{{ '#collapseBox' + i }}" attr.aria-controls="{{ 'collapseBox' + i }}" attr.aria-expanded="false">{{ item['name'] }}</a>
+              <a id="{{ 'dropdownMenu' + i }}" class="dropdown-item" role="button" data-toggle="collapse"
+                 href="{{ '#collapseBox' + i }}" attr.aria-controls="{{ 'collapseBox' + i }}"
+                 attr.aria-expanded="false">
+                {{ item['name'] }}
+              </a>
               <ul id="{{ 'collapseBox' + i }}" class="collapse" attr.aria-labelledby="{{ 'dropdownMenu' + i }}">
                 <!-- Begin items of sub-menu -->
                 <li *ngFor="let subItem of item['submenu']">
-                  <a (click)="inputVarStreamAddr = subItem['url']" class="dropdown-item text-truncate" [class.customActive]="inputVarStreamAddr === subItem['url']">
-                    <span class="badge badge-pill badge-secondary" data-toggle="tooltip" data-placement="top" title="{{ srcProvider[subItem['provider']]['name'] }}">{{ srcProvider[subItem['provider']]['acronym'] }}</span>
+                  <a (click)="inputVarStreamAddr = subItem['url']" class="dropdown-item text-truncate"
+                     [class.customActive]="inputVarStreamAddr === subItem['url']">
+                    <span class="badge badge-pill badge-secondary" data-toggle="tooltip" data-placement="top"
+                          title="{{ srcProvider[subItem['provider']]['name'] }}">
+                      {{ srcProvider[subItem['provider']]['acronym'] }}
+                    </span>
                     {{ subItem['name'] }}
                   </a>
                 </li>
@@ -25,7 +34,8 @@
 
           </ul>
         </div>
-        <input [(ngModel)]="inputVarStreamAddr" name="inputNameStreamAddr" type="text" class="form-control" placeholder="Stream Address" aria-label="Stream Address">
+        <input [(ngModel)]="inputVarStreamAddr" name="inputNameStreamAddr" type="text" class="form-control"
+               placeholder="Stream Address" aria-label="Stream Address">
       </div>
 
       <div class="ml-1 btn-group">

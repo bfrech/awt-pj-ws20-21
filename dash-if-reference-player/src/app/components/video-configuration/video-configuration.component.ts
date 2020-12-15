@@ -3,7 +3,6 @@ import { PlayerService } from '../../player.service';
 import * as sources from '../../../sources.json';
 
 
-
 @Component({
   selector: 'app-video-configuration',
   templateUrl: './video-configuration.component.html',
@@ -11,7 +10,7 @@ import * as sources from '../../../sources.json';
 })
 export class VideoConfigurationComponent implements OnInit {
 
-  srcProvider = sources.provider;
+  srcProvider: {[index: string]: any} = sources.provider;
   srcItems = sources.items;
   inputVarStreamAddr: string | undefined;
 
