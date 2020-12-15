@@ -12,6 +12,10 @@ import { MatExpansionPanel } from '@angular/material/expansion';
 import { PlayerService } from '../../player.service';
 import * as sources from '../../../sources.json';
 
+import {Component, OnInit} from '@angular/core';
+import {PlayerService} from '../../player.service';
+
+declare const settings: any;
 
 @Component({
   selector: 'app-video-configuration',
@@ -31,6 +35,7 @@ import * as sources from '../../../sources.json';
   ]
 })
 export class VideoConfigurationComponent implements OnInit {
+  group$: any;
 
   srcProvider: {[index: string]: any} = sources.provider;
   srcItems = sources.items;
@@ -43,6 +48,8 @@ export class VideoConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     this.inputVarStreamAddr = this.srcItems[0].submenu[0].url;
+    this.group$ = Object.entries(settings);
+    console.log(Object.entries(settings));
   }
 
   setStreamsDropdownExpandedPanel(panel: MatExpansionPanel): void {
@@ -68,5 +75,9 @@ export class VideoConfigurationComponent implements OnInit {
 
   load(): void {
     this.playerService.load(this.inputVarStreamAddr);
+  }
+
+  isBoolean(val): boolean {
+    return val === false || val === true;
   }
 }
