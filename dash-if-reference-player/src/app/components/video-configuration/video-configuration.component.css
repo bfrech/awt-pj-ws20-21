@@ -1,26 +1,28 @@
+
 .dropdown-item {
   cursor: pointer;
 }
 
-.dropdown-submenu>.dropdown-menu {
+.vc-dropdown-submenu>.vc-collapse {
+  display: none;
   position: static;
   border: none;
 }
 
-.dropdown-submenu>ul {
+.vc-dropdown-submenu>ul {
   margin: 0;
   padding-left: 0.75rem;
 }
 
-.dropdown-submenu>ul>li {
+.vc-dropdown-submenu>ul>li {
   list-style-type: none;
 }
 
-.dropdown-submenu .customActive {
+.vc-dropdown-submenu .customActive {
   border-left: 1px solid #007bff !important;
 }
 
-.dropdown-submenu>a::after {
+.vc-dropdown-submenu>a::after {
   float: right;
   padding-left: 0.5rem;
   border: none;
@@ -30,6 +32,6 @@
   content: "\f0d7";
 }
 
-.dropdown-submenu .badge {
+.vc-dropdown-submenu .badge {
   vertical-align: text-top;
 }
