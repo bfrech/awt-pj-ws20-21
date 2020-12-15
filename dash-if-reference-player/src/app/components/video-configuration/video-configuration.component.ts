@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { PlayerService } from '../../player.service';
+import {Component, OnInit} from '@angular/core';
+import {PlayerService} from '../../player.service';
+
+declare const settings: any;
 
 @Component({
   selector: 'app-video-configuration',
@@ -7,6 +9,7 @@ import { PlayerService } from '../../player.service';
   styleUrls: ['./video-configuration.component.css']
 })
 export class VideoConfigurationComponent implements OnInit {
+  group$: any;
 
   // TODO: Use sources.json instead
   listOfStreams = [
@@ -16,10 +19,13 @@ export class VideoConfigurationComponent implements OnInit {
   ];
   inputVarStreamAddr: string | undefined;
 
-  constructor(private playerService: PlayerService) { }
+  constructor(private playerService: PlayerService) {
+  }
 
   ngOnInit(): void {
     this.inputVarStreamAddr = 'https://dash.akamaized.net/envivio/Envivio-dash2/manifest.mpd';
+    this.group$ = Object.entries(settings);
+    console.log(Object.entries(settings));
   }
 
   stop(): void {
@@ -28,5 +34,9 @@ export class VideoConfigurationComponent implements OnInit {
 
   load(): void {
     this.playerService.load(this.inputVarStreamAddr);
+  }
+
+  isBoolean(val): boolean {
+    return val === false || val === true;
   }
 }

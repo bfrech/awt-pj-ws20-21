@@ -35,7 +35,7 @@ export class PlayerComponent implements OnInit {
     const videoElement = document.getElementById('videoPlayer');       // Better way to bind HTMLElement?
 
     if (videoElement) {                                                         // Make sure it is not null
-      this.player.initialize(videoElement, this.streamAddr, true);
+      this.player.initialize(videoElement, this.streamAddr, false);
     }
 
   }

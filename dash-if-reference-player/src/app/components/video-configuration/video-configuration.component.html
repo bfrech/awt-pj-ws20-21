@@ -1,13 +1,16 @@
 <div class="container">
   <form class="form-inline">
-    <div class="form-group col-12 p-0">
+    <div class="form-group col-12">
       <div class="input-group flex-grow-1">
-        <input [(ngModel)]="inputVarStreamAddr" name="inputNameStreamAddr" type="text" class="form-control" placeholder="Stream Address" aria-label="Text input with dropdown button">
+        <input [(ngModel)]="inputVarStreamAddr" name="inputNameStreamAddr" type="text" class="form-control"
+               placeholder="Stream Address" aria-label="Text input with dropdown button">
         <div class="input-group-append">
           <!-- TODO: Multilevel Dropdown menu with all sources found in sources.json // -->
-          <button class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Stream</button>
+          <button class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">Stream
+          </button>
           <div class="dropdown-menu dropdown-menu-right">
-            <a *ngFor="let item of listOfStreams" (click)="inputVarStreamAddr = item" class="dropdown-item">{{ item }}</a>
+            <a *ngFor="let item of listOfStreams" (click)="inputVarStreamAddr=item" class="dropdown-item">{{ item }}</a>
           </div>
         </div>
       </div>
@@ -17,4 +20,19 @@
       </div>
     </div>
   </form>
+
+  <div class="row">
+    <div class="settings-frame col-3" *ngFor="let group of group$">
+      <h4>{{group[0]}}</h4>
+      <div class="singleSetting" *ngFor="let item of group[1] | keyvalue">
+        <p>{{item.key}}</p>
+        <mat-radio-group *ngIf="item.key.value" aria-label="Select an option">
+          <mat-radio-button value="1">Option 1</mat-radio-button>
+          <mat-radio-button value="2">Option 2</mat-radio-button>
+        </mat-radio-group>
+        <mat-checkbox *ngIf=isBoolean(item.value)></mat-checkbox>
+        <input *ngIf=!isBoolean(item.value) value="{{item.value}}">
+      </div>
+    </div>
+  </div>
 </div>
