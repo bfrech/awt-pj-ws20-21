@@ -13,6 +13,8 @@ import { PlayerService } from '../../player.service';
 import * as sources from '../../../sources.json';
 
 
+declare const settings: any;
+
 @Component({
   selector: 'app-video-configuration',
   templateUrl: './video-configuration.component.html',
@@ -31,6 +33,7 @@ import * as sources from '../../../sources.json';
   ]
 })
 export class VideoConfigurationComponent implements OnInit {
+  group$: any;
 
   srcProvider: {[index: string]: any} = sources.provider;
   srcItems = sources.items;
@@ -68,5 +71,9 @@ export class VideoConfigurationComponent implements OnInit {
 
   load(): void {
     this.playerService.load(this.inputVarStreamAddr);
+  }
+
+  isBoolean(val): boolean {
+    return val === false || val === true;
   }
 }

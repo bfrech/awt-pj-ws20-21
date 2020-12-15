@@ -37,8 +37,8 @@ export class PlayerComponent implements OnInit {
 
     const videoElement = document.getElementById('videoPlayer');
 
-    if (videoElement) {
-      this.player.initialize(videoElement, this.streamAddr, true);
+    if (videoElement) {                                                         // Make sure it is not null
+      this.player.initialize(videoElement, this.streamAddr, false);
     }
 
   }
