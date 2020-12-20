@@ -33,7 +33,9 @@
             ],
             "scripts": [
               "src/assets/groups.js",
-              "src/assets/custom.js"]
+              "src/assets/constants/settingGroups.ts",
+              "src/assets/custom.js"
+              ]
           },
           "configurations": {
             "production": {

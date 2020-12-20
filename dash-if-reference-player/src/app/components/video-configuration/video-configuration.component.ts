@@ -11,9 +11,11 @@ import { MatExpansionPanel } from '@angular/material/expansion';
 
 import { PlayerService } from '../../player.service';
 import * as sources from '../../../sources.json';
+import {MediaPlayer} from 'dashjs';
 
 
 declare const settings: any;
+declare const settingGroups: any;
 
 @Component({
   selector: 'app-video-configuration',
@@ -32,8 +34,11 @@ declare const settings: any;
     ])
   ]
 })
+
+
 export class VideoConfigurationComponent implements OnInit {
   group$: any;
+  defaultSettings: any;
 
   srcProvider: {[index: string]: any} = sources.provider;
   srcItems = sources.items;
@@ -65,6 +70,8 @@ export class VideoConfigurationComponent implements OnInit {
     this.streamsDropdownToggle();
   }
 
+
+
   stop(): void {
     this.playerService.stop();
   }
@@ -76,4 +83,14 @@ export class VideoConfigurationComponent implements OnInit {
   isBoolean(val): boolean {
     return val === false || val === true;
   }
+
+  isGroup(val): boolean {
+    if (val == null || typeof val === 'string'){return false; }
+    else { return (Object.values(val).length > 0); }
+  }
+
+  makeArray(val): object {
+    return Object.entries(val);
+  }
+
 }
