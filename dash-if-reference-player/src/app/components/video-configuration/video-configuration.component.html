@@ -31,7 +31,16 @@
           <mat-radio-button value="2">Option 2</mat-radio-button>
         </mat-radio-group>
         <mat-checkbox *ngIf=isBoolean(item.value)></mat-checkbox>
-        <input *ngIf=!isBoolean(item.value) value="{{item.value}}">
+        <div *ngIf=isGroup(item.value)>
+          <div class="SingleSubSetting ml-4" *ngFor="let subItem of makeArray(item.value)">
+            <p>{{subItem[0]}}</p>
+            <mat-checkbox *ngIf=isBoolean(subItem[1])></mat-checkbox>
+            <input *ngIf=!isBoolean(subItem[1]) value="{{subItem[1]}}">
+          </div>
+        </div>
+        <div *ngIf=!isGroup(item.value)>
+          <input *ngIf=!isBoolean(item.value) value="{{item.value}}">
+        </div>
       </div>
     </div>
   </div>
