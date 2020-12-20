@@ -18,7 +18,7 @@ const settingGroups  = {
     bandwidthSafetyFactor: 'Bandwith safety factor',
     useDefaultABRRules: 'Use default ABR rules',
     useBufferOccupancyABR: 'Use buffer occupancy ABR',
-    useDeadTimeLatency: 'Use dead dime latency',
+    useDeadTimeLatency: 'Use dead dime datency',
     limitBitrateByPortal: 'Limit bitrate by portal',
     usePixelRatioInLimitBitrateByPortal: 'Use pixel ratio in limit bitrate by portal',
     maxBitrate: {audio: 'MaxBitrate audio', video: 'MaxBitrate video'},

@@ -33,6 +33,7 @@
             ],
             "scripts": [
               "src/assets/groups.js",
+              "src/assets/constants/settingGroups.ts",
               "src/assets/custom.js"
             ]
           },
