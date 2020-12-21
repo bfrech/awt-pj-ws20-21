@@ -51,11 +51,11 @@
     </div>
   </form>
 
-  <div class="row">
+  <div class="row" id="settingMenu">
     <div class="settings-frame col-3" *ngFor="let group of group$">
       <h4>{{group[0]}}</h4>
-      <div class="singleSetting" *ngFor="let item of group[1] | keyvalue">
-        <p>{{item.key}}</p>
+      <div class="singleSetting mt-3" *ngFor="let item of group[1] | keyvalue">
+        <p>{{item.key}}:</p>
         <mat-radio-group *ngIf="item.key.value" aria-label="Select an option">
           <mat-radio-button value="1">Option 1</mat-radio-button>
           <mat-radio-button value="2">Option 2</mat-radio-button>
