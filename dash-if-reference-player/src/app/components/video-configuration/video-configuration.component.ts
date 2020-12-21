@@ -50,6 +50,52 @@ export class VideoConfigurationComponent implements OnInit {
   constructor(private playerService: PlayerService) { }
 
   ngOnInit(): void {
+    this.inputVarStreamAddr = 'https://dash.akamaized.net/envivio/Envivio-dash2/manifest.mpd';
+   // this.group$ = Object.entries(settings);
+    this.group$ =  Object.entries(processSettings());
+
+
+
+    /**
+     * Settings Preprocessing: get default Settings, traverse Nested Object and return Object
+     * ordered according to our custom order from groups.js
+     */
+    function processSettings(): object {
+
+      // TODO: Use MediaPlayer from playerService
+      const player = MediaPlayer().create();
+      const defaultSettings = player.getSettings();
+
+      // Flatten Settings Object
+      const flattenedSettings = flattenSettings(defaultSettings);
+
+      // Map Settings to custom order
+      Object.values(flattenedSettings).forEach(setting => {
+        setting.unshift(findGroup(setting[1]));
+      });
+
+      // Formatting
+      const formatSet = Object.values(flattenedSettings).map( setting => {
+        const formatted = {};
+        setting[2] = setting[2].charAt(0).toUpperCase() + setting[2].replace(/([a-z0-9])([A-Z])/g, '$1 $2').slice(1);
+        formatted[setting[2]] = setting[3];
+        if ( setting[0] === undefined ) { setting[0] = 'OTHER'; }
+        return ( [setting[0], formatted]);
+      });
+
+
+      // group newSet by groupNames
+      const result = {};
+      formatSet.forEach(setting => {
+        const key = setting[0];
+        if (!result[key]) {
+          result[key] = Object.assign({}, setting[1]);
+        } else {
+          Object.assign(result[key], setting[1]);
+        }
+      });
+      return result;
+    }
     this.inputVarStreamAddr = this.srcItems[0].submenu[0].url;
   }
 
