@@ -55,10 +55,12 @@ export class VideoConfigurationComponent implements OnInit {
       // Formatting
       const formatSet = Object.values(flattenedSettings).map( setting => {
         const formatted = {};
+        setting[2] = setting[2].charAt(0).toUpperCase() + setting[2].replace(/([a-z0-9])([A-Z])/g, '$1 $2').slice(1);
         formatted[setting[2]] = setting[3];
         if ( setting[0] === undefined ) { setting[0] = 'OTHER'; }
         return ( [setting[0], formatted]);
       });
+
 
       // group newSet by groupNames
       const result = {};
