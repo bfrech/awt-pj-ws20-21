@@ -4,34 +4,40 @@
 
       <div class="input-group flex-grow-1">
         <div class="input-group-prepend dropdown-container">
-          <button (click)="toggleMainMenu($event)" class="btn btn-outline-secondary dropdown-toggle"
-                  aria-haspopup="true" aria-expanded="false">Stream</button>
-          <ul class="dropdown-menu">
 
-            <!-- Begin items of main-menu -->
-            <li *ngFor="let item of srcItems; let i = index" class="vc-dropdown-submenu">
-              <a (click)="toggleSubMenu($event)" id="{{ 'vcDropdownMenu' + i }}" class="dropdown-item" role="button"
-                 attr.aria-controls="{{ 'vcCollapseBox' + i }}" attr.aria-expanded="false">
-                {{ item['name'] }}
-              </a>
-              <ul id="{{ 'vcCollapseBox' + i }}" class="vc-collapse" attr.aria-labelledby="{{ 'vcDropdownMenu' + i }}">
-                <!-- Begin items of sub-menu -->
+          <button (click)="streamsDropdownToggle()" class="btn btn-outline-secondary dropdown-toggle"
+                  aria-haspopup="true" aria-expanded="false">
+            Stream
+          </button>
+
+          <mat-accordion [@streamsDropdownShowHide]="streamsDropdownIsVisible"
+                         displayMode=flat class="vc-dropdown-menu">
+            <mat-expansion-panel #expPanel *ngFor="let item of srcItems"
+                                 (opened)="setStreamsDropdownExpandedPanel(expPanel)">
+
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ item['name'] }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <ul class="vc-collapse">
                 <li *ngFor="let subItem of item['submenu']">
-                  <a (click)="selectStream($event, subItem['url'])" class="dropdown-item text-truncate"
-                     [class.customActive]="inputVarStreamAddr === subItem['url']">
-                    <span class="badge badge-pill badge-secondary" data-toggle="tooltip" data-placement="top"
-                          title="{{ srcProvider[subItem['provider']]['name'] }}">
+                  <a (click)="selectStream(subItem['url'])" class="dropdown-item vc-custom-dropdown-item text-truncate"
+                     [class.vc-custom-active]="inputVarStreamAddr === subItem['url']">
+                    <span class="badge badge-pill badge-secondary"
+                          matTooltip="{{ srcProvider[subItem['provider']]['name'] }}" matTooltipPosition="above">
                       {{ srcProvider[subItem['provider']]['acronym'] }}
                     </span>
-                    {{ subItem['name'] }}
+                    <span matTooltip="{{ subItem['name'] }}" matTooltipPosition="above" matTooltipShowDelay="1000">
+                      {{ subItem['name'] }}
+                    </span>
                   </a>
                 </li>
-                <!-- End items of sub-menu // -->
               </ul>
-            </li>
-            <!-- End items of main-menu // -->
+            </mat-expansion-panel>
+          </mat-accordion>
 
-          </ul>
         </div>
         <input [(ngModel)]="inputVarStreamAddr" name="inputNameStreamAddr" type="text" class="form-control"
                placeholder="Stream Address" aria-label="Stream Address">
