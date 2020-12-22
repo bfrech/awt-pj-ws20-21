@@ -1,13 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  // ...
+} from '@angular/animations';
+import { MatExpansionPanel } from '@angular/material/expansion';
+
 import { PlayerService } from '../../player.service';
 import * as sources from '../../../sources.json';
-import * as $ from 'jquery';
 
 
 @Component({
   selector: 'app-video-configuration',
   templateUrl: './video-configuration.component.html',
-  styleUrls: ['./video-configuration.component.css']
+  styleUrls: ['./video-configuration.component.css'],
+  /**
+   * Need to remove view encapsulation so that dynamic mat elements can be styled. Otherwise, style definitions would
+   * have to be defined in global styles.css or deprecated selector ::ng-deep would have to be used.
+   */
+  encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('streamsDropdownShowHide', [
+      state('true', style({ opacity: 1 })),
+      state('false', style({ opacity: 0 })),
+      transition('false <=> true', animate(120))
+    ])
+  ]
 })
 export class VideoConfigurationComponent implements OnInit {
 
@@ -15,40 +36,30 @@ export class VideoConfigurationComponent implements OnInit {
   srcItems = sources.items;
   inputVarStreamAddr: string | undefined;
 
+  streamsDropdownIsVisible = false;
+  streamsDropdownExpandedPanel: MatExpansionPanel | null = null;
+
   constructor(private playerService: PlayerService) { }
 
   ngOnInit(): void {
     this.inputVarStreamAddr = this.srcItems[0].submenu[0].url;
   }
 
-  toggleMainMenu(event: any): void {
-    const menu = $(event.target).siblings('.dropdown-menu').first();
+  setStreamsDropdownExpandedPanel(panel: MatExpansionPanel): void {
+    this.streamsDropdownExpandedPanel = panel;
+  }
 
-    // Reset before opening
-    if (menu.is(':hidden')) {
-      menu.find('.vc-collapse').css({display: 'none'});
-      menu.css({width: 'auto'});
+  streamsDropdownToggle(): void {
+    this.streamsDropdownIsVisible = !this.streamsDropdownIsVisible;
+    if (!this.streamsDropdownIsVisible) {
+      this.streamsDropdownExpandedPanel?.close();
+      this.streamsDropdownExpandedPanel = null;
     }
-
-    menu.fadeToggle();
   }
 
-  toggleSubMenu(event: any): void {
-    const parentMenu = $(event.target).parents('ul.dropdown-menu');
-
-    // Enlarge dropdown menu (if not already done) and toggle sub-menu collapse
-    parentMenu.animate({width: '100%'}, 500);
-    $(event.target).siblings().slideToggle();
-
-    // If another sub-menu is still open, close it
-    $(event.target).parent('.vc-dropdown-submenu').siblings().children('.vc-collapse:visible')
-      .slideUp();
-
-  }
-
-  selectStream(event: any, url: string): void {
+  selectStream(url: string): void {
     this.inputVarStreamAddr = url;
-    $(event.target).parents('.dropdown-menu').first().fadeOut();
+    this.streamsDropdownToggle();
   }
 
   stop(): void {
