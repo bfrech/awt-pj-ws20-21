@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {
   trigger,
   state,
@@ -7,9 +7,9 @@ import {
   transition,
   // ...
 } from '@angular/animations';
-import { MatExpansionPanel } from '@angular/material/expansion';
+import {MatExpansionPanel} from '@angular/material/expansion';
 
-import { PlayerService } from '../../player.service';
+import {PlayerService} from '../../player.service';
 import * as sources from '../../../sources.json';
 import {MediaPlayer} from 'dashjs';
 
@@ -28,8 +28,8 @@ declare const settingGroups: any;
   encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('streamsDropdownShowHide', [
-      state('true', style({ opacity: 1 })),
-      state('false', style({ opacity: 0 })),
+      state('true', style({opacity: 1})),
+      state('false', style({opacity: 0})),
       transition('false <=> true', animate(120))
     ])
   ]
@@ -40,20 +40,19 @@ export class VideoConfigurationComponent implements OnInit {
   group$: any;
   defaultSettings: any;
 
-  srcProvider: {[index: string]: any} = sources.provider;
+  srcProvider: { [index: string]: any } = sources.provider;
   srcItems = sources.items;
   inputVarStreamAddr: string | undefined;
 
   streamsDropdownIsVisible = false;
   streamsDropdownExpandedPanel: MatExpansionPanel | null = null;
 
-  constructor(private playerService: PlayerService) { }
+  constructor(private playerService: PlayerService) {
+  }
 
   ngOnInit(): void {
-    this.inputVarStreamAddr = 'https://dash.akamaized.net/envivio/Envivio-dash2/manifest.mpd';
-   // this.group$ = Object.entries(settings);
-    this.group$ =  Object.entries(processSettings());
-
+    this.inputVarStreamAddr = this.srcItems[0].submenu[0].url;
+    this.group$ = Object.entries(processSettings());
 
 
     /**
@@ -75,12 +74,14 @@ export class VideoConfigurationComponent implements OnInit {
       });
 
       // Formatting
-      const formatSet = Object.values(flattenedSettings).map( setting => {
+      const formatSet = Object.values(flattenedSettings).map(setting => {
         const formatted = {};
         setting[2] = setting[2].charAt(0).toUpperCase() + setting[2].replace(/([a-z0-9])([A-Z])/g, '$1 $2').slice(1);
         formatted[setting[2]] = setting[3];
-        if ( setting[0] === undefined ) { setting[0] = 'OTHER'; }
-        return ( [setting[0], formatted]);
+        if (setting[0] === undefined) {
+          setting[0] = 'OTHER';
+        }
+        return ([setting[0], formatted]);
       });
 
 
@@ -96,7 +97,57 @@ export class VideoConfigurationComponent implements OnInit {
       });
       return result;
     }
-    this.inputVarStreamAddr = this.srcItems[0].submenu[0].url;
+
+
+    /**
+     * Check if value is further nested, or if value is leaf node with key:value
+     * Return false if obj is String to prevent splitting into chars
+     */
+    function isNested(obj): boolean {
+      if (obj == null || typeof obj === 'string') {
+        return false;
+      } else {
+        return (Object.values(obj).length > 0);
+      }
+    }
+
+    /**
+     * Traverse SettingObject until leave nodes or 3rd level, return leave nodes as Array
+     */
+    function flattenSettings(nestedSettings): object {
+      let iteration = 0;
+      const flattenedSettings = [];
+      traverseObject(nestedSettings);
+
+      function traverseObject(obj, context?: any): void {
+        iteration++;
+        for (const [key, value] of Object.entries(obj)) {
+          if (iteration > 4) {
+            flattenedSettings.push([context, key, value]);
+            return;
+          }
+          if (!isNested(value)) {
+            flattenedSettings.push([context, key, value]);
+          } else {
+            traverseObject(value, key);
+          }
+        }
+      }
+
+      return flattenedSettings;
+    }
+
+    /**
+     * Find group that Setting should be displayed in according to our custom order
+     * defined in settingGroups.js
+     */
+    function findGroup(name: string): any {
+      for (const key of Object.keys(settingGroups)) {
+        if (settingGroups[key].hasOwnProperty(name)) {
+          return key;
+        }
+      }
+    }
   }
 
   setStreamsDropdownExpandedPanel(panel: MatExpansionPanel): void {
@@ -117,7 +168,6 @@ export class VideoConfigurationComponent implements OnInit {
   }
 
 
-
   stop(): void {
     this.playerService.stop();
   }
@@ -131,8 +181,11 @@ export class VideoConfigurationComponent implements OnInit {
   }
 
   isGroup(val): boolean {
-    if (val == null || typeof val === 'string'){return false; }
-    else { return (Object.values(val).length > 0); }
+    if (val == null || typeof val === 'string') {
+      return false;
+    } else {
+      return (Object.values(val).length > 0);
+    }
   }
 
   makeArray(val): object {

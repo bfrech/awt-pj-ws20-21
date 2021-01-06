@@ -27,19 +27,13 @@
         <item name="GROUP_NODE:feature" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:feature" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:feature/implement_setting_component" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </select>
+    <select />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="769f4b77-bdac-45f1-96ab-bc2798154698" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +47,9 @@
         <option value="JavaScript File" />
       </list>
     </option>
+  </component>
+  <component name="Git.Rebase.Settings">
+    <option name="NEW_BASE" value="develop" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -172,9 +169,25 @@
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
     <state width="1237" height="288" key="GridCell.Tab.0.right/0.23.2560.1337@0.23.2560.1337" timestamp="1608462888084" />
+    <state x="-653" y="-993" width="1612" height="778" key="MergeDialog" timestamp="1609935992971">
+      <screen x="-961" y="-1055" width="1920" height="1055" />
+    </state>
+    <state x="-653" y="-993" width="1612" height="778" key="MergeDialog/-961.-1055.1920.1055/0.25.1440.818@-961.-1055.1920.1055" timestamp="1609935992971" />
+    <state x="-295" y="-654" key="MultipleFileMergeDialog" timestamp="1609935993007">
+      <screen x="-961" y="-1055" width="1920" height="1055" />
+    </state>
+    <state x="-295" y="-654" key="MultipleFileMergeDialog/-961.-1055.1920.1055/0.25.1440.818@-961.-1055.1920.1055" timestamp="1609935993007" />
     <state x="370" y="400" key="RollbackChangesDialog" timestamp="1608544097493">
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
     <state x="370" y="400" key="RollbackChangesDialog/0.23.2560.1337@0.23.2560.1337" timestamp="1608544097493" />
+    <state x="-861" y="-955" width="1720" height="855" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1609937037844">
+      <screen x="-961" y="-1055" width="1920" height="1055" />
+    </state>
+    <state x="-861" y="-955" width="1720" height="855" key="com.intellij.history.integration.ui.views.FileHistoryDialog/-961.-1055.1920.1055/0.25.1440.818@-961.-1055.1920.1055" timestamp="1609937037844" />
+    <state x="-174" y="-640" key="git4idea.rebase.GitUnstructuredEditor" timestamp="1609935994562">
+      <screen x="-961" y="-1055" width="1920" height="1055" />
+    </state>
+    <state x="-174" y="-640" key="git4idea.rebase.GitUnstructuredEditor/-961.-1055.1920.1055/0.25.1440.818@-961.-1055.1920.1055" timestamp="1609935994562" />
   </component>
 </project>
