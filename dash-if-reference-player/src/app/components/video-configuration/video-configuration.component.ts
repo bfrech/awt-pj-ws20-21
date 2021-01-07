@@ -16,7 +16,6 @@ import {Component, OnInit} from '@angular/core';
 import {PlayerService} from '../../player.service';
 import {MediaPlayer} from 'dashjs';
 
-declare const settings: any;
 declare const settingGroups: any;
 
 @Component({
@@ -53,10 +52,7 @@ export class VideoConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     this.inputVarStreamAddr = 'https://dash.akamaized.net/envivio/Envivio-dash2/manifest.mpd';
-   // this.group$ = Object.entries(settings);
     this.group$ =  Object.entries(processSettings());
-
-
 
     /**
      * Settings Preprocessing: get default Settings, traverse Nested Object and return Object
@@ -68,66 +64,76 @@ export class VideoConfigurationComponent implements OnInit {
       const player = MediaPlayer().create();
       const defaultSettings = player.getSettings();
 
-      // Flatten Settings Object
-      const flattenedSettings = flattenSettings(defaultSettings);
+      const flattenedSettings = [];
+      Object.entries(flattenObject(defaultSettings)).map(setting => {
+        flattenedSettings.push([setting[0].split('.').slice(-2, -1).toString(), setting[0].split('.').slice(-1).toString(), setting[1]]);
+      });
 
-      // Map Settings to custom order
-      Object.values(flattenedSettings).forEach(setting => {
-        setting.unshift(findGroup(setting[1]));
+      // Find Related settings and group the settings
+      const res = [];
+      flattenedSettings.forEach(setting  => {
+        if (!(setting[0] === 'debug' || setting[0] === 'streaming' || setting[0] === 'abr' || setting[0] === 'abr' ||
+          setting[0] === 'cmcd')) {
+          if (!res[setting[0]]) {
+            res[setting[0]] = [];
+          }
+          const formatted = {};
+          formatted[setting[1]] = setting[2];
+          res[setting[0]].push(formatted);
+        } else {
+          res[setting[1]] = setting[2];
+        }
+      });
+
+      // Map to custom groups
+      const withGroups = [];
+      Object.entries(res).forEach(setting => {
+        withGroups.push([findGroup(setting[0]), setting[0], setting[1]]);
       });
 
       // Formatting
-      const formatSet = Object.values(flattenedSettings).map( setting => {
-        const formatted = {};
-        setting[2] = setting[2].charAt(0).toUpperCase() + setting[2].replace(/([a-z0-9])([A-Z])/g, '$1 $2').slice(1);
-        formatted[setting[2]] = setting[3];
+      const formatSet = Object.values(withGroups).map(setting => {
+        setting[1] = setting[1].charAt(0).toUpperCase() + setting[1].replace(/([a-z0-9])([A-Z])/g, '$1 $2').slice(1);
         if ( setting[0] === undefined ) { setting[0] = 'OTHER'; }
+        const formatted = {};
+        formatted[setting[1]] = setting[2];
         return ( [setting[0], formatted]);
       });
 
-
-      // group newSet by groupNames
-      const result = {};
+      // Grouping
+      const resultNew = {};
       formatSet.forEach(setting => {
         const key = setting[0];
-        if (!result[key]) {
-          result[key] = Object.assign({}, setting[1]);
+        if (!resultNew[key]) {
+          resultNew[key] = Object.assign({}, setting[1]);
         } else {
-          Object.assign(result[key], setting[1]);
+          Object.assign(resultNew[key], setting[1]);
         }
       });
-      return result;
-    }
-
-
-    /**
-     * Check if value is further nested, or if value is leaf node with key:value
-     * Return false if obj is String to prevent splitting into chars
-     */
-    function isNested(obj): boolean {
-      if (obj == null || typeof obj === 'string'){return false; }
-      else { return (Object.values(obj).length > 0); }
+      return resultNew;
     }
 
     /**
-     * Traverse SettingObject until leave nodes or 3rd level, return leave nodes as Array
+     * Traverse Object until leaf node
      */
-    function flattenSettings(nestedSettings): object {
-      let iteration = 0;
-      const flattenedSettings = [];
-      traverseObject(nestedSettings);
-      function traverseObject(obj, context?: any): void {
-        iteration++;
-        for (const [key, value] of Object.entries(obj)){
-          if ( iteration > 4 ) { flattenedSettings.push([context, key, value]); return; }
-          if (!isNested(value)){
-            flattenedSettings.push([context, key, value]);
-          } else {
-            traverseObject(value, key);
+    function flattenObject(obj): object {
+      const result = {};
+      for (const i in obj){
+        if (!obj.hasOwnProperty(i)) { continue; }
+        if (obj[i] === null) {
+          obj[i] = 'null';
+        }
+        if ((typeof obj[i]) === 'object') {
+          const flatObject = flattenObject(obj[i]);
+          for (const x in flatObject) {
+            if (!flatObject.hasOwnProperty(x)) { continue; }
+            result[i + '.' + x] = flatObject[x];
           }
+        } else {
+          result[i] = obj[i];
         }
       }
-      return flattenedSettings;
+      return result;
     }
 
     /**
@@ -179,6 +185,14 @@ export class VideoConfigurationComponent implements OnInit {
 
   makeArray(val): object {
     return Object.entries(val);
+  }
+
+  getKey(val): string[] {
+    return Object.keys(val);
+  }
+
+  getValue(val): any {
+    return Object.values(val)[0];
   }
 
 }

@@ -1,75 +1,78 @@
+
 /**
  * Hardcoded order of the Setting Group we want to display
  */
 const settingGroups  = {
   PLAYBACK: {
-    fastSwitchEnabled: 'Fast Switch Enabled',
-    flushBufferAtTrackSwitch: 'Flush Buffer at Track Switch',
-    jumpGaps: 'Jump Small Gaps',
-    jumpLargeGaps: 'Jump Large Gaps',
-    smallGapLimit: 'Small Gap Limit',
-    lastBitrateCachingInfo: 'Last Bitrate Caching Info',
-    lastMediaSettingsCachingInfo: 'Last Media Setting Caching Info',
-    cacheLoadThresholds: 'Cache Load Thresholds',
+    fastSwitchEnabled: false,
+    flushBufferAtTrackSwitch: false,
+    jumpGaps: true,
+    jumpLargeGaps: true,
+    smallGapLimit: 1.5,
+    lastBitrateCachingInfo: { enabled: true, ttl: 360000 },
+    lastMediaSettingsCachingInfo: { enabled: true, ttl: 360000 },
+    cacheLoadThresholds: { video: 50, audio: 5 },
   },
   ABR : {
-    movingAverageMethod: 'Moving Average Method',
+    movingAverageMethod: 'Constants.MOVING_AVERAGE_SLIDING_WINDOW',
     ABRStrategy: 'ABR Strategy',
-    bandwidthSafetyFactor: 'Bandwith safety factor',
-    useDefaultABRRules: 'Use default ABR rules',
-    useBufferOccupancyABR: 'Use buffer occupancy ABR',
-    useDeadTimeLatency: 'Use dead dime latency',
-    limitBitrateByPortal: 'Limit bitrate by portal',
-    usePixelRatioInLimitBitrateByPortal: 'Use pixel ratio in limit bitrate by portal',
-    maxBitrate: {audio: 'MaxBitrate audio', video: 'MaxBitrate video'},
-    minBitrate: {audio: 'MinBitrate audio', video: 'MinBitrate video'},
-    maxRepresentationRatio: {audio: 'maxRepresentationRatio audio', video: 'maxRepresentationRatio video'},
-    initialBitrate: {audio: 'Initial Bitrate audio', video: 'Initial Bitrate video'},
-    initialRepresentationRatio: {audio: 'Initial Representation Ratio audio', video: 'Initial Representation Ratio video'},
-    autoSwitchBitrate: {audio: 'Auto Switch Bitrate audio', video: 'Auto Switch Bitrate video'}
+    bandwidthSafetyFactor: 0.9,
+    useDefaultABRRules: true,
+    useBufferOccupancyABR: false,
+    useDeadTimeLatency: true,
+    limitBitrateByPortal: false,
+    usePixelRatioInLimitBitrateByPortal: false,
+    maxBitrate: {audio: -1, video: -1},
+    minBitrate: {audio: -1, video: -1},
+    maxRepresentationRatio: {audio: 1, video: 1},
+    initialBitrate: {audio: -1, video: -1},
+    initialRepresentationRatio: {audio: -1, video: -1},
+    autoSwitchBitrate: {audio: true, video: true}
   },
   INITIAL : {
-    abandonLoadTimeout: 'Abandon load timeout',
-    scheduleWhilePaused: 'Schedule While Paused',
+    abandonLoadTimeout: 1000,
+    scheduleWhilePaused: true,
   },
   LOWLATENCY : {
-    liveDelay: 'Live delay',
-    lowLatencyEnabled: 'Enable Low Latency',
-    liveCatchUpMinDrift: 'Live Catch Up min Drift',
-    liveCatchUpMaxDrift: 'Live Catch Up max Drift',
-    liveCatchUpPlaybackRate: 'Live Catch Up Playback Rate',
-    liveCatchupLatencyThreshold: 'Live Catch Up Latency Threshold',
-    lowLatencyMultiplyFactor: 'Low Latency Multiply Factor'
+    liveDelay: null,
+    lowLatencyEnabled: false,
+    liveCatchUpMinDrift: 0.02,
+    liveCatchUpMaxDrift: 0,
+    liveCatchUpPlaybackRate: 0.5,
+    liveCatchupLatencyThreshold: NaN,
+    lowLatencyMultiplyFactor: 5,
+    liveDelayFragmentCount: NaN,
   },
   DEBUG : {
     logLevel: 'logLevel',
   },
   CMCD : {
-    enabled: 'Enable CMCD',
-    sid: 'SID',
-    cid: 'CID',
-    did: 'DID'
+    enabled: false,
+    sid: null,
+    cid: null,
+    did: null
   },
   BUFFER : {
-    bufferPruningInterval: 'Buffer Pruning Interval',
-    bufferToKeep: 'Buffer to Keep',
-    stableBufferTime: 'Stable Buffer Time',
-    bufferTimeAtTopQuality: 'Buffer Time At Top Quality',
-    bufferTimeAtTopQualityLongForm: 'Buffer Time At Top Quality Long Form',
+    bufferPruningInterval: 10,
+    bufferToKeep: 20,
+    stableBufferTime: 12,
+    bufferTimeAtTopQuality: 30,
+    bufferTimeAtTopQualityLongForm: 60,
   }
 };
 
+
+/* Still needs to be assigned to Group */
 const order = {
-    metricsMaxListDepth: undefined,
-    liveDelayFragmentCount: undefined,
-    calcSegmentAvailabilityRangeFromTimeline: undefined,
-    longFormContentDurationThreshold: undefined,
-    wallclockTimeUpdateInterval: undefined,
-    keepProtectionMediaKeys: undefined,
-    useManifestDateHeaderTimeSource: undefined,
-    useSuggestedPresentationDelay: undefined,
-    useAppendWindow: undefined,
-    manifestUpdateRetryInterval: undefined,
+    metricsMaxListDepth: 1000,
+    calcSegmentAvailabilityRangeFromTimeline: true,
+    longFormContentDurationThreshold: 600,
+    wallclockTimeUpdateInterval: 50,
+    keepProtectionMediaKeys: false,
+    useManifestDateHeaderTimeSource: true,
+    useSuggestedPresentationDelay: true,
+    useAppendWindow: true,
+    manifestUpdateRetryInterval: 100,
     retryIntervals: {
       MPD: 500,
       XLinkExpansion: 500,
