@@ -1,13 +1,69 @@
+:root {
+  --primary: #1F8AF9;
+}
+
+* {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #707070;
+}
+
 .dropdown-item {
   cursor: pointer;
 }
-.settings-frame{
-  background-color: white;
-  -webkit-box-shadow: 13px 13px 10px -10px rgba(130,130,130,0.12);
-  box-shadow: 13px 13px 10px -10px rgba(130,130,130,0.12);
-  margin: 15px;
+
+#searchbar {
+  text-transform: uppercase;
+  border: none;
+  font-size: 16px;
+}
+button{
+  text-transform: uppercase;
+  font-size: 14px;
+}
+.form-inline {
 }
 
-h4{
+.form-group {
+  padding: 0px;
+}
+
+.settings-frame {
+  margin-top: 20px;
+  float: right;
+}
+
+.content {
+  padding: 10px;
+  background-color: white;
+  -webkit-box-shadow: 13px 13px 10px -10px rgba(130, 130, 130, 0.12);
+  box-shadow: 13px 13px 10px -10px rgba(130, 130, 130, 0.12);
+}
+
+.content h4{
   font-size: 14px;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.content p{
+  font-size: 12px;
+  margin-bottom: 7px;
+}
+
+.content input{
+  border: #707070 solid 1px;
+  border-radius: 6px;
+  width: 100%;
+}
+.content label{
+width:100%;
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
+  opacity: 0.03 !important;
+  background-color: #1F8AF9;
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: #1F8AF9;
 }
