@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {
   trigger,
   state,
@@ -7,11 +7,10 @@ import {
   transition,
   // ...
 } from '@angular/animations';
-import { MatExpansionPanel } from '@angular/material/expansion';
+import {MatExpansionPanel} from '@angular/material/expansion';
 
-import { PlayerService } from '../../player.service';
+import {PlayerService} from '../../player.service';
 import * as sources from '../../../sources.json';
-
 import {MediaPlayer} from 'dashjs';
 
 declare const settingGroups: any;
@@ -27,8 +26,8 @@ declare const settingGroups: any;
   encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('streamsDropdownShowHide', [
-      state('true', style({ opacity: 1 })),
-      state('false', style({ opacity: 0 })),
+      state('true', style({opacity: 1})),
+      state('false', style({opacity: 0})),
       transition('false <=> true', animate(120))
     ])
   ]
@@ -39,18 +38,19 @@ export class VideoConfigurationComponent implements OnInit {
   group$: any;
   defaultSettings: any;
 
-  srcProvider: {[index: string]: any} = sources.provider;
+  srcProvider: { [index: string]: any } = sources.provider;
   srcItems = sources.items;
   inputVarStreamAddr: string | undefined;
 
   streamsDropdownIsVisible = false;
   streamsDropdownExpandedPanel: MatExpansionPanel | null = null;
 
-  constructor(private playerService: PlayerService) { }
+  constructor(private playerService: PlayerService) {
+  }
 
   ngOnInit(): void {
     this.inputVarStreamAddr = 'https://dash.akamaized.net/envivio/Envivio-dash2/manifest.mpd';
-    this.group$ =  Object.entries(processSettings());
+    this.group$ = Object.entries(processSettings());
 
     /**
      * Settings Preprocessing: get default Settings, traverse Nested Object and return Object
@@ -69,7 +69,7 @@ export class VideoConfigurationComponent implements OnInit {
 
       // Find Related settings and group the settings
       const res = [];
-      flattenedSettings.forEach(setting  => {
+      flattenedSettings.forEach(setting => {
         if (!(setting[0] === 'debug' || setting[0] === 'streaming' || setting[0] === 'abr' || setting[0] === 'abr' ||
           setting[0] === 'cmcd')) {
           if (!res[setting[0]]) {
@@ -92,10 +92,12 @@ export class VideoConfigurationComponent implements OnInit {
       // Formatting
       const formatSet = Object.values(withGroups).map(setting => {
         setting[1] = setting[1].charAt(0).toUpperCase() + setting[1].replace(/([a-z0-9])([A-Z])/g, '$1 $2').slice(1);
-        if ( setting[0] === undefined ) { setting[0] = 'OTHER'; }
+        if (setting[0] === undefined) {
+          setting[0] = 'OTHER';
+        }
         const formatted = {};
         formatted[setting[1]] = setting[2];
-        return ( [setting[0], formatted]);
+        return ([setting[0], formatted]);
       });
 
       // Grouping
@@ -116,15 +118,19 @@ export class VideoConfigurationComponent implements OnInit {
      */
     function flattenObject(obj): object {
       const result = {};
-      for (const i in obj){
-        if (!obj.hasOwnProperty(i)) { continue; }
+      for (const i in obj) {
+        if (!obj.hasOwnProperty(i)) {
+          continue;
+        }
         if (obj[i] === null) {
           obj[i] = 'null';
         }
         if ((typeof obj[i]) === 'object') {
           const flatObject = flattenObject(obj[i]);
           for (const x in flatObject) {
-            if (!flatObject.hasOwnProperty(x)) { continue; }
+            if (!flatObject.hasOwnProperty(x)) {
+              continue;
+            }
             result[i + '.' + x] = flatObject[x];
           }
         } else {
@@ -139,12 +145,13 @@ export class VideoConfigurationComponent implements OnInit {
      * defined in settingGroups.js
      */
     function findGroup(name: string): any {
-      for (const key of Object.keys(settingGroups)){
-        if (settingGroups[key].hasOwnProperty(name)){return key; }
+      for (const key of Object.keys(settingGroups)) {
+        if (settingGroups[key].hasOwnProperty(name)) {
+          return key;
+        }
       }
     }
   }
-
 
 
   setStreamsDropdownExpandedPanel(panel: MatExpansionPanel): void {
@@ -177,8 +184,11 @@ export class VideoConfigurationComponent implements OnInit {
   }
 
   isGroup(val): boolean {
-    if (val == null || typeof val === 'string'){return false; }
-    else { return (Object.values(val).length > 0); }
+    if (val == null || typeof val === 'string') {
+      return false;
+    } else {
+      return (Object.values(val).length > 0);
+    }
   }
 
   makeArray(val): object {
@@ -192,5 +202,4 @@ export class VideoConfigurationComponent implements OnInit {
   getValue(val): any {
     return Object.values(val)[0];
   }
-
 }

@@ -1,15 +1,12 @@
 <div class="container">
   <form class="form-inline">
     <div class="form-group col-12 p-0">
-
       <div class="input-group flex-grow-1">
         <div class="input-group-prepend dropdown-container">
-
-          <button (click)="streamsDropdownToggle()" class="btn btn-outline-secondary dropdown-toggle"
+          <button (click)="streamsDropdownToggle()" class="defaultbtn btn btn-primary dropdown-toggle"
                   aria-haspopup="true" aria-expanded="false">
             Stream
           </button>
-
           <mat-accordion [@streamsDropdownShowHide]="streamsDropdownIsVisible"
                          displayMode=flat class="vc-dropdown-menu">
             <mat-expansion-panel #expPanel *ngFor="let item of srcItems"
@@ -42,12 +39,11 @@
         <input [(ngModel)]="inputVarStreamAddr" name="inputNameStreamAddr" type="text" class="form-control"
                placeholder="Stream Address" aria-label="Stream Address">
       </div>
-
-      <div class="ml-1 btn-group">
-        <button (click)="stop()" class="btn btn-secondary">Stop</button>
-        <button (click)="load()" class="btn btn-primary">Load</button>
+      <div class="btn-group col-2">
+        <button (click)="stop()" class="defaultbtn btn btn-secondary">Stop</button>
+        <button (click)="load()" class="defaultbtn btn btn-primary">Load</button>
       </div>
-
+        <button id="settingsBtn" class="col-1 defaultbtn btn btn-primary">Settings</button>
     </div>
   </form>
 
