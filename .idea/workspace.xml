@@ -39,10 +39,9 @@
   <component name="ChangeListManager">
     <list default="true" id="769f4b77-bdac-45f1-96ab-bc2798154698" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/app.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/app.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/player/player.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/player/player.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/app.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +55,9 @@
         <option value="JavaScript File" />
       </list>
     </option>
+  </component>
+  <component name="Git.Rebase.Settings">
+    <option name="NEW_BASE" value="develop" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -203,10 +205,22 @@
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
     <state width="1343" height="288" key="GridCell.Tab.0.right/0.23.2560.1337@0.23.2560.1337" timestamp="1609875873182" />
+    <state x="0" y="25" width="1440" height="875" key="MergeDialog" timestamp="1610294348013">
+      <screen x="0" y="25" width="1440" height="875" />
+    </state>
+    <state x="0" y="25" width="1440" height="875" key="MergeDialog/-961.-1055.1920.996/0.25.1440.875@0.25.1440.875" timestamp="1610294348013" />
+    <state x="358" y="228" key="MultipleFileMergeDialog" timestamp="1610294348112">
+      <screen x="0" y="25" width="1440" height="875" />
+    </state>
+    <state x="358" y="228" key="MultipleFileMergeDialog/-961.-1055.1920.996/0.25.1440.875@0.25.1440.875" timestamp="1610294348112" />
     <state x="370" y="400" key="RollbackChangesDialog" timestamp="1608544097493">
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
     <state x="370" y="400" key="RollbackChangesDialog/0.23.2560.1337@0.23.2560.1337" timestamp="1608544097493" />
+    <state x="443" y="379" key="git4idea.rebase.GitUnstructuredEditor" timestamp="1610294351292">
+      <screen x="0" y="25" width="1440" height="875" />
+    </state>
+    <state x="443" y="379" key="git4idea.rebase.GitUnstructuredEditor/-961.-1055.1920.996/0.25.1440.875@0.25.1440.875" timestamp="1610294351292" />
     <state x="384" y="165" width="670" height="676" key="search.everywhere.popup" timestamp="1610212105102">
       <screen x="0" y="25" width="1440" height="816" />
     </state>

@@ -12,8 +12,6 @@ import { MatExpansionPanel } from '@angular/material/expansion';
 import { PlayerService } from '../../player.service';
 import * as sources from '../../../sources.json';
 
-import {Component, OnInit} from '@angular/core';
-import {PlayerService} from '../../player.service';
 import {MediaPlayer} from 'dashjs';
 
 declare const settingGroups: any;
