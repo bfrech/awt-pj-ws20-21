@@ -43,10 +43,12 @@
         <button (click)="stop()" class="defaultbtn btn btn-secondary">Stop</button>
         <button (click)="load()" class="defaultbtn btn btn-primary">Load</button>
       </div>
-        <button id="settingsBtn" class="col-1 defaultbtn btn btn-primary">Settings</button>
+        <button (click)="settingsSectionToggle()" id="settingsBtn" class="col-1 defaultbtn btn btn-primary">Settings</button>
     </div>
   </form>
 
-  <div class="row" id="settingMenu">
+  <div [@settingsShowHide]="settingsSectionIsVisible ? true : false" class="row settingsContainer">
+    <div id="settingMenu"></div>
   </div>
+
 </div>
