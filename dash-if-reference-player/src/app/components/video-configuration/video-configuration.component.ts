@@ -11,7 +11,8 @@ import {MatExpansionPanel} from '@angular/material/expansion';
 
 import {PlayerService} from '../../player.service';
 import * as sources from '../../../sources.json';
-import {MediaPlayer} from 'dashjs';
+import {MediaPlayer, MediaPlayerSettingClass} from 'dashjs';
+import * as dashjs from 'dashjs';
 
 declare const settingGroups: any;
 
@@ -50,8 +51,6 @@ export class VideoConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     this.inputVarStreamAddr = 'https://dash.akamaized.net/envivio/Envivio-dash2/manifest.mpd';
-    //this.group$ = Object.entries(processSettings());
-
 
     ////////////////////////////////////////
     // Player Setup
@@ -65,6 +64,9 @@ export class VideoConfigurationComponent implements OnInit {
       const player = MediaPlayer().create();
       const defaultSettings = player.getSettings();
 
+      console.log(dashjs.LogLevel.LOG_LEVEL_DEBUG);
+
+
       const flattenedSettings = [];
       Object.entries(flattenObject(defaultSettings)).map(setting => {
         flattenedSettings.push([setting[0].split('.').slice(-2, -1).toString(), setting[0].split('.').slice(-1).toString(), setting[1]]);
@@ -73,7 +75,7 @@ export class VideoConfigurationComponent implements OnInit {
       // Find Related settings and group the settings
       const res = [];
       flattenedSettings.forEach(setting => {
-        if (!(setting[0] === 'debug' || setting[0] === 'streaming' || setting[0] === 'abr' || setting[0] === 'abr' ||
+        if (!(setting[0] === 'debug' || setting[0] === 'streaming' || setting[0] === 'abr' ||
           setting[0] === 'cmcd')) {
           if (!res[setting[0]]) {
             res[setting[0]] = [];
@@ -123,15 +125,15 @@ export class VideoConfigurationComponent implements OnInit {
       const groups = Object.entries(processSettings());
       groups.forEach( grp => {
 
-        //.setting-frame
-        const element = document.createElement('div')
-        element.setAttribute("class", "settings-frame col-3")
+        // .setting-frame
+        const element = document.createElement('div');
+        element.setAttribute('class', 'settings-frame col-3');
 
         // .content
-        const contentElement = document.createElement("div");
-        contentElement.setAttribute("class", "content");
+        const contentElement = document.createElement('div');
+        contentElement.setAttribute('class', 'content');
         element.appendChild(contentElement);
-        const header = document.createElement("h4");
+        const header = document.createElement('h4');
         header.textContent = grp[0];
         contentElement.appendChild(header);
 
@@ -139,59 +141,60 @@ export class VideoConfigurationComponent implements OnInit {
         Object.entries(grp[1]).forEach( setting => {
 
           // Name
-          let name = setting[0];
-          const singleSetting = document.createElement("div");
-          const settingName = document.createElement("p");
-          singleSetting.setAttribute("class", "singleSetting my-3")
-          settingName.textContent = name + ": ";
+          const name = setting[0];
+          const singleSetting = document.createElement('div');
+          const settingName = document.createElement('p');
+          singleSetting.setAttribute('class', 'singleSetting my-3');
+          settingName.textContent = name + ': ';
           singleSetting.appendChild(settingName);
 
           // Input Name
-          let value = setting[1];
-          const input = document.createElement("div");
-          input.setAttribute("class", "input");
+          const value = setting[1];
+          const input = document.createElement('div');
+          input.setAttribute('class', 'input');
 
           // TODO: Radio Buttons
 
+
           // Checkbox
-          if(typeof value === 'boolean'){
-            const checkbox = document.createElement("input");
-            checkbox.setAttribute("color", "primary");
-            checkbox.setAttribute("type", "checkbox");
+          if (typeof value === 'boolean'){
+            const checkbox = document.createElement('input');
+            checkbox.setAttribute('color', 'primary');
+            checkbox.setAttribute('type', 'checkbox');
             input.appendChild(checkbox);
           }
             // Grouped Settings
             else if (isGroup(value)){
-              const groupedSetting = document.createElement("div");
-              groupedSetting.setAttribute("class", "SingleSubSetting ml-3");
+              const groupedSetting = document.createElement('div');
+              groupedSetting.setAttribute('class', 'SingleSubSetting ml-3');
               Object.values(value).forEach((subSetting) => {
-                const subName = document.createElement("p");
-                subName.textContent = Object.keys(subSetting).toString() + ": ";
-                groupedSetting.appendChild(subName)
+                const subName = document.createElement('p');
+                subName.textContent = Object.keys(subSetting).toString() + ': ';
+                groupedSetting.appendChild(subName);
 
-                const inputField = document.createElement("input");
+                const inputField = document.createElement('input');
                 const subvalue = Object.values(subSetting)[0];
-                if(typeof subvalue === 'boolean'){
-                  inputField.setAttribute("color", "primary");
-                  inputField.setAttribute("type", "checkbox");
+                if (typeof subvalue === 'boolean'){
+                  inputField.setAttribute('color', 'primary');
+                  inputField.setAttribute('type', 'checkbox');
                   groupedSetting.appendChild(inputField);
                 } else {
-                  inputField.setAttribute("value", subvalue.toString());
+                  inputField.setAttribute('value', subvalue.toString());
                   groupedSetting.appendChild(inputField);
                 }
                 input.appendChild(groupedSetting);
-            })
+            });
           } else {
             // Text Input
-            const inputField = document.createElement("input");
-            inputField.setAttribute("value", value.toString());
+            const inputField = document.createElement('input');
+            inputField.setAttribute('value', value.toString());
             input.appendChild(inputField);
           }
           singleSetting.appendChild(input);
           contentElement.appendChild(singleSetting);
-        })
+        });
         document.getElementById('settingMenu').appendChild(element);
-      })
+      });
     }
     buildSettings();
 
