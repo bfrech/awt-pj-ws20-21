@@ -27,9 +27,14 @@ declare const settingGroups: any;
   encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('streamsDropdownShowHide', [
-      state('true', style({opacity: 1})),
-      state('false', style({opacity: 0})),
+      state('true', style({ opacity: 1 })),
+      state('false', style({ opacity: 0 })),
       transition('false <=> true', animate(120))
+    ]),
+    trigger('settingsShowHide', [
+      state('true', style({ visibility: 'visible', height: '*' })),
+      state('false', style({ visibility: 'hidden', height: '0px' })),
+      transition('false <=> true', animate(500))
     ])
   ]
 })
@@ -45,6 +50,8 @@ export class VideoConfigurationComponent implements OnInit {
 
   streamsDropdownIsVisible = false;
   streamsDropdownExpandedPanel: MatExpansionPanel | null = null;
+
+  settingsSectionIsVisible = false;
 
   constructor(private playerService: PlayerService) {
   }
@@ -278,6 +285,10 @@ export class VideoConfigurationComponent implements OnInit {
   selectStream(url: string): void {
     this.inputVarStreamAddr = url;
     this.streamsDropdownToggle();
+  }
+
+  settingsSectionToggle(): void {
+    this.settingsSectionIsVisible = !this.settingsSectionIsVisible;
   }
 
   stop(): void {
