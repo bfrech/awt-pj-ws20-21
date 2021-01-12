@@ -43,42 +43,12 @@
         <button (click)="stop()" class="defaultbtn btn btn-secondary">Stop</button>
         <button (click)="load()" class="defaultbtn btn btn-primary">Load</button>
       </div>
-        <button id="settingsBtn" class="col-1 defaultbtn btn btn-primary">Settings</button>
+        <button (click)="settingsSectionToggle()" id="settingsBtn" class="col-1 defaultbtn btn btn-primary">Settings</button>
     </div>
   </form>
 
-  <div class="row" id="settingMenu">
-    <div class="settings-frame col-3" *ngFor="let group of group$">
-      <div class="content">
-      <h4>{{group[0]}}</h4>
-      <div class="singleSetting my-3" *ngFor="let item of group[1] | keyvalue">
-        <div>
-          <p>{{item.key}}:</p>
-        </div>
-        <div class="input">
-          <mat-radio-group *ngIf="item.key.value" aria-label="Select an option">
-            <mat-radio-button value="1">Option 1</mat-radio-button>
-            <mat-radio-button value="2">Option 2</mat-radio-button>
-          </mat-radio-group>
-          <mat-checkbox color="primary" *ngIf=isBoolean(item.value)></mat-checkbox>
-          <div *ngIf=isGroup(item.value)>
-            <div class="SingleSubSetting ml-4" *ngFor="let subItem of makeArray(item.value)">
-              <p>{{getKey(subItem[1])}}</p>
-              <mat-checkbox *ngIf=isBoolean(getValue(subItem[1]))></mat-checkbox>
-              <label>
-                <input *ngIf=!isBoolean(getValue(subItem[1])) value="{{getValue(subItem[1])}}">
-              </label>
-            </div>
-          </div>
-          <div *ngIf=!isGroup(item.value)>
-            <label>
-              <input *ngIf=!isBoolean(item.value) value="{{item.value}}">
-            </label>
-          </div>
-        </div>
-      </div>
-
-      </div>
-    </div>
+  <div [@settingsShowHide]="settingsSectionIsVisible ? true : false" class="row">
+    <div id="settingMenu"></div>
   </div>
+
 </div>

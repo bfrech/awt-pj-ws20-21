@@ -1,4 +1,3 @@
-
 /**
  * Hardcoded order of the Setting Group we want to display
  */

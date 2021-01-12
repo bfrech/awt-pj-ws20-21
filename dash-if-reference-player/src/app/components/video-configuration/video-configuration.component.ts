@@ -4,14 +4,15 @@ import {
   state,
   style,
   animate,
-  transition,
+  transition
   // ...
 } from '@angular/animations';
 import {MatExpansionPanel} from '@angular/material/expansion';
 
 import {PlayerService} from '../../player.service';
 import * as sources from '../../../sources.json';
-import {MediaPlayer} from 'dashjs';
+import {MediaPlayer, MediaPlayerSettingClass} from 'dashjs';
+import * as dashjs from 'dashjs';
 
 declare const settingGroups: any;
 
@@ -26,10 +27,45 @@ declare const settingGroups: any;
   encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('streamsDropdownShowHide', [
-      state('true', style({opacity: 1})),
-      state('false', style({opacity: 0})),
-      transition('false <=> true', animate(120))
-    ])
+      state('true', style({
+        // scaleY(0) <=> scaleY(1) is not animated but set as state to prevent user-interaction with hidden element
+        transform: 'scaleY(1)',
+        opacity: 1
+      })),
+      state('false', style({
+        transform: 'scaleY(0)',
+        opacity: 0
+      })),
+      transition('false => true', [
+        // Set scaleY(1) initially, then start animation
+        style({ transform: 'scaleY(1)', opacity: 0 }),
+        animate(100, style({ opacity: 1 }))
+      ]),
+      transition('true => false',
+        animate(100, style({ opacity: 0 }))
+        // After the animation, scaleY(0) is set automatically by state declaration
+      )
+    ]),
+    trigger('settingsShowHide', [
+      state('true', style({
+        // scaleY(0) <=> scaleY(1) is not animated but set as state to prevent user-interaction with hidden element
+        transform: 'scaleY(1)',
+        height: '*'
+      })),
+      state('false', style({
+        transform: 'scaleY(0)',
+        height: '0px'
+      })),
+      transition('false => true', [
+        // Set scaleY(1) initially, then start animation
+        style({ transform: 'scaleY(1)', height: '0px' }),
+        animate(500, style({ height: '*' }))
+      ]),
+      transition('true => false',
+        animate(500, style({ height: '0px' }))
+        // After the animation, scaleY(0) is set automatically by state declaration
+      )
+    ]),
   ]
 })
 
@@ -45,22 +81,28 @@ export class VideoConfigurationComponent implements OnInit {
   streamsDropdownIsVisible = false;
   streamsDropdownExpandedPanel: MatExpansionPanel | null = null;
 
+  settingsSectionIsVisible = false;
+
   constructor(private playerService: PlayerService) {
   }
 
   ngOnInit(): void {
     this.inputVarStreamAddr = 'https://dash.akamaized.net/envivio/Envivio-dash2/manifest.mpd';
-    this.group$ = Object.entries(processSettings());
 
+    ////////////////////////////////////////
+    // Player Setup
+    ////////////////////////////////////////
     /**
      * Settings Preprocessing: get default Settings, traverse Nested Object and return Object
      * ordered according to our custom order from groups.js
      */
     function processSettings(): object {
-
       // TODO: Use MediaPlayer from playerService
       const player = MediaPlayer().create();
       const defaultSettings = player.getSettings();
+
+      console.log(dashjs.LogLevel.LOG_LEVEL_DEBUG);
+
 
       const flattenedSettings = [];
       Object.entries(flattenObject(defaultSettings)).map(setting => {
@@ -70,7 +112,7 @@ export class VideoConfigurationComponent implements OnInit {
       // Find Related settings and group the settings
       const res = [];
       flattenedSettings.forEach(setting => {
-        if (!(setting[0] === 'debug' || setting[0] === 'streaming' || setting[0] === 'abr' || setting[0] === 'abr' ||
+        if (!(setting[0] === 'debug' || setting[0] === 'streaming' || setting[0] === 'abr' ||
           setting[0] === 'cmcd')) {
           if (!res[setting[0]]) {
             res[setting[0]] = [];
@@ -114,6 +156,98 @@ export class VideoConfigurationComponent implements OnInit {
     }
 
     /**
+     * Build HTML Elements for each Setting
+     */
+    function buildSettings(): void {
+      const groups = Object.entries(processSettings());
+      groups.forEach( grp => {
+
+        // .setting-frame
+        const element = document.createElement('div');
+        element.setAttribute('class', 'settings-frame col-3');
+
+        // .content
+        const contentElement = document.createElement('div');
+        contentElement.setAttribute('class', 'content');
+        element.appendChild(contentElement);
+        const header = document.createElement('h4');
+        header.textContent = grp[0];
+        contentElement.appendChild(header);
+
+        // .singleSetting
+        Object.entries(grp[1]).forEach( setting => {
+
+          // Name
+          const name = setting[0];
+          const singleSetting = document.createElement('div');
+          const settingName = document.createElement('p');
+          singleSetting.setAttribute('class', 'singleSetting my-3');
+          settingName.textContent = name + ': ';
+          singleSetting.appendChild(settingName);
+
+          // Input Name
+          const value = setting[1];
+          const input = document.createElement('div');
+          input.setAttribute('class', 'input');
+
+          // TODO: Radio Buttons
+
+
+          // Checkbox
+          if (typeof value === 'boolean'){
+            const checkbox = document.createElement('input');
+            checkbox.setAttribute('color', 'primary');
+            checkbox.setAttribute('type', 'checkbox');
+            input.appendChild(checkbox);
+          }
+            // Grouped Settings
+            else if (isGroup(value)){
+              const groupedSetting = document.createElement('div');
+              groupedSetting.setAttribute('class', 'SingleSubSetting ml-3');
+              Object.values(value).forEach((subSetting) => {
+                const subName = document.createElement('p');
+                subName.textContent = Object.keys(subSetting).toString() + ': ';
+                groupedSetting.appendChild(subName);
+
+                const inputField = document.createElement('input');
+                const subvalue = Object.values(subSetting)[0];
+                if (typeof subvalue === 'boolean'){
+                  inputField.setAttribute('color', 'primary');
+                  inputField.setAttribute('type', 'checkbox');
+                  groupedSetting.appendChild(inputField);
+                } else {
+                  inputField.setAttribute('value', subvalue.toString());
+                  groupedSetting.appendChild(inputField);
+                }
+                input.appendChild(groupedSetting);
+            });
+          } else {
+            // Text Input
+            const inputField = document.createElement('input');
+            inputField.setAttribute('value', value.toString());
+            input.appendChild(inputField);
+          }
+          singleSetting.appendChild(input);
+          contentElement.appendChild(singleSetting);
+        });
+        document.getElementById('settingMenu').appendChild(element);
+      });
+    }
+    buildSettings();
+
+
+    ////////////////////////////////////////
+    // Player Methods
+    ////////////////////////////////////////
+    function updateSettings(): void {
+
+    }
+
+
+    ////////////////////////////////////////
+    // Helper Functions
+    ////////////////////////////////////////
+    /**
      * Traverse Object until leaf node
      */
     function flattenObject(obj): object {
@@ -151,6 +285,18 @@ export class VideoConfigurationComponent implements OnInit {
         }
       }
     }
+
+    /**
+     * Check for grouped Settings
+     */
+    function isGroup(val): boolean {
+      if (val == null || typeof val === 'string') {
+        return false;
+      } else {
+        return (Object.values(val).length > 0);
+      }
+    }
+
   }
 
 
@@ -171,6 +317,10 @@ export class VideoConfigurationComponent implements OnInit {
     this.streamsDropdownToggle();
   }
 
+  settingsSectionToggle(): void {
+    this.settingsSectionIsVisible = !this.settingsSectionIsVisible;
+  }
+
   stop(): void {
     this.playerService.stop();
   }
@@ -179,27 +329,4 @@ export class VideoConfigurationComponent implements OnInit {
     this.playerService.load(this.inputVarStreamAddr);
   }
 
-  isBoolean(val): boolean {
-    return val === false || val === true;
-  }
-
-  isGroup(val): boolean {
-    if (val == null || typeof val === 'string') {
-      return false;
-    } else {
-      return (Object.values(val).length > 0);
-    }
-  }
-
-  makeArray(val): object {
-    return Object.entries(val);
-  }
-
-  getKey(val): string[] {
-    return Object.keys(val);
-  }
-
-  getValue(val): any {
-    return Object.values(val)[0];
-  }
 }
