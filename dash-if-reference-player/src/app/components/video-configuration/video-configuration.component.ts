@@ -4,7 +4,7 @@ import {
   state,
   style,
   animate,
-  transition,
+  transition
   // ...
 } from '@angular/animations';
 import {MatExpansionPanel} from '@angular/material/expansion';
@@ -27,15 +27,45 @@ declare const settingGroups: any;
   encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('streamsDropdownShowHide', [
-      state('true', style({ opacity: 1 })),
-      state('false', style({ opacity: 0 })),
-      transition('false <=> true', animate(120))
+      state('true', style({
+        // scaleY(0) <=> scaleY(1) is not animated but set as state to prevent user-interaction with hidden element
+        transform: 'scaleY(1)',
+        opacity: 1
+      })),
+      state('false', style({
+        transform: 'scaleY(0)',
+        opacity: 0
+      })),
+      transition('false => true', [
+        // Set scaleY(1) initially, then start animation
+        style({ transform: 'scaleY(1)', opacity: 0 }),
+        animate(100, style({ opacity: 1 }))
+      ]),
+      transition('true => false',
+        animate(100, style({ opacity: 0 }))
+        // After the animation, scaleY(0) is set automatically by state declaration
+      )
     ]),
     trigger('settingsShowHide', [
-      state('true', style({ visibility: 'visible', height: '*' })),
-      state('false', style({ visibility: 'hidden', height: '0px' })),
-      transition('false <=> true', animate(500))
-    ])
+      state('true', style({
+        // scaleY(0) <=> scaleY(1) is not animated but set as state to prevent user-interaction with hidden element
+        transform: 'scaleY(1)',
+        height: '*'
+      })),
+      state('false', style({
+        transform: 'scaleY(0)',
+        height: '0px'
+      })),
+      transition('false => true', [
+        // Set scaleY(1) initially, then start animation
+        style({ transform: 'scaleY(1)', height: '0px' }),
+        animate(500, style({ height: '*' }))
+      ]),
+      transition('true => false',
+        animate(500, style({ height: '0px' }))
+        // After the animation, scaleY(0) is set automatically by state declaration
+      )
+    ]),
   ]
 })
 
