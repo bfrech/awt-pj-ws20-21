@@ -43,12 +43,13 @@
         <button (click)="stop()" class="defaultbtn btn btn-secondary">Stop</button>
         <button (click)="load()" class="defaultbtn btn btn-primary">Load</button>
       </div>
-        <button (click)="settingsSectionToggle()" id="settingsBtn" class="col-1 defaultbtn btn btn-primary">Settings</button>
+      <button (click)="settingsSectionToggle()" id="settingsBtn" class="col-1 defaultbtn btn btn-primary">Settings
+      </button>
     </div>
   </form>
 
   <div [@settingsShowHide]="settingsSectionIsVisible ? true : false" class="row">
     <div id="settingMenu"></div>
   </div>
-
+  <app-player></app-player>
 </div>

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {
   trigger,
   state,
@@ -11,8 +11,8 @@ import {MatExpansionPanel} from '@angular/material/expansion';
 
 import {PlayerService} from '../../player.service';
 import * as sources from '../../../sources.json';
-import {MediaPlayer, MediaPlayerSettingClass} from 'dashjs';
-import * as dashjs from 'dashjs';
+import {MediaPlayer} from 'dashjs';
+import {PlayerComponent} from './player/player.component';
 
 declare const settingGroups: any;
 
@@ -38,11 +38,11 @@ declare const settingGroups: any;
       })),
       transition('false => true', [
         // Set scaleY(1) initially, then start animation
-        style({ transform: 'scaleY(1)', opacity: 0 }),
-        animate(100, style({ opacity: 1 }))
+        style({transform: 'scaleY(1)', opacity: 0}),
+        animate(100, style({opacity: 1}))
       ]),
       transition('true => false',
-        animate(100, style({ opacity: 0 }))
+        animate(100, style({opacity: 0}))
         // After the animation, scaleY(0) is set automatically by state declaration
       )
     ]),
@@ -58,11 +58,11 @@ declare const settingGroups: any;
       })),
       transition('false => true', [
         // Set scaleY(1) initially, then start animation
-        style({ transform: 'scaleY(1)', height: '0px' }),
-        animate(500, style({ height: '*' }))
+        style({transform: 'scaleY(1)', height: '0px'}),
+        animate(500, style({height: '*'}))
       ]),
       transition('true => false',
-        animate(500, style({ height: '0px' }))
+        animate(500, style({height: '0px'}))
         // After the animation, scaleY(0) is set automatically by state declaration
       )
     ]),
@@ -70,7 +70,7 @@ declare const settingGroups: any;
 })
 
 
-export class VideoConfigurationComponent implements OnInit {
+export class VideoConfigurationComponent implements OnInit, AfterViewInit {
   group$: any;
   defaultSettings: any;
 
@@ -82,13 +82,16 @@ export class VideoConfigurationComponent implements OnInit {
   streamsDropdownExpandedPanel: MatExpansionPanel | null = null;
 
   settingsSectionIsVisible = false;
+  enumValues: Array<string> = [];
+  @ViewChild(PlayerComponent) player;
 
   constructor(private playerService: PlayerService) {
   }
 
   ngOnInit(): void {
     this.inputVarStreamAddr = 'https://dash.akamaized.net/envivio/Envivio-dash2/manifest.mpd';
-
+  }
+  ngAfterViewInit(): void {
     ////////////////////////////////////////
     // Player Setup
     ////////////////////////////////////////
@@ -96,13 +99,10 @@ export class VideoConfigurationComponent implements OnInit {
      * Settings Preprocessing: get default Settings, traverse Nested Object and return Object
      * ordered according to our custom order from groups.js
      */
+    const defaultSettings = this.player.getSettings();
+
     function processSettings(): object {
       // TODO: Use MediaPlayer from playerService
-      const player = MediaPlayer().create();
-      const defaultSettings = player.getSettings();
-
-      console.log(dashjs.LogLevel.LOG_LEVEL_DEBUG);
-
 
       const flattenedSettings = [];
       Object.entries(flattenObject(defaultSettings)).map(setting => {
@@ -160,7 +160,7 @@ export class VideoConfigurationComponent implements OnInit {
      */
     function buildSettings(): void {
       const groups = Object.entries(processSettings());
-      groups.forEach( grp => {
+      groups.forEach(grp => {
 
         // .setting-frame
         const element = document.createElement('div');
@@ -175,7 +175,7 @@ export class VideoConfigurationComponent implements OnInit {
         contentElement.appendChild(header);
 
         // .singleSetting
-        Object.entries(grp[1]).forEach( setting => {
+        Object.entries(grp[1]).forEach(setting => {
 
           // Name
           const name = setting[0];
@@ -194,32 +194,32 @@ export class VideoConfigurationComponent implements OnInit {
 
 
           // Checkbox
-          if (typeof value === 'boolean'){
+          if (typeof value === 'boolean') {
             const checkbox = document.createElement('input');
             checkbox.setAttribute('color', 'primary');
             checkbox.setAttribute('type', 'checkbox');
             input.appendChild(checkbox);
           }
-            // Grouped Settings
-            else if (isGroup(value)){
-              const groupedSetting = document.createElement('div');
-              groupedSetting.setAttribute('class', 'SingleSubSetting ml-3');
-              Object.values(value).forEach((subSetting) => {
-                const subName = document.createElement('p');
-                subName.textContent = Object.keys(subSetting).toString() + ': ';
-                groupedSetting.appendChild(subName);
+          // Grouped Settings
+          else if (isGroup(value)) {
+            const groupedSetting = document.createElement('div');
+            groupedSetting.setAttribute('class', 'SingleSubSetting ml-3');
+            Object.values(value).forEach((subSetting) => {
+              const subName = document.createElement('p');
+              subName.textContent = Object.keys(subSetting).toString() + ': ';
+              groupedSetting.appendChild(subName);
 
-                const inputField = document.createElement('input');
-                const subvalue = Object.values(subSetting)[0];
-                if (typeof subvalue === 'boolean'){
-                  inputField.setAttribute('color', 'primary');
-                  inputField.setAttribute('type', 'checkbox');
-                  groupedSetting.appendChild(inputField);
-                } else {
-                  inputField.setAttribute('value', subvalue.toString());
-                  groupedSetting.appendChild(inputField);
-                }
-                input.appendChild(groupedSetting);
+              const inputField = document.createElement('input');
+              const subvalue = Object.values(subSetting)[0];
+              if (typeof subvalue === 'boolean') {
+                inputField.setAttribute('color', 'primary');
+                inputField.setAttribute('type', 'checkbox');
+                groupedSetting.appendChild(inputField);
+              } else {
+                inputField.setAttribute('value', subvalue.toString());
+                groupedSetting.appendChild(inputField);
+              }
+              input.appendChild(groupedSetting);
             });
           } else {
             // Text Input
@@ -233,6 +233,7 @@ export class VideoConfigurationComponent implements OnInit {
         document.getElementById('settingMenu').appendChild(element);
       });
     }
+
     buildSettings();
 
 
@@ -297,8 +298,7 @@ export class VideoConfigurationComponent implements OnInit {
       }
     }
 
-  }
-
+}
 
   setStreamsDropdownExpandedPanel(panel: MatExpansionPanel): void {
     this.streamsDropdownExpandedPanel = panel;

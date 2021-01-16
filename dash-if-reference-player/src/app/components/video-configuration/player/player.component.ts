@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { MediaPlayer } from 'dashjs';
 
-import { PlayerService } from '../../player.service';
-import * as sources from '../../../sources.json';
+import { PlayerService } from '../../../player.service';
+import * as sources from '../../../../sources.json';
 
 
 @Component({
@@ -10,6 +10,7 @@ import * as sources from '../../../sources.json';
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.css']
 })
+
 export class PlayerComponent implements OnInit {
 
   // srcProvider = sources.provider;
@@ -40,7 +41,6 @@ export class PlayerComponent implements OnInit {
     if (videoElement) {
       this.player.initialize(videoElement, this.streamAddr, false);
     }
-
   }
 
   stop(): void {
@@ -49,6 +49,10 @@ export class PlayerComponent implements OnInit {
 
   load(): void {
     this.player.attachSource(this.streamAddr);
+  }
+
+  getSettings(): any{
+    return this.player.getSettings();
   }
 
 }
