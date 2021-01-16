@@ -35,7 +35,6 @@ export class PlayerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     const videoElement = document.getElementById('videoPlayer');
 
     if (videoElement) {
@@ -50,7 +49,6 @@ export class PlayerComponent implements OnInit {
   load(): void {
     this.player.attachSource(this.streamAddr);
   }
-
   getSettings(): any{
     return this.player.getSettings();
   }

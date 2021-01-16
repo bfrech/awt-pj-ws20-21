@@ -39,15 +39,10 @@
   <component name="ChangeListManager">
     <list default="true" id="769f4b77-bdac-45f1-96ab-bc2798154698" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/app.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/app.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/player/player.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/player/player.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/player/player.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/player/player.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/player/player.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/player/player.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/player/player.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/player/player.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/player/player.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/player/player.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,11 +232,11 @@
       <screen x="0" y="25" width="1440" height="875" />
     </state>
     <state x="443" y="379" key="git4idea.rebase.GitUnstructuredEditor/-961.-1055.1920.996/0.25.1440.875@0.25.1440.875" timestamp="1610294351292" />
-    <state x="384" y="165" width="671" height="677" key="search.everywhere.popup" timestamp="1610799115813">
+    <state x="384" y="165" width="671" height="677" key="search.everywhere.popup" timestamp="1610811933795">
       <screen x="0" y="25" width="1440" height="816" />
     </state>
     <state x="-449" y="-874" width="894" height="874" key="search.everywhere.popup/-961.-1055.1920.1055/0.25.1440.816@-961.-1055.1920.1055" timestamp="1610534084609" />
     <state x="384" y="165" width="670" height="676" key="search.everywhere.popup/-961.-1055.1920.1055/0.25.1440.816@0.25.1440.816" timestamp="1610212105102" />
-    <state x="384" y="165" width="671" height="677" key="search.everywhere.popup/0.25.1440.816@0.25.1440.816" timestamp="1610799115813" />
+    <state x="384" y="165" width="671" height="677" key="search.everywhere.popup/0.25.1440.816@0.25.1440.816" timestamp="1610811933795" />
   </component>
 </project>

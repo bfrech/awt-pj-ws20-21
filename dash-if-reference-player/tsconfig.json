@@ -16,6 +16,8 @@
     "importHelpers": true,
     "resolveJsonModule": true,
     "target": "es2015",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "module": "es2020",
     "lib": [
       "es2018",
@@ -27,5 +29,4 @@
     "strictInjectionParameters": false,
     "strictInputAccessModifiers": false,
     "strictTemplates": false
-  }
-}
+}}

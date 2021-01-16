@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {PlayerComponent} from './components/video-configuration/player/player.component';
 
 @Component({
@@ -8,8 +8,6 @@ import {PlayerComponent} from './components/video-configuration/player/player.co
 })
 export class AppComponent implements OnInit {
   title = 'dash-if-reference-player';
-  playerCom: PlayerComponent;
-
   ngOnInit(): void {
   }
 }
