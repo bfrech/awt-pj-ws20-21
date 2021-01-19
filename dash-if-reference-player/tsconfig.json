@@ -19,12 +19,14 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "module": "es2020",
+    "preserveConstEnums": true,
     "lib": [
       "es2018",
       "dom"
     ]
   },
   "angularCompilerOptions": {
+    "preserveConstEnums": true,
     "enableIvy": false,
     "strictInjectionParameters": false,
     "strictInputAccessModifiers": false,

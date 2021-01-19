@@ -1,5 +1,5 @@
-import { Component, OnInit} from '@angular/core';
-import {PlayerComponent} from './components/video-configuration/player/player.component';
+import {Component, Input, OnInit} from '@angular/core';
+import { MediaPlayerSettingClass } from 'dashjs/index';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +7,11 @@ import {PlayerComponent} from './components/video-configuration/player/player.co
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  @Input() test: MediaPlayerSettingClass;
   title = 'dash-if-reference-player';
+
   ngOnInit(): void {
+
   }
 }
 

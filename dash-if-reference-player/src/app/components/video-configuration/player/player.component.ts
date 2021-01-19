@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import { MediaPlayer } from 'dashjs';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {MediaPlayer} from 'dashjs';
 
-import { PlayerService } from '../../../player.service';
+import {PlayerService} from '../../../player.service';
 import * as sources from '../../../../sources.json';
 
 
@@ -11,8 +11,7 @@ import * as sources from '../../../../sources.json';
   styleUrls: ['./player.component.css']
 })
 
-export class PlayerComponent implements OnInit {
-
+export class PlayerComponent implements OnInit{
   // srcProvider = sources.provider;
   srcItems = sources.items;
   streamAddr = this.srcItems[0].submenu[0].url;
@@ -42,6 +41,9 @@ export class PlayerComponent implements OnInit {
     }
   }
 
+  // tslint:disable-next-line:typedef
+
+
   stop(): void {
     this.player.attachSource('');
   }
@@ -49,7 +51,8 @@ export class PlayerComponent implements OnInit {
   load(): void {
     this.player.attachSource(this.streamAddr);
   }
-  getSettings(): any{
+
+  getSettings(): any {
     return this.player.getSettings();
   }
 

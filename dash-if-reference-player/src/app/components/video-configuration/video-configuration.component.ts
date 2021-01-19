@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import * as dashjs from 'dashjs/index';
 
+
 import {
   trigger,
   state,
@@ -72,9 +73,8 @@ declare const settingGroups: any;
 
 
 export class VideoConfigurationComponent implements OnInit, AfterViewInit {
-  group$: any;
   defaultSettings: any;
-
+  groups: any;
   srcProvider: { [index: string]: any } = sources.provider;
   srcItems = sources.items;
   inputVarStreamAddr: string | undefined;
@@ -96,16 +96,16 @@ export class VideoConfigurationComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.defaultSettings = this.player.getSettings();
     this.processSettings();
+    this.groups = Object.entries(this.processSettings());
     this.buildSettings();
-
-    ////////////////////////////////////////
-    // Player Setup
-    ////////////////////////////////////////
-    /**
-     * Settings Preprocessing: get default Settings, traverse Nested Object and return Object
-     * ordered according to our custom order from groups.js
-     */
   }
+  ////////////////////////////////////////
+  // Player Setup
+  ////////////////////////////////////////
+  /**
+   * Settings Preprocessing: get default Settings, traverse Nested Object and return Object
+   * ordered according to our custom order from groups.js
+   */
 
   processSettings(): object {
     const flattenedSettings = [];
@@ -163,9 +163,7 @@ export class VideoConfigurationComponent implements OnInit, AfterViewInit {
    * Build HTML Elements for each Setting
    */
   buildSettings(): void {
-    const groups = Object.entries(this.processSettings());
-    groups.forEach(grp => {
-
+    this.groups.forEach(grp => {
       // .setting-frame
       const element = document.createElement('div');
       element.setAttribute('class', 'settings-frame col-3');
@@ -194,8 +192,20 @@ export class VideoConfigurationComponent implements OnInit, AfterViewInit {
         const input = document.createElement('div');
         input.setAttribute('class', 'input');
 
+        // Debug
+        if (grp[0] === 'DEBUG') {
+          const logLevelDebug = document.createElement('input');
+          logLevelDebug.setAttribute('type', 'radio');
+          logLevelDebug.setAttribute('id', 'debug');
+          logLevelDebug.setAttribute('name', 'loglevel');
+          logLevelDebug.setAttribute('value', 'DEBUG');
+          const logLevelDebugLabel = document.createElement('label');
+          logLevelDebugLabel.setAttribute('for', 'debug');
+          logLevelDebugLabel.setAttribute('value', 'DEBUG');
+          input.appendChild(logLevelDebug);
+          input.appendChild(logLevelDebugLabel);
+        }
         // TODO: Radio Buttons
-
 
         // Checkbox
         if (typeof value === 'boolean') {
