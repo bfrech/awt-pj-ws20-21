@@ -7,12 +7,17 @@ import {HeaderComponent} from './components/header/header.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {VideoConfigurationComponent} from './components/video-configuration/video-configuration.component';
 import {PlayerComponent} from './components/player/player.component';
+import {MetricsViewComponent} from './components/metrics-view/metrics-view.component';
+import {MetricsConfigurationComponent} from './components/metrics-configuration/metrics-configuration.component';
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatCardModule} from '@angular/material/card';
+import {NgApexchartsModule} from 'ng-apexcharts';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +25,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     HeaderComponent,
     FooterComponent,
     VideoConfigurationComponent,
-    PlayerComponent
+    PlayerComponent,
+    MetricsViewComponent,
+    MetricsConfigurationComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +37,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatRadioModule,
     MatExpansionModule,
     MatTooltipModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatCardModule,
+    NgApexchartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
