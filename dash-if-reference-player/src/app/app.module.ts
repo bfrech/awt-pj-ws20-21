@@ -13,6 +13,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { SettingComponent } from './components/setting/setting.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     HeaderComponent,
     FooterComponent,
     VideoConfigurationComponent,
-    PlayerComponent
+    PlayerComponent,
+    SettingComponent
   ],
   imports: [
     BrowserModule,
