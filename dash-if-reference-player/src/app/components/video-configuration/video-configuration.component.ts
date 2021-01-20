@@ -95,9 +95,9 @@ export class VideoConfigurationComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.defaultSettings = this.player.getSettings();
-    this.processSettings();
-    this.groups = Object.entries(this.processSettings());
+    //this.processSettings();
     this.buildSettings();
+    console.log(dashjs.MediaPlayerSettingClass.name);
   }
   ////////////////////////////////////////
   // Player Setup
