@@ -30,9 +30,16 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   @ViewChild('chartObj') chart: ChartComponent;
   public chartOptions: Partial<any>;
   subscription: Subscription;
-  currentX = 6;
+  currentX = 0;
+  metric = 0;
 
   constructor(private playerService: PlayerService) {
+
+    this.playerService.playerSendMetricsCalled$.subscribe(
+      buffer => {
+        this.updateChart(buffer);
+      }
+    );
 
     this.chartOptions = {
       chart: {
@@ -53,12 +60,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       series: [{
         name: 'Video Buffer Length',
         data: [
-          [1, 34],
-          [2, 54],
-          [3, 43],
-          [4, 30],
-          [5, 39],
-          [6, 42]
+          [0, 0]
         ]
       }],
       title: {
@@ -91,18 +93,24 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     const source = interval(1000);
-    this.subscription = source.subscribe(val => this.updateChart());
+    this.subscription = source.subscribe(val => this.triggerMetricsUpdate());
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  updateChart(): void {
+  updateChart(buffer: number): void {
+    console.log(`update buffer=${buffer}`);
     this.currentX++;
     this.chart.appendData([{
-      data: [[this.currentX, 34]]
+      data: [[this.currentX, buffer]]
     }]);
+  }
+
+  triggerMetricsUpdate(): void {
+    /* Found no solution to pull data directly so far */
+    this.playerService.triggerMetricsUpdate();
   }
 
 }

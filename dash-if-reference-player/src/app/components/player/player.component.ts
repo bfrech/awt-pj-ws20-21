@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MediaPlayer } from 'dashjs';
+import {DashMetrics, MediaPlayer} from 'dashjs';
 
 import { PlayerService } from '../../player.service';
 import * as sources from '../../../assets/sources.json';
@@ -16,8 +16,7 @@ export class PlayerComponent implements OnInit {
   srcItems = sources.items;
   streamAddr = this.srcItems[0].submenu[0].url;
   player = MediaPlayer().create();
-  metrics = this.player.getDashMetrics();
-  /* buffer = this.metrics?.getCurrentBufferLevel('video'); */
+
 
   constructor(private playerService: PlayerService) {
 
@@ -31,7 +30,14 @@ export class PlayerComponent implements OnInit {
       streamAddr => {
         this.streamAddr = streamAddr;
         this.load();
-      });
+      }
+    );
+
+    this.playerService.playerTriggerMetricsUpdateCalled$.subscribe(
+      () => {
+        this.sendMetrics();
+      }
+    );
 
   }
 
@@ -51,6 +57,12 @@ export class PlayerComponent implements OnInit {
 
   load(): void {
     this.player.attachSource(this.streamAddr);
+  }
+
+  sendMetrics(): void {
+    /* Just send video buffer for now */
+    const metrics = this.player.getDashMetrics();
+    this.playerService.sendMetrics(metrics?.getCurrentBufferLevel('video'));
   }
 
 }
