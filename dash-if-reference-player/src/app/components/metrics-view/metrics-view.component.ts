@@ -1,4 +1,5 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {interval, Subscription} from 'rxjs';
 import {
   ChartComponent,
   ApexAxisChartSeries,
@@ -6,6 +7,9 @@ import {
   ApexXAxis,
   ApexTitleSubtitle
 } from 'ng-apexcharts';
+
+import { PlayerService } from '../../player.service';
+
 
 /*
 export type ChartOptions = {
@@ -21,17 +25,26 @@ export type ChartOptions = {
   templateUrl: './metrics-view.component.html',
   styleUrls: ['./metrics-view.component.css']
 })
-export class MetricsViewComponent {
-  @ViewChild('chart') chart: ChartComponent;
-  public chartOptions: Partial<any>;
+export class MetricsViewComponent implements OnInit, OnDestroy {
 
-  constructor() {
+  @ViewChild('chartObj') chart: ChartComponent;
+  public chartOptions: Partial<any>;
+  subscription: Subscription;
+  currentX = 6;
+
+  constructor(private playerService: PlayerService) {
+
     this.chartOptions = {
       chart: {
         height: '270px',
-        /* width: '60%',
-        offsetX: '50%', */
-        type: 'line'
+        type: 'line',
+        animations: {
+          enabled: true,
+          easing: 'linear',
+          dynamicAnimation: {
+            speed: 1000
+          }
+        },
       },
       theme: {
         mode: 'light',
@@ -63,7 +76,7 @@ export class MetricsViewComponent {
         /* curve: 'straight', */
       },
       markers: {
-        size: 4,
+        size: 0,
       },
       legend: {
         show: true,
@@ -73,6 +86,23 @@ export class MetricsViewComponent {
         },
       }
     };
+  }
+
+  ngOnInit(): void {
+
+    const source = interval(1000);
+    this.subscription = source.subscribe(val => this.updateChart());
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  updateChart(): void {
+    this.currentX++;
+    this.chart.appendData([{
+      data: [[this.currentX, 34]]
+    }]);
   }
 
 }

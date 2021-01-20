@@ -16,6 +16,8 @@ export class PlayerComponent implements OnInit {
   srcItems = sources.items;
   streamAddr = this.srcItems[0].submenu[0].url;
   player = MediaPlayer().create();
+  metrics = this.player.getDashMetrics();
+  /* buffer = this.metrics?.getCurrentBufferLevel('video'); */
 
   constructor(private playerService: PlayerService) {
 
