@@ -6,8 +6,10 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./setting.component.css']
 })
 export class SettingComponent implements OnInit {
-@Input() groups;
-  constructor() { }
+  @Input() groups;
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
@@ -40,5 +42,4 @@ export class SettingComponent implements OnInit {
   // TODO description
   updateSettings(): void {
   }
-
 }
