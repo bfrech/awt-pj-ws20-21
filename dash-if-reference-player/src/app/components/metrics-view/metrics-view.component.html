@@ -3,10 +3,15 @@
     <div class="col-12">
       <mat-card>
         <apx-chart
-          [series]="chartOptions.series"
           [chart]="chartOptions.chart"
+          [theme]="chartOptions.theme"
+          [series]="chartOptions.series"
           [xaxis]="chartOptions.xaxis"
+          [yaxis]="chartOptions.yaxis"
           [title]="chartOptions.title"
+          [stroke]="chartOptions.stroke"
+          [markers]="chartOptions.markers"
+          [legend]="chartOptions.legend"
         ></apx-chart>
       </mat-card>
     </div>

@@ -7,12 +7,14 @@ import {
   ApexTitleSubtitle
 } from 'ng-apexcharts';
 
+/*
 export type ChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
   xaxis: ApexXAxis;
   title: ApexTitleSubtitle;
 };
+*/
 
 @Component({
   selector: 'app-metrics-view',
@@ -25,21 +27,50 @@ export class MetricsViewComponent {
 
   constructor() {
     this.chartOptions = {
-      series: [
-        {
-          name: 'My-series',
-          data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-        }
-      ],
       chart: {
-        height: '280px',
+        height: '270px',
+        /* width: '60%',
+        offsetX: '50%', */
         type: 'line'
       },
+      theme: {
+        mode: 'light',
+        palette: 'palette6',
+      },
+      series: [{
+        name: 'Video Buffer Length',
+        data: [
+          [1, 34],
+          [2, 54],
+          [3, 43],
+          [4, 30],
+          [5, 39],
+          [6, 42]
+        ]
+      }],
       title: {
-        text: 'My First Angular Chart'
+        text: 'Stream Metrics'
       },
       xaxis: {
-        categories: ['Jan', 'Feb',  'Mar',  'Apr',  'May',  'Jun',  'Jul',  'Aug', 'Sep']
+        type: 'numeric',
+        title: { text: 'Seconds' }
+      },
+      yaxis: {
+        title: { text: 'Mbit/s' }
+      },
+      stroke: {
+        curve: 'smooth',
+        /* curve: 'straight', */
+      },
+      markers: {
+        size: 4,
+      },
+      legend: {
+        show: true,
+        position: 'top',
+        onItemHover: {
+          highlightDataSeries: true
+        },
       }
     };
   }
