@@ -34,7 +34,6 @@
             "scripts": [
               "src/assets/groups.js",
               "src/assets/settingGroups.ts",
-              "src/assets/custom.js",
               "node_modules/apexcharts/dist/apexcharts.min.js"
             ]
           },

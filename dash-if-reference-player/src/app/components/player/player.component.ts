@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MediaPlayer } from 'dashjs';
 
 import { PlayerService } from '../../player.service';
-import * as sources from '../../../sources.json';
+import * as sources from '../../../assets/sources.json';
 
 
 @Component({
