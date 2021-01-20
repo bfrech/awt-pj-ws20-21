@@ -15,6 +15,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { SettingComponent } from './components/setting/setting.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {NgApexchartsModule} from 'ng-apexcharts';
@@ -27,6 +28,7 @@ import {NgApexchartsModule} from 'ng-apexcharts';
     FooterComponent,
     VideoConfigurationComponent,
     PlayerComponent,
+    SettingComponent
     MetricsViewComponent,
     MetricsConfigurationComponent
   ],

@@ -43,12 +43,14 @@
         <button (click)="playerService.stop()" class="defaultbtn btn btn-secondary">Stop</button>
         <button (click)="playerService.load(inputVarStreamAddr)" class="defaultbtn btn btn-primary">Load</button>
       </div>
-        <button (click)="settingsSectionToggle()" id="settingsBtn" class="col-1 defaultbtn btn btn-primary">Settings</button>
+      <button (click)="settingsSectionToggle()" id="settingsBtn" class="col-1 defaultbtn btn btn-primary">Settings
+      </button>
     </div>
   </form>
 
   <div [@settingsShowHide]="settingsSectionIsVisible ? true : false" class="row">
-    <div id="settingMenu"></div>
-  </div>
+    <div id="settingMenu">
+      <app-setting [groups]="groups"></app-setting>
 
+  </div>
 </div>
