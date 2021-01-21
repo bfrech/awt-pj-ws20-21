@@ -89,6 +89,7 @@ export class VideoConfigurationComponent implements OnInit {
   ngOnInit(): void {
     this.inputVarStreamAddr = 'https://dash.akamaized.net/envivio/Envivio-dash2/manifest.mpd';
     this.groups = Object.entries(this.processSettings());
+    console.log(this.groups);
   }
 
   ////////////////////////////////////////

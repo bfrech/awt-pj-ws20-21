@@ -20,7 +20,6 @@ import {MatCardModule} from '@angular/material/card';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {NgApexchartsModule} from 'ng-apexcharts';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +39,10 @@ import {NgApexchartsModule} from 'ng-apexcharts';
     MatRadioModule,
     MatExpansionModule,
     MatTooltipModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule
     MatSnackBarModule,
     BrowserAnimationsModule,
     MatCardModule,

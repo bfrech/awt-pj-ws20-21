@@ -7,7 +7,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class SettingComponent implements OnInit {
   @Input() groups;
-
+  checked = false;
   constructor() {
   }
 
@@ -29,6 +29,7 @@ export class SettingComponent implements OnInit {
    * Check if setting value is a boolean
    */
   isBoo(value: any): boolean {
+    this.checked = value;
     return (typeof value === 'boolean');
   }
 
@@ -36,6 +37,10 @@ export class SettingComponent implements OnInit {
    * Check if setting value is a number or a string
    */
   isInput(value: any): boolean {
+    return (!this.isBoo(value));
+  }
+
+  isRadio(value: any): boolean {
     return (!this.isBoo(value));
   }
 

@@ -2,22 +2,38 @@
   <div class="content">
     <h4>{{group[0]}}</h4>
     <div class="singleSetting my-3" *ngFor="let setting of group[1] | keyvalue">
-      <p>{{setting.key}}: </p>
       <div *ngIf="isBoo(setting.value)">
-        <mat-checkbox [value]="setting.value"></mat-checkbox>
+        <mat-checkbox [(ngModel)]="checked"
+                      [labelPosition]="'after'">
+          {{setting.key}}
+        </mat-checkbox>
       </div>
       <div *ngIf="isGroup(setting.value)" class="SingleSubSetting ml-3">
+        <p>{{setting.key}}</p>
         <div *ngFor="let sub of setting.value">
           <div *ngFor="let subset of sub | keyvalue">
-            <p>{{subset.key}}: </p>
-            <input *ngIf="isInput(subset.value)" [value]="subset.value">
-            <mat-checkbox *ngIf="isBoo(subset.value)" [value]="subset.value"></mat-checkbox>
+            <mat-form-field *ngIf="isInput(subset.value)"
+                            class="settingsform">
+              <p>{{subset.key}}</p>
+              <input matInput type="text" [(ngModel)]="subset.value">
+            </mat-form-field>
+            <mat-checkbox *ngIf="isBoo(subset.value)"
+                          [(ngModel)]="checked"
+                          [labelPosition]="'after'">
+              {{subset.key}}
+            </mat-checkbox>
           </div>
         </div>
       </div>
-      <div *ngIf="isInput(setting.value) && !isGroup(setting.value)">
-        <input [value]="setting.value">
+
+      <div class="fields" *ngIf="isInput(setting.value) && !isGroup(setting.value)">
+        <mat-form-field class="settingsform">
+          <p>{{setting.key}}</p>
+          <input matInput type="text" [(ngModel)]="setting.value">
+        </mat-form-field>
       </div>
+
+
     </div>
   </div>
 </div>
