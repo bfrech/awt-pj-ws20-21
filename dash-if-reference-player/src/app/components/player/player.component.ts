@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import { PlayerService } from '../../player.service';
 
 
@@ -7,17 +7,16 @@ import { PlayerService } from '../../player.service';
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.css']
 })
-export class PlayerComponent implements OnInit {
+export class PlayerComponent implements AfterViewInit {
+
+  /** Get <video> element reference */
+  @ViewChild('videoPlayer', {read: ElementRef}) videoElement: ElementRef<HTMLElement>;
 
   constructor(private playerService: PlayerService) { }
 
-  ngOnInit(): void {
-
-    const videoElement = document.getElementById('videoPlayer');
-
-    if (videoElement) {
-      this.playerService.player.initialize(videoElement);
-    }
-
+  /** When <video> element ref is available, initialize dashjs player via playerService */
+  ngAfterViewInit(): void {
+    this.playerService.player.initialize(this.videoElement.nativeElement);
   }
+
 }

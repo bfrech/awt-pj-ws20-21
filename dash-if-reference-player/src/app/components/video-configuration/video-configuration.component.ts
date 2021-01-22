@@ -76,7 +76,7 @@ export class VideoConfigurationComponent implements OnInit {
 
   srcProvider: { [index: string]: any } = sources.provider;
   srcItems = sources.items;
-  inputVarStreamAddr: string | undefined;
+  inputVarStreamAddr = this.srcItems[0].submenu[4].url;
 
   streamsDropdownIsVisible = false;
   streamsDropdownExpandedPanel: MatExpansionPanel | null = null;
@@ -84,11 +84,9 @@ export class VideoConfigurationComponent implements OnInit {
   settingsSectionIsVisible = false;
 
   /** playerService must be public to access it in the template */
-  constructor(public playerService: PlayerService) {
-  }
+  constructor(public playerService: PlayerService) { }
 
   ngOnInit(): void {
-    this.inputVarStreamAddr = 'https://dash.akamaized.net/envivio/Envivio-dash2/manifest.mpd';
 
     ////////////////////////////////////////
     // Player Setup

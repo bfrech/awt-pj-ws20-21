@@ -6,6 +6,7 @@ import * as dashjs from 'dashjs';
 })
 export class PlayerService {
 
+  // tslint:disable-next-line:variable-name
   private readonly _player: dashjs.MediaPlayerClass;
 
   constructor() {

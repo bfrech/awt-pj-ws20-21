@@ -35,14 +35,6 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
   constructor(private playerService: PlayerService) {
 
-    /*
-    this.playerService.playerSendMetricsCalled$.subscribe(
-      buffer => {
-        this.updateChart(buffer);
-      }
-    );
-    */
-
     this.chartOptions = {
       chart: {
         height: '270px',
@@ -99,7 +91,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    const source = interval(1000);
+    const source = interval(500);
     this.subscription = source.subscribe(val => this.getMetrics());
   }
 
