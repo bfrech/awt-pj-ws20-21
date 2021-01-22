@@ -1,43 +1,37 @@
 import { Injectable } from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import * as dashjs from 'dashjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService {
 
-  constructor() { }
+  private readonly _player: dashjs.MediaPlayerClass;
 
+  constructor() {
+    this._player = dashjs.MediaPlayer().create();
+  }
 
-  // Observable sources
-  private playerStopCallSource = new Subject<any>();
-  private playerLoadCallSource = new Subject<any>();
-  private playerTriggerMetricsUpdateSource = new Subject<any>();
-  private playerSendMetricsSource = new Subject<any>();
+  /** Getter for dashjs player object */
+  get player(): dashjs.MediaPlayerClass {
+    return this._player;
+  }
 
-
-  // Observable streams
-  playerStopCalled$ = this.playerStopCallSource.asObservable();
-  playerLoadCalled$ = this.playerLoadCallSource.asObservable();
-  playerTriggerMetricsUpdateCalled$ = this.playerTriggerMetricsUpdateSource.asObservable();
-  playerSendMetricsCalled$ = this.playerSendMetricsSource.asObservable();
-
-
-  // Service methods
+  /** Stop player by unloading source */
   stop(): void {
-    this.playerStopCallSource.next();
+    this._player.attachSource('');
   }
 
+  /** Load source */
   load(streamAddr: string | undefined): void {
-    this.playerLoadCallSource.next(streamAddr);
+    this._player.attachSource(streamAddr);
   }
 
-  triggerMetricsUpdate(): void {
-    this.playerTriggerMetricsUpdateSource.next();
-  }
-
-  sendMetrics(buffer: number): void {
-    this.playerSendMetricsSource.next(buffer);
+  /** Provide metrics */
+  getMetrics(): number {
+    const metrics = this._player.getDashMetrics();
+    // let state: dashjs.IBufferState | undefined = metrics?.getCurrentBufferState('video');
+    return metrics?.getCurrentBufferLevel('video');
   }
 
 }

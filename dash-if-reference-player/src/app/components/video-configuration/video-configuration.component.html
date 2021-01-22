@@ -40,8 +40,8 @@
                placeholder="Stream Address" aria-label="Stream Address">
       </div>
       <div class="btn-group col-2">
-        <button (click)="stop()" class="defaultbtn btn btn-secondary">Stop</button>
-        <button (click)="load()" class="defaultbtn btn btn-primary">Load</button>
+        <button (click)="playerService.stop()" class="defaultbtn btn btn-secondary">Stop</button>
+        <button (click)="playerService.load(inputVarStreamAddr)" class="defaultbtn btn btn-primary">Load</button>
       </div>
         <button (click)="settingsSectionToggle()" id="settingsBtn" class="col-1 defaultbtn btn btn-primary">Settings</button>
     </div>

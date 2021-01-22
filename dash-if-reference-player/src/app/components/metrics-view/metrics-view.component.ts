@@ -35,11 +35,13 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
   constructor(private playerService: PlayerService) {
 
+    /*
     this.playerService.playerSendMetricsCalled$.subscribe(
       buffer => {
         this.updateChart(buffer);
       }
     );
+    */
 
     this.chartOptions = {
       chart: {
@@ -58,7 +60,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
         palette: 'palette6',
       },
       series: [{
-        name: 'Video Buffer Length',
+        name: 'Video Buffer Level',
         data: [
           [0, 0]
         ]
@@ -68,10 +70,15 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       },
       xaxis: {
         type: 'numeric',
-        title: { text: 'Seconds' }
+        title: { text: 't / Seconds' }
       },
       yaxis: {
-        title: { text: 'Mbit/s' }
+        title: { text: '' },
+        labels: {
+          formatter: (val, index) => {
+            return val.toFixed(0);
+          }
+        }
       },
       stroke: {
         curve: 'smooth',
@@ -93,13 +100,24 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     const source = interval(1000);
-    this.subscription = source.subscribe(val => this.triggerMetricsUpdate());
+    this.subscription = source.subscribe(val => this.getMetrics());
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
+  getMetrics(): void {
+    const buffer = this.playerService.getMetrics();
+
+    console.log(`update buffer=${buffer}`);
+    this.currentX++;
+    this.chart.appendData([{
+      data: [[this.currentX, buffer]]
+    }]);
+  }
+
+  /*
   updateChart(buffer: number): void {
     console.log(`update buffer=${buffer}`);
     this.currentX++;
@@ -109,8 +127,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   }
 
   triggerMetricsUpdate(): void {
-    /* Found no solution to pull data directly so far */
     this.playerService.triggerMetricsUpdate();
   }
-
+  */
 }

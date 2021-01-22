@@ -28,7 +28,7 @@ declare const settingGroups: any;
   animations: [
     trigger('streamsDropdownShowHide', [
       state('true', style({
-        // scaleY(0) <=> scaleY(1) is not animated but set as state to prevent user-interaction with hidden element
+        /** scaleY(0) <=> scaleY(1) is not animated but set as state to prevent user-interaction with hidden element */
         transform: 'scaleY(1)',
         opacity: 1
       })),
@@ -37,7 +37,7 @@ declare const settingGroups: any;
         opacity: 0
       })),
       transition('false => true', [
-        // Set scaleY(1) initially, then start animation
+        /**  Set scaleY(1) initially, then start animation */
         style({ transform: 'scaleY(1)', opacity: 0 }),
         animate(100, style({ opacity: 1 }))
       ]),
@@ -48,7 +48,7 @@ declare const settingGroups: any;
     ]),
     trigger('settingsShowHide', [
       state('true', style({
-        // scaleY(0) <=> scaleY(1) is not animated but set as state to prevent user-interaction with hidden element
+        /** scaleY(0) <=> scaleY(1) is not animated but set as state to prevent user-interaction with hidden element */
         transform: 'scaleY(1)',
         height: '*'
       })),
@@ -57,13 +57,13 @@ declare const settingGroups: any;
         height: '0px'
       })),
       transition('false => true', [
-        // Set scaleY(1) initially, then start animation
+        /**  Set scaleY(1) initially, then start animation */
         style({ transform: 'scaleY(1)', height: '0px' }),
         animate(500, style({ height: '*' }))
       ]),
       transition('true => false',
         animate(500, style({ height: '0px' }))
-        // After the animation, scaleY(0) is set automatically by state declaration
+        /** After the animation, scaleY(0) is set automatically by state declaration */
       )
     ]),
   ]
@@ -83,7 +83,8 @@ export class VideoConfigurationComponent implements OnInit {
 
   settingsSectionIsVisible = false;
 
-  constructor(private playerService: PlayerService) {
+  /** playerService must be public to access it in the template */
+  constructor(public playerService: PlayerService) {
   }
 
   ngOnInit(): void {
@@ -299,11 +300,12 @@ export class VideoConfigurationComponent implements OnInit {
 
   }
 
-
+  /** Assign object of the dropdown accordion to make it accessible for manipulation */
   setStreamsDropdownExpandedPanel(panel: MatExpansionPanel): void {
     this.streamsDropdownExpandedPanel = panel;
   }
 
+  /** Toggle visibility of dropdown menu. If it gets hidden, close the accordion */
   streamsDropdownToggle(): void {
     this.streamsDropdownIsVisible = !this.streamsDropdownIsVisible;
     if (!this.streamsDropdownIsVisible) {
@@ -312,21 +314,15 @@ export class VideoConfigurationComponent implements OnInit {
     }
   }
 
+  /** When a stream is selected, apply URL and toggle dropdown menu */
   selectStream(url: string): void {
     this.inputVarStreamAddr = url;
     this.streamsDropdownToggle();
   }
 
+  /** Toggle visibility of settings section. */
   settingsSectionToggle(): void {
     this.settingsSectionIsVisible = !this.settingsSectionIsVisible;
-  }
-
-  stop(): void {
-    this.playerService.stop();
-  }
-
-  load(): void {
-    this.playerService.load(this.inputVarStreamAddr);
   }
 
 }
