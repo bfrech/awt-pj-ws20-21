@@ -4,51 +4,23 @@
     <tr><th>Video</th><th>Audio</th><th></th></tr>
     </thead>
     <tbody>
-    <tr>
-      <td><mat-checkbox color="primary"></mat-checkbox></td>
-      <td><mat-checkbox color="primary"></mat-checkbox></td>
-      <td><p>Buffer Length</p></td>
-    </tr>
-    <tr>
-      <td><mat-checkbox color="primary"></mat-checkbox></td>
-      <td><mat-checkbox color="primary"></mat-checkbox></td>
-      <td><p>Bitrate Downloading</p></td>
-    </tr>
-    <tr>
-      <td><mat-checkbox color="primary"></mat-checkbox></td>
-      <td><mat-checkbox color="primary"></mat-checkbox></td>
-      <td><p>Index Downloading</p></td>
-    </tr>
-    <tr>
-      <td><mat-checkbox color="primary"></mat-checkbox></td>
-      <td><mat-checkbox color="primary"></mat-checkbox></td>
-      <td><p>Current Index / Max Index</p></td>
-    </tr>
-    <tr>
-      <td><mat-checkbox color="primary"></mat-checkbox></td>
-      <td><mat-checkbox color="primary"></mat-checkbox></td>
-      <td><p>Dropped Frames</p></td>
-    </tr>
-    <tr>
-      <td><mat-checkbox color="primary"></mat-checkbox></td>
-      <td><mat-checkbox color="primary"></mat-checkbox></td>
-      <td><p>Latency (min|avg|max)</p></td>
-    </tr>
-    <tr>
-      <td><mat-checkbox color="primary"></mat-checkbox></td>
-      <td><mat-checkbox color="primary"></mat-checkbox></td>
-      <td><p>Download (min|avg|max)</p></td>
-    </tr>
-    <tr>
-      <td><mat-checkbox color="primary"></mat-checkbox></td>
-      <td><mat-checkbox color="primary"></mat-checkbox></td>
-      <td><p>Ratio (min|avg|max)</p></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td><mat-checkbox color="primary"></mat-checkbox></td>
-      <td><p>Live Latency</p></td>
-    </tr>
+      <tr *ngFor="let option of options">
+        <td>
+          <mat-checkbox #checkbox
+                        *ngIf="option.type === 'v' || option.type === 'av'"
+                        (change)="optionChange(checkbox, $event, option.key, 'video')"
+                        color="primary"></mat-checkbox>
+        </td>
+        <td>
+          <mat-checkbox #checkbox
+                        *ngIf="option.type === 'a' || option.type === 'av'"
+                        (change)="optionChange(checkbox, $event, option.key, 'audio')"
+                        color="primary"></mat-checkbox>
+        </td>
+        <td>
+          <p>{{ option.name }}</p>
+        </td>
+      </tr>
     </tbody>
   </table>
 </mat-card>

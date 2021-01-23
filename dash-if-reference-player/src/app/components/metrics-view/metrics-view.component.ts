@@ -91,35 +91,21 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    const source = interval(500);
-    this.subscription = source.subscribe(val => this.getMetrics());
+    const source = interval(1000);
+    this.subscription = source.subscribe(val => this.updateChart());
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  getMetrics(): void {
-    const buffer = this.playerService.getMetrics();
+  updateChart(): void {
+    const metrics = this.playerService.getMetrics();
 
-    console.log(`update buffer=${buffer}`);
     this.currentX++;
     this.chart.appendData([{
-      data: [[this.currentX, buffer]]
+      data: [[this.currentX, metrics.bufferLevel.video]]
     }]);
   }
 
-  /*
-  updateChart(buffer: number): void {
-    console.log(`update buffer=${buffer}`);
-    this.currentX++;
-    this.chart.appendData([{
-      data: [[this.currentX, buffer]]
-    }]);
-  }
-
-  triggerMetricsUpdate(): void {
-    this.playerService.triggerMetricsUpdate();
-  }
-  */
 }
