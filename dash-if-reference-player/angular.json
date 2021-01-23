@@ -133,7 +133,7 @@
   "defaultProject": "dash-if-reference-player",
   "schematics": {
     "@schematics/angular:component": {
-      "style": "scss"
+      "style": "css"
     }
   }
 }
