@@ -3,7 +3,7 @@ import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.component.html',
-  styleUrls: ['./setting.component.scss'],
+  styleUrls: ['./setting.component.css'],
   encapsulation: ViewEncapsulation.None,
 
 })

@@ -19,7 +19,7 @@ declare const settingGroups: any;
 @Component({
   selector: 'app-video-configuration',
   templateUrl: './video-configuration.component.html',
-  styleUrls: ['./video-configuration.component.scss'],
+  styleUrls: ['./video-configuration.component.css'],
   /**
    * Need to remove view encapsulation so that dynamic mat elements can be styled. Otherwise, style definitions would
    * have to be defined in global styles.css or deprecated selector ::ng-deep would have to be used.
