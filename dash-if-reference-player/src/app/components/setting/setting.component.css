@@ -1,14 +1,34 @@
-#columns {
-  column-width: 250px;
-  column-gap: 15px;
+.masonry-with-columns {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  max-height: 3000px;
 }
 
-settings-frame {
-  padding-bottom: 10px;
-  transition: opacity .4s ease-in-out;
-  display: inline-block;
-  overflow: hidden; /* fix for Firefox */
-  break-inside: avoid;
+.masonry-with-columns div {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 0 auto;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
+  font-size: 14px;
+}
+
+
+.SingleSubSetting label {
+  display: flex;
+}
+.settingsFrame {
+  width: 32%;
+  margin: auto;
 }
 
 .content {
@@ -26,48 +46,3 @@ settings-frame {
 .content input {
   width: 100%;
 }
-
-.content h4 {
-  font-size: 14px;
-  font-weight: bold;
-  color: var(--primary);
-}
-
-
-.mat-checkbox-label {
-  font-size: 14px;
-  color: #707070;;
-}
-
-.mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
-  opacity: 0.03 !important;
-  background-color: #1F8AF9;
-}
-
-.mat-label {
-  font-size: 14px;
-  color: #707070;
-}
-
-.mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-  background-color: #1F8AF9;
-}
-
-input.mat-input-element {
-  color: black;
-}
-
-
-.SingleSubSetting h5 {
-  color: #1F8AF9;
-  margin-bottom: -10px;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.SingleSubSetting label {
-  margin-top: 15px !important;
-  display: flex;
-}
-
-

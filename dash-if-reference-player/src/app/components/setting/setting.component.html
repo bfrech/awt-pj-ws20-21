@@ -1,7 +1,7 @@
-<div id="columns">
-  <div class="settings-frame" *ngFor="let group of groups">
+<div id="masonry-with-columns" class="masonry-with-columns">
+  <div class="settingsFrame" *ngFor="let group of groups">
     <div class="content">
-      <h4>{{group[0]}}</h4>
+      <h2>{{group[0]}}</h2>
       <div class="singleSetting my-3" *ngFor="let setting of group[1] | keyvalue">
         <div *ngIf="isBoo(setting.value) && !isGroup(setting.value)">
           <mat-checkbox [(ngModel)]="checked"
@@ -13,8 +13,10 @@
           <label>{{setting.key}}</label>
           <input type="text" name="{{setting.key}}" value="{{setting.value}}">
         </div>
+
         <div *ngIf="isGroup(setting.value)" class="SingleSubSetting my-3">
-          <h5>{{setting.key}}</h5>
+          <h3>{{setting.key}}</h3>
+          <hr>
           <div *ngFor="let sub of setting.value">
             <div *ngFor="let subset of sub | keyvalue">
               <label>{{subset.key}}</label>
