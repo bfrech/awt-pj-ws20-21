@@ -4,12 +4,11 @@ import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
   selector: 'app-setting',
   templateUrl: './setting.component.html',
   styleUrls: ['./setting.component.css'],
-  encapsulation: ViewEncapsulation.None,
-
 })
 export class SettingComponent implements OnInit {
   @Input() groups;
   checked = false;
+
   constructor() {
   }
 

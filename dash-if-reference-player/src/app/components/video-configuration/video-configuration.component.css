@@ -1,14 +1,3 @@
-:root {
-  --primary: #1F8AF9;
-}
-
-* {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #707070;
-}
-.dropdown-item {
-}
-
 .vc-collapse {
   margin: 0;
   max-height: 30rem;
@@ -55,6 +44,8 @@
 }
 
 .vc-dropdown-menu {
+  -webkit-box-shadow: 13px 13px 10px -10px rgba(130, 130, 130, 0.12);
+  box-shadow: 13px 13px 10px -10px rgba(130, 130, 130, 0.12);
   position: absolute;
   top: 100%;
   left: 0;
@@ -102,5 +93,4 @@
 #settingMenu{
   margin:0 15px;
   width: 100%;
- // background-color: green;
 }
