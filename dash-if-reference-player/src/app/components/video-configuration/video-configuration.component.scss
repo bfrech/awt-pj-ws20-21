@@ -6,6 +6,8 @@
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #707070;
 }
+.dropdown-item {
+}
 
 .vc-collapse {
   margin: 0;
@@ -32,6 +34,7 @@
 .vc-collapse::-webkit-scrollbar-thumb:hover {
   background: #888;
 }
+
 
 .vc-collapse > li {
   list-style-type: none;
@@ -80,13 +83,13 @@
   font-size: 16px;
 }
 
-.defaultbtn {
+.defaultbtn{
   text-transform: uppercase !important;
   font-size: 12px !important;
   border-radius: 4px;
 }
 
-.settingsBtn {
+.settingsBtn{
   margin-left: 15px;
 }
 
@@ -96,9 +99,8 @@
   height: auto;
 }
 
-#settingMenu {
-  margin: 0 15px;
+#settingMenu{
+  margin:0 15px;
   width: 100%;
+ // background-color: green;
 }
-
-/*# sourceMappingURL=video-configuration.component.css.map */
