@@ -17,20 +17,6 @@ export class SettingComponent implements OnInit {
     ABRStrategy: ['Dynamic', 'BOLA']
   };
 
-  logLevels: string[] = [
-    'DEBUG',
-    'ERROR',
-    'FATAL',
-    'INFO',
-    'NONE',
-    'WARNING'
-  ];
-
-  movingAverageMethod: string[] = ['Sliding Window', 'EWMA'];
-
-  ABRStrategy: string[] = ['Dynamic', 'BOLA'];
-
-
   constructor() {
   }
 
