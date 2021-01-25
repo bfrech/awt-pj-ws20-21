@@ -83,5 +83,3 @@ const order = {
       lowLatencyReductionFactor: 10
     },
 };
-
-
