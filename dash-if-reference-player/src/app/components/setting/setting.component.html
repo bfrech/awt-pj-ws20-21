@@ -21,8 +21,10 @@
           <hr>
           <div *ngFor="let sub of setting.value">
             <div *ngFor="let subset of sub | keyvalue">
-              <label>{{subset.key}}</label>
-              <input *ngIf="isInput(subset.value)" type="text" name="{{subset.key}}" value="{{subset.value}}">
+              <div *ngIf="isInput(subset.value)">
+                <label>{{subset.key}}</label>
+                <input type="text" name="{{subset.key}}" value="{{subset.value}}">
+              </div>
               <mat-checkbox *ngIf="isBoo(subset.value)"
                             [(ngModel)]="checked"
                             [labelPosition]="'after'">
