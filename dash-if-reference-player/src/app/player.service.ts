@@ -1,37 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as dashjs from 'dashjs';
+import { Metrics } from './metrics';
 
-
-/** Interface for metrics passed to the live chart */
-export interface Metrics {
-  bufferLevel?: { audio: number, video: number };
-  bitrateDownload?: { audio: number, video: number };
-  qualityIndex?: { audio: number, video: number };
-  qualityIndexPending?: { audio: number, video: number };
-  qualityIndexMax?: { audio: number, video: number };
-  droppedFrames?: { audio: number, video: number };
-  latency?: {
-    audio: { min: number, avg: number, max: number },
-    video: { min: number, avg: number, max: number }
-  };
-  liveLatency?: {
-    audio: { min: number, avg: number, max: number }
-  };
-  segDownloadTime?: {
-    audio: { min: number, avg: number, max: number },
-    video: { min: number, avg: number, max: number }
-  };
-  playbackDownloadTimeRatio?: {
-    audio: { min: number, avg: number, max: number },
-    video: { min: number, avg: number, max: number }
-  };
-}
-
-/*
-export interface Metrics {
-  id: number;
-  name: string;
-}
+/**
+ * This service provides a dashjs object and some helper methods that can be accessed from every component where needed
  */
 
 
@@ -73,6 +45,8 @@ export class PlayerService {
       audio: dashMetrics.getCurrentBufferLevel('audio'),
       video: dashMetrics.getCurrentBufferLevel('video')
     };
+
+    // TODO: more metrics..
 
     return metrics;
 

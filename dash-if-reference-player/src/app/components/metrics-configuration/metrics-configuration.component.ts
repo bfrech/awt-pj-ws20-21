@@ -1,9 +1,8 @@
-import {Component} from '@angular/core';
-import {MatCheckbox, MatCheckboxChange} from '@angular/material/checkbox';
-import {MatSnackBar} from '@angular/material/snack-bar';
-
-/** Interface for selectable metric options */
-interface MetricOption { name: string; type: 'a' | 'v' | 'av'; key: string; }
+import { Component } from '@angular/core';
+import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MetricsService } from '../../metrics.service';
+import { MetricOption, METRICOPTIONS } from '../../metrics';
 
 
 @Component({
@@ -14,27 +13,18 @@ interface MetricOption { name: string; type: 'a' | 'v' | 'av'; key: string; }
 export class MetricsConfigurationComponent {
 
   /** What metrics can be selected to be displayed */
-  options: MetricOption[] = [
-    { name: 'Buffer Length', type: 'av', key: 'bufferLevel' },
-    { name: 'Bitrate Downloading', type: 'av', key: 'bitrateDownload' },
-    { name: 'Quality Index', type: 'av', key: 'qualityIndex' },
-    { name: 'Quality Index Pending', type: 'av', key: 'qualityIndexPending' },
-    { name: 'Dropped Frames', type: 'av', key: 'droppedFrames' },
-    { name: 'Download Time', type: 'av', key: 'segDownloadTime' },
-    { name: 'Playback Ratio', type: 'av', key: 'playbackDownloadTimeRatio' },
-    { name: 'Latency', type: 'av', key: 'latency' },
-    { name: 'Live Latency', type: 'a', key: 'liveLatency' }
-  ];
+  options: MetricOption[] = METRICOPTIONS;
 
   /** What options are selected */
-  selectedOptions: Array<string> = [];
+  selectedOptionKeys: Array<string> = [];
 
   /** Max allowed number of selected options */
   maxNumOfSelectedOptions = 5;
-  messageTooManySelections = `Please select ${this.maxNumOfSelectedOptions} options only.`;
+  messageTooManySelections = `Please select a maximum of ${this.maxNumOfSelectedOptions} metrics only.`;
 
 
-  constructor(private snackBar: MatSnackBar) { }
+  constructor( private snackBar: MatSnackBar,
+               private metricsService: MetricsService ) { }
 
   /** Handle selection change */
   optionChange(checkbox: MatCheckbox, event: MatCheckboxChange, key: string, typeKey: 'audio' | 'video'): void {
@@ -42,10 +32,10 @@ export class MetricsConfigurationComponent {
     const fullKey = `${key}.${typeKey}`;
 
     if (event.checked) {
-      /** Option was selected. If more is allowed, push its key into the selectedOptions array */
-      if (this.selectedOptions.length < this.maxNumOfSelectedOptions ) {
-        this.selectedOptions.push(fullKey);
-        // TODO: Send selectedOptions to metrics-view
+      /** Option was selected. If more is allowed, push its key into the selectedOptions array and send to service */
+      if (this.selectedOptionKeys.length < this.maxNumOfSelectedOptions ) {
+        this.selectedOptionKeys.push(fullKey);
+        this.metricsService.updateMetricsSelection(this.selectedOptionKeys);
       }
       else {
         /** That is too many. Unselect element and show a snack-bar note. */
@@ -54,12 +44,12 @@ export class MetricsConfigurationComponent {
       }
     }
     else {
-      /** Option was un-selected. Search and remove its key from the selectedOptions array */
-      const idx = this.selectedOptions.indexOf(fullKey);
+      /** Option was un-selected. Search and remove its key from the selectedOptions array and send to service */
+      const idx = this.selectedOptionKeys.indexOf(fullKey);
 
       if (idx > -1) {
-        this.selectedOptions.splice(idx, 1);
-        // TODO: Send selectedOptions to metrics-view
+        this.selectedOptionKeys.splice(idx, 1);
+        this.metricsService.updateMetricsSelection(this.selectedOptionKeys);
       }
     }
 
