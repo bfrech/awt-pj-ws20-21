@@ -1,0 +1,26 @@
+<mat-card>
+  <table>
+    <thead>
+    <tr><th>Video</th><th>Audio</th><th></th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let option of options">
+        <td>
+          <mat-checkbox #checkbox
+                        *ngIf="option.type === 'v' || option.type === 'av'"
+                        (change)="optionChange(checkbox, $event, option.key, 'video')"
+                        color="primary"></mat-checkbox>
+        </td>
+        <td>
+          <mat-checkbox #checkbox
+                        *ngIf="option.type === 'a' || option.type === 'av'"
+                        (change)="optionChange(checkbox, $event, option.key, 'audio')"
+                        color="primary"></mat-checkbox>
+        </td>
+        <td>
+          <p>{{ option.name }}</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</mat-card>

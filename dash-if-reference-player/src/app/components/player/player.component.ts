@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MediaPlayer } from 'dashjs';
-
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import { PlayerService } from '../../player.service';
-import * as sources from '../../../sources.json';
 
 
 @Component({
@@ -10,45 +7,16 @@ import * as sources from '../../../sources.json';
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.css']
 })
-export class PlayerComponent implements OnInit {
+export class PlayerComponent implements AfterViewInit {
 
-  // srcProvider = sources.provider;
-  srcItems = sources.items;
-  streamAddr = this.srcItems[0].submenu[0].url;
-  player = MediaPlayer().create();
+  /** Get <video> element reference */
+  @ViewChild('videoPlayer', {read: ElementRef}) videoElement: ElementRef<HTMLElement>;
 
-  constructor(private playerService: PlayerService) {
+  constructor(private playerService: PlayerService) { }
 
-    this.playerService.playerStopCalled$.subscribe(
-      () => {
-        this.stop();
-      }
-    );
-
-    this.playerService.playerLoadCalled$.subscribe(
-      streamAddr => {
-        this.streamAddr = streamAddr;
-        this.load();
-      });
-
-  }
-
-  ngOnInit(): void {
-
-    const videoElement = document.getElementById('videoPlayer');
-
-    if (videoElement) {
-      this.player.initialize(videoElement, this.streamAddr, false);
-    }
-
-  }
-
-  stop(): void {
-    this.player.attachSource('');
-  }
-
-  load(): void {
-    this.player.attachSource(this.streamAddr);
+  /** When <video> element ref is available, initialize dashjs player via playerService */
+  ngAfterViewInit(): void {
+    this.playerService.player.initialize(this.videoElement.nativeElement);
   }
 
 }
