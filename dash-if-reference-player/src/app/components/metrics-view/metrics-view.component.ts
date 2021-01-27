@@ -12,8 +12,8 @@ import {
   ApexMarkers,
   ApexLegend
 } from 'ng-apexcharts';
-import { PlayerService } from '../../player.service';
-import { MetricsService } from '../../metrics.service';
+import { PlayerService } from '../../services/player.service';
+import { MetricsService } from '../../services/metrics.service';
 import { Metrics, METRICOPTIONS } from '../../metrics';
 import * as dashjs from 'dashjs';
 
