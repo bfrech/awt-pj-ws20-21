@@ -130,5 +130,10 @@
       }
     }
   },
-  "defaultProject": "dash-if-reference-player"
+  "defaultProject": "dash-if-reference-player",
+  "schematics": {
+    "@schematics/angular:component": {
+      "style": "css"
+    }
+  }
 }
