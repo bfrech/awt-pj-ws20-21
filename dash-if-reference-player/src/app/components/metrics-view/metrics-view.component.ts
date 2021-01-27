@@ -174,11 +174,17 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       }
 
       /**
-       * Get rid of old data about every 30 minutes. This should not be done too often since it destroys the horizontal
-       * realtime animation.
+       * Get rid of old data every 3600 iterations (about 30 min) minutes. This should not be done too often since it
+       * destroys the horizontal realtime animation.
        */
       if (this.iteration % 3600 === 0) {
-        // TODO...
+
+        const keys = Object.keys(this.chartData);
+        const slice = (this.chartOptions.xaxis.range + 1) * -1;
+
+        for (const key of keys) {
+          this.chartData[key] = this.chartData[key].slice(slice);
+        }
       }
     }
     /** If player is not ready (anymore) but there is chart data left, reset */
