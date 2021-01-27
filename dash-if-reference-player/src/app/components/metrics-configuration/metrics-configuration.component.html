@@ -9,13 +9,13 @@
           <mat-checkbox #checkbox
                         *ngIf="option.type === 'v' || option.type === 'av'"
                         (change)="optionChange(checkbox, $event, option.key, 'video')"
-                        color="primary"></mat-checkbox>
+                        ></mat-checkbox>
         </td>
         <td>
           <mat-checkbox #checkbox
                         *ngIf="option.type === 'a' || option.type === 'av'"
                         (change)="optionChange(checkbox, $event, option.key, 'audio')"
-                        color="primary"></mat-checkbox>
+                        ></mat-checkbox>
         </td>
         <td>
           <p>{{ option.name }}</p>
