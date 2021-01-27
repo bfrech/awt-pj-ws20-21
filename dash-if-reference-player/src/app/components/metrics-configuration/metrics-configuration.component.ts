@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MetricsService } from '../../metrics.service';
+import { MetricsService } from '../../services/metrics.service';
 import { MetricOption, METRICOPTIONS } from '../../metrics';
 
 

@@ -9,7 +9,7 @@ import {
 } from '@angular/animations';
 import {MatExpansionPanel} from '@angular/material/expansion';
 
-import {PlayerService} from '../../player.service';
+import {PlayerService} from '../../services/player.service';
 import * as sources from '../../../assets/sources.json';
 import {MediaPlayer, MediaPlayerSettingClass} from 'dashjs';
 import * as dashjs from 'dashjs';
