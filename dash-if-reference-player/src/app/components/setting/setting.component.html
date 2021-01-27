@@ -1,0 +1,66 @@
+<div id="masonry-with-columns" class="masonry-with-columns">
+  <div class="settingsFrame" *ngFor="let group of groups">
+    <div class="content">
+      <h2>{{group[0]}}</h2>
+      <div class="singleSetting my-3" *ngFor="let setting of group[1] | keyvalue">
+
+        <div *ngIf="isBoo(setting.value) && !isGroup(setting.value) && !isRadio(setting.key)">
+          <mat-checkbox [(ngModel)]="checked"
+                        [labelPosition]="'after'">
+            {{setting.key}}
+          </mat-checkbox>
+        </div>
+
+        <div class="fields" *ngIf="isInput(setting.value) && !isGroup(setting.value) && !isRadio(setting.key)">
+          <label>{{setting.key}}</label>
+          <input type="text" name="{{setting.key}}" value="{{setting.value}}">
+        </div>
+
+        <div *ngIf="isGroup(setting.value)" class="SingleSubSetting my-3">
+          <h3>{{setting.key}}</h3>
+          <hr>
+          <div *ngFor="let sub of setting.value">
+            <div *ngFor="let subset of sub | keyvalue">
+              <div *ngIf="isInput(subset.value)">
+                <label>{{subset.key}}</label>
+                <input type="text" name="{{subset.key}}" value="{{subset.value}}">
+              </div>
+              <mat-checkbox *ngIf="isBoo(subset.value)"
+                            [(ngModel)]="checked"
+                            [labelPosition]="'after'">
+                {{subset.key}}
+              </mat-checkbox>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="isLogLevel(setting.key)" class="radio">
+          <label class="Radio-Button-Settings">{{setting.key}}:</label>
+          <mat-radio-group aria-labelledby="Radio-Button-Settings" class="radioButtonSettingGroup">
+            <mat-radio-button *ngFor="let value of enums.logLevels" [value]="value">
+              {{value}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div *ngIf="isABRStrategy(setting.key)" class="radio">
+          <label class="Radio-Button-Settings">{{setting.key}}:</label>
+          <mat-radio-group aria-labelledby="Radio-Button-Settings" class="radioButtonSettingGroup">
+            <mat-radio-button *ngFor="let value of enums.ABRStrategy" [value]="value">
+              {{value}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div *ngIf="isMovingAverageMethod(setting.key)" class="radio">
+          <label class="Radio-Button-Settings">{{setting.key}}:</label>
+          <mat-radio-group aria-labelledby="Radio-Button-Settings" class="radioButtonSettingGroup">
+            <mat-radio-button *ngFor="let value of enums.movingAverageMethod" [value]="value">
+              {{value}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
