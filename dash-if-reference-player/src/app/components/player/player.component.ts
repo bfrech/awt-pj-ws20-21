@@ -10,7 +10,7 @@ import { PlayerService } from '../../services/player.service';
 export class PlayerComponent implements AfterViewInit {
 
   /** Get <video> element reference */
-  @ViewChild('videoPlayer', {read: ElementRef}) videoElement: ElementRef<HTMLElement>;
+  @ViewChild('videoPlayer', {read: ElementRef}) videoElement!: ElementRef<HTMLElement>;
 
   constructor(private playerService: PlayerService) { }
 

@@ -45,7 +45,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   private availableOptionKeys: Array<string> = [];
 
   /** Get a reference of the chart object */
-  @ViewChild('chartObj') chart: ChartComponent;
+  @ViewChild('chartObj') chart!: ChartComponent;
 
   private chartData: { [index: string]: Array<[number, number]> } = {};
   private emptySeries: ApexAxisChartSeries = [{
@@ -118,7 +118,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
     }
   };
 
-  private subscription: Subscription;
+  private subscription!: Subscription;
   private iteration = 0;
 
   constructor( private playerService: PlayerService,
@@ -180,7 +180,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       if (this.iteration % 3600 === 0) {
 
         const keys = Object.keys(this.chartData);
-        const slice = (this.chartOptions.xaxis.range + 1) * -1;
+        const slice = (this.chartOptions.xaxis.range) ? ((this.chartOptions.xaxis.range + 1) * -1) : -1;
 
         for (const key of keys) {
           this.chartData[key] = this.chartData[key].slice(slice);
@@ -202,14 +202,19 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
     for (const fullKey of this.availableOptionKeys) {
 
       const key = fullKey.split('.');
+      const key0 = key[0] as 'bufferLevel' | 'bitrateDownload' | 'qualityIndex' | 'qualityIndexPending' | 'droppedFrames' | 'segDownloadTime' | 'playbackDownloadTimeRatio' | 'latency' | 'liveLatency';
+      const key1 = key[1] as 'audio' | 'video';
 
-      if (metrics[key[0]] && metrics[ key[0] ][ key[1] ]) {
+      /** Keys come from METRICOPTIONS and should be valid. Therefore avoid type checking by @ts-ignore */
+
+      if (metrics[key0] && metrics[ key0 ][ key1 ]) {
 
         if (!this.chartData[fullKey]) {
           this.chartData[fullKey] = new Array<[number, number]>();
         }
 
-        this.chartData[fullKey].push([this.iteration, metrics[ key[0] ][ key[1] ]]);
+
+        this.chartData[fullKey].push([this.iteration, metrics[ key0 ][ key1 ]]);
       }
       else {
         // console.log(`Metrics: Could not find ${fullKey}`);
@@ -234,7 +239,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       if (this.chartData[fullKey]) {
 
         const key = fullKey.split('.');
-        const name = METRICOPTIONS.find(element => element.key === key[0]).name;
+        const name = (METRICOPTIONS) ? METRICOPTIONS.find(element => element.key === key[0])?.name : '';
         const typeString = key[1].charAt(0).toUpperCase() + key[1].slice(1);
         const fullName = `${name} ${typeString}`;
 
@@ -247,7 +252,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
         if (chartYAxes.length > 0) {
           yaxis.opposite = true;
-          yaxis.axisBorder.show = true;
+          yaxis.axisBorder = { show: true };
         }
 
         chartSeries.push({

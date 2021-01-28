@@ -16,7 +16,7 @@ export class PlayerService {
 
   // tslint:disable-next-line:variable-name
   private readonly _player: dashjs.MediaPlayerClass;
-  private streamInfo;
+  private streamInfo: dashjs.StreamInfo | null | undefined;
 
   constructor() {
 
@@ -38,7 +38,7 @@ export class PlayerService {
   }
 
   /** Load source */
-  load(streamAddr: string | undefined): void {
+  load(streamAddr: string): void {
     this._player.attachSource(streamAddr);
   }
 

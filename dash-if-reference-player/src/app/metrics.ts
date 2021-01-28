@@ -24,6 +24,7 @@ export interface Metrics {
   };
 }
 
+
 /** Interface for selectable metric options */
 export interface MetricOption { name: string; type: 'a' | 'v' | 'av'; key: string; }
 
