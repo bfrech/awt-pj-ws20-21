@@ -87,7 +87,6 @@ export class VideoConfigurationComponent implements OnInit {
   constructor(public playerService: PlayerService) { }
 
   ngOnInit(): void {
-    this.inputVarStreamAddr = 'https://dash.akamaized.net/envivio/Envivio-dash2/manifest.mpd';
     this.groups = Object.entries(this.processSettings());
     console.log(this.groups);
   }
@@ -105,20 +104,20 @@ export class VideoConfigurationComponent implements OnInit {
     const player = MediaPlayer().create();
     const defaultSettings = player.getSettings();
 
-    const flattenedSettings: any[] = [];
+    const flattenedSettings = [];
     Object.entries(this.flattenObject(defaultSettings)).map(setting => {
       flattenedSettings.push([setting[0].split('.').slice(-2, -1).toString(), setting[0].split('.').slice(-1).toString(), setting[1]]);
     });
 
     // Find Related settings and group the settings
-    const res: any[] = [];
+    const res = [];
     flattenedSettings.forEach(setting => {
       if (!(setting[0] === 'debug' || setting[0] === 'streaming' || setting[0] === 'abr' ||
         setting[0] === 'cmcd')) {
         if (!res[setting[0]]) {
           res[setting[0]] = [];
         }
-        const formatted: {[index: string]: any} = {};
+        const formatted = {};
         formatted[setting[1]] = setting[2];
         res[setting[0]].push(formatted);
       } else {
@@ -127,7 +126,7 @@ export class VideoConfigurationComponent implements OnInit {
     });
 
     // Map to custom groups
-    const withGroups: any[] = [];
+    const withGroups = [];
     Object.entries(res).forEach(setting => {
       withGroups.push([this.findGroup(setting[0]), setting[0], setting[1]]);
     });
@@ -138,13 +137,13 @@ export class VideoConfigurationComponent implements OnInit {
       if (setting[0] === undefined) {
         setting[0] = 'OTHER';
       }
-      const formatted: {[index: string]: any} = {};
+      const formatted = {};
       formatted[setting[1]] = setting[2];
       return ([setting[0], formatted]);
     });
 
     // Grouping
-    const resultNew: {[index: string]: any} = {};
+    const resultNew = {};
     formatSet.forEach(setting => {
       const key = setting[0];
       if (!resultNew[key]) {
@@ -162,8 +161,8 @@ export class VideoConfigurationComponent implements OnInit {
   /**
    * Traverse Object until leaf node
    */
-  flattenObject(obj: {[index: string]: any}): object {
-    const result: {[index: string]: any} = {};
+  flattenObject(obj): object {
+    const result = {};
     for (const i in obj) {
       if (!obj.hasOwnProperty(i)) {
         continue;
@@ -172,7 +171,7 @@ export class VideoConfigurationComponent implements OnInit {
         obj[i] = 'null';
       }
       if ((typeof obj[i]) === 'object') {
-        const flatObject: {[index: string]: any} = this.flattenObject(obj[i]);
+        const flatObject = this.flattenObject(obj[i]);
         for (const x in flatObject) {
           if (!flatObject.hasOwnProperty(x)) {
             continue;

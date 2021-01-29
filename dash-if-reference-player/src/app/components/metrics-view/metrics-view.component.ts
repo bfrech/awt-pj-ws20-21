@@ -202,19 +202,19 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
     for (const fullKey of this.availableOptionKeys) {
 
       const key = fullKey.split('.');
-      const key0 = key[0] as 'bufferLevel' | 'bitrateDownload' | 'qualityIndex' | 'qualityIndexPending' | 'droppedFrames' | 'segDownloadTime' | 'playbackDownloadTimeRatio' | 'latency' | 'liveLatency';
-      const key1 = key[1] as 'audio' | 'video';
+      const key0 = key[0] as keyof typeof metrics;
+      const key1 = key[1] as keyof typeof metrics[typeof key0];
 
-      /** Keys come from METRICOPTIONS and should be valid. Therefore avoid type checking by @ts-ignore */
+      if (metrics[key0] && metrics[key0]?.[key1]) {
 
-      if (metrics[key0] && metrics[ key0 ][ key1 ]) {
+        if (typeof metrics[key0]?.[key1] === 'number') {
 
-        if (!this.chartData[fullKey]) {
-          this.chartData[fullKey] = new Array<[number, number]>();
+          if (!this.chartData[fullKey]) {
+            this.chartData[fullKey] = new Array<[number, number]>();
+          }
+
+          this.chartData[fullKey].push([this.iteration, metrics[key0]?.[key1] as unknown as number]);
         }
-
-
-        this.chartData[fullKey].push([this.iteration, metrics[ key0 ][ key1 ]]);
       }
       else {
         // console.log(`Metrics: Could not find ${fullKey}`);
