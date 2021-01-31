@@ -20,7 +20,7 @@ declare const settingGroups: any;
   selector: 'app-video-configuration',
   templateUrl: './video-configuration.component.html',
   styleUrls: ['./video-configuration.component.css'],
-  /**
+  /*
    * Need to remove view encapsulation so that dynamic mat elements can be styled. Otherwise, style definitions would
    * have to be defined in global styles.css or deprecated selector ::ng-deep would have to be used.
    */
@@ -74,7 +74,7 @@ export class VideoConfigurationComponent implements OnInit {
   groups: any;
   defaultSettings: any;
 
-  srcProvider: { [index: string]: any } = sources.provider;
+  srcProvider: { [index: string]: object } = sources.provider;
   srcItems = sources.items;
   inputVarStreamAddr = this.srcItems[0].submenu[4].url;
 
@@ -83,7 +83,7 @@ export class VideoConfigurationComponent implements OnInit {
 
   settingsSectionIsVisible = false;
 
-  /** playerService must be public to access it in the template */
+  // playerService must be public to access it in the template
   constructor(public playerService: PlayerService) { }
 
   ngOnInit(): void {
@@ -104,20 +104,20 @@ export class VideoConfigurationComponent implements OnInit {
     const player = MediaPlayer().create();
     const defaultSettings = player.getSettings();
 
-    const flattenedSettings = [];
+    const flattenedSettings: any[] = [];
     Object.entries(this.flattenObject(defaultSettings)).map(setting => {
       flattenedSettings.push([setting[0].split('.').slice(-2, -1).toString(), setting[0].split('.').slice(-1).toString(), setting[1]]);
     });
 
     // Find Related settings and group the settings
-    const res = [];
+    const res: any[] = [];
     flattenedSettings.forEach(setting => {
       if (!(setting[0] === 'debug' || setting[0] === 'streaming' || setting[0] === 'abr' ||
         setting[0] === 'cmcd')) {
         if (!res[setting[0]]) {
           res[setting[0]] = [];
         }
-        const formatted = {};
+        const formatted: {[index: string]: any} = {};
         formatted[setting[1]] = setting[2];
         res[setting[0]].push(formatted);
       } else {
@@ -126,7 +126,7 @@ export class VideoConfigurationComponent implements OnInit {
     });
 
     // Map to custom groups
-    const withGroups = [];
+    const withGroups: any[] = [];
     Object.entries(res).forEach(setting => {
       withGroups.push([this.findGroup(setting[0]), setting[0], setting[1]]);
     });
@@ -137,13 +137,13 @@ export class VideoConfigurationComponent implements OnInit {
       if (setting[0] === undefined) {
         setting[0] = 'OTHER';
       }
-      const formatted = {};
+      const formatted: {[index: string]: any} = {};
       formatted[setting[1]] = setting[2];
       return ([setting[0], formatted]);
     });
 
     // Grouping
-    const resultNew = {};
+    const resultNew: {[index: string]: any} = {};
     formatSet.forEach(setting => {
       const key = setting[0];
       if (!resultNew[key]) {
@@ -161,8 +161,8 @@ export class VideoConfigurationComponent implements OnInit {
   /**
    * Traverse Object until leaf node
    */
-  flattenObject(obj): object {
-    const result = {};
+  flattenObject(obj: {[index: string]: any}): object {
+    const result: {[index: string]: any} = {};
     for (const i in obj) {
       if (!obj.hasOwnProperty(i)) {
         continue;
@@ -171,7 +171,7 @@ export class VideoConfigurationComponent implements OnInit {
         obj[i] = 'null';
       }
       if ((typeof obj[i]) === 'object') {
-        const flatObject = this.flattenObject(obj[i]);
+        const flatObject: {[index: string]: any} = this.flattenObject(obj[i]);
         for (const x in flatObject) {
           if (!flatObject.hasOwnProperty(x)) {
             continue;

@@ -3,11 +3,10 @@ import * as dashjs from 'dashjs';
 import '../types/dashjs-types';
 import { Metrics } from '../metrics';
 
-/**
+/*
  * This service provides a dashjs player object and some helper methods that can be accessed from every component where
  * needed
  */
-
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +19,7 @@ export class PlayerService {
 
   constructor() {
 
-    /** Create player instance and setup listeners for player events */
+    // Create player instance and setup listeners for player events
     this._player = dashjs.MediaPlayer().create();
     this._player.on(dashjs.MediaPlayer.events.PERIOD_SWITCH_COMPLETED, (e) => {
       this.streamInfo = e.toStreamInfo;

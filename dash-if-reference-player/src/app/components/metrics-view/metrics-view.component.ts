@@ -40,11 +40,10 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
   mouseOnChart = false;
 
-  /** What metric options are selected and what available */
+  // What metric options are selected and what available
   private selectedOptionKeys: Array<string> = [];
-  private availableOptionKeys: Array<string> = [];
 
-  /** Get a reference of the chart object */
+  // Get a reference of the chart object
   @ViewChild('chartObj') chart!: ChartComponent;
 
   private chartData: { [index: string]: Array<[number, number]> } = {};
@@ -53,7 +52,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
     data: [[0, 0]],
   }];
 
-  /** Set chart options */
+  // Set chart options
   private yAxisMock: ApexYAxis = {
     title: { text: '' },
     axisBorder: { show: false },
@@ -124,19 +123,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   constructor( private playerService: PlayerService,
                private metricsService: MetricsService ) {
 
-    /** Populate array with all available metric keys  */
-    for (const option of METRICOPTIONS) {
-
-      if (option.type === 'a' || option.type === 'av') {
-        this.availableOptionKeys.push(`${option.key}.audio`);
-      }
-      if (option.type === 'v' || option.type === 'av') {
-        this.availableOptionKeys.push(`${option.key}.video`);
-      }
-
-    }
-
-    /** Subscribe to the service observable to receive metrics selection  */
+    // Subscribe to the service observable to receive metrics selection
     this.metricsService.updateMetricsSelectionCalled$.subscribe(
       selectedOptionKeys => {
         this.selectedOptionKeys = selectedOptionKeys;
@@ -147,11 +134,11 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    /** Setup an rxjs interval and subscribe updater method */
+    // Setup an rxjs interval and subscribe updater method
     const source = interval(1000);
     this.subscription = source.subscribe(() => this.intervalMain());
 
-    /** Setup listener for stream initialization. That event triggers a full chart reset */
+    // Setup listener for stream initialization. That event triggers a full chart reset
     this.playerService.player.on(dashjs.MediaPlayer.events.STREAM_INITIALIZED, () => { this.reset(); });
   }
 
@@ -162,18 +149,18 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   /** Main interval method, called every x seconds and handles data and chart refresh, deletion, etc. */
   intervalMain(): void {
 
-    /** If player is initialized and source is applied, update all available metric data */
+    // If player is initialized and source is applied, update all available metric data
     if (this.playerService.player.isReady()) {
 
       this.iteration += 1;
       this.updateChartData();
 
-      /** If user has selected some metric to display, update chart */
+      // If user has selected some metric to display, update chart
       if ( Array.isArray(this.selectedOptionKeys) && this.selectedOptionKeys.length ) {
         this.updateChart();
       }
 
-      /**
+      /*
        * Get rid of old data every 3600 iterations (about 30 min) minutes. This should not be done too often since it
        * destroys the horizontal realtime animation.
        */
@@ -187,7 +174,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
         }
       }
     }
-    /** If player is not ready (anymore) but there is chart data left, reset */
+    // If player is not ready (anymore) but there is chart data left, reset
     else if (Object.keys(this.chartData).length) {
       this.reset();
     }
@@ -198,26 +185,21 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
     const metrics: Metrics = this.playerService.getMetrics();
 
-    /** Iterate through all available options and push their data into this.chartData */
-    for (const fullKey of this.availableOptionKeys) {
+    // Iterate through all available metrics and push their data into this.chartData
+    for (const [metricKey, metricVal] of Object.entries(metrics)) {
 
-      const key = fullKey.split('.');
-      const key0 = key[0] as keyof typeof metrics;
-      const key1 = key[1] as keyof typeof metrics[typeof key0];
+      for (const [typeKey, typeVal] of Object.entries(metricVal)) {
 
-      if (metrics[key0] && metrics[key0]?.[key1]) {
+        if (typeof typeVal === 'number') {
 
-        if (typeof metrics[key0]?.[key1] === 'number') {
+          const fullKey = `${metricKey}.${typeKey}`;
 
           if (!this.chartData[fullKey]) {
             this.chartData[fullKey] = new Array<[number, number]>();
           }
 
-          this.chartData[fullKey].push([this.iteration, metrics[key0]?.[key1] as unknown as number]);
+          this.chartData[fullKey].push([this.iteration, typeVal]);
         }
-      }
-      else {
-        // console.log(`Metrics: Could not find ${fullKey}`);
       }
     }
   }
@@ -225,7 +207,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   /** Append selected series data to chart */
   updateChart(): void {
 
-    /** We want the chart to stop if mouse is on it, otherwise user interactions would not work. */
+    // We want the chart to stop if mouse is on it, otherwise user interactions would not work.
     if (this.mouseOnChart) {
       return;
     }
@@ -233,13 +215,13 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
     const chartSeries: ApexAxisChartSeries = [];
     const chartYAxes = [];
 
-    /** Iterate through all selected options and create a series and y-axis for each */
+    // Iterate through all selected options and create a series and y-axis for each
     for (const fullKey of this.selectedOptionKeys) {
 
       if (this.chartData[fullKey]) {
 
         const key = fullKey.split('.');
-        const name = (METRICOPTIONS) ? METRICOPTIONS.find(element => element.key === key[0])?.name : '';
+        const name = METRICOPTIONS.find(element => element.key === key[0])?.name ?? '';
         const typeString = key[1].charAt(0).toUpperCase() + key[1].slice(1);
         const fullName = `${name} ${typeString}`;
 
@@ -260,7 +242,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
           data: this.chartData[fullKey],
         });
 
-        /** Note that we assign to a copy of this.yAxisMock so that this.yAxisMock itself is not changed */
+        // Note that we assign to a copy of this.yAxisMock so that this.yAxisMock itself is not changed
         chartYAxes.push( Object.assign({...this.yAxisMock}, yaxis) );
       }
     }

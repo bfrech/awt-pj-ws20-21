@@ -9,13 +9,13 @@ import { PlayerService } from '../../services/player.service';
 })
 export class PlayerComponent implements AfterViewInit {
 
-  /** Get <video> element reference */
+  // Get <video> element reference
   @ViewChild('videoPlayer', {read: ElementRef}) videoElement!: ElementRef<HTMLElement>;
 
   constructor(private playerService: PlayerService) { }
 
-  /** When <video> element ref is available, initialize dashjs player via playerService */
   ngAfterViewInit(): void {
+    // When <video> element ref is available, initialize dashjs player via playerService
     this.playerService.player.initialize(this.videoElement.nativeElement);
   }
 
