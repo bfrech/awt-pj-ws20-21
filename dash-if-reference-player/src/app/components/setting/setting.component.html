@@ -4,30 +4,30 @@
       <h2>{{group[0]}}</h2>
       <div class="singleSetting my-3" *ngFor="let setting of group[1] | keyvalue">
 
-        <div *ngIf="isBoo(setting.value) && !isGroup(setting.value) && !isRadio(setting.key)">
+        <div *ngIf="isBoo(setting.value[0]) && !isGroup(setting.value[0]) && !isRadio(setting.key)">
           <mat-checkbox [(ngModel)]="checked"
-                        [labelPosition]="'after'">
+                        [labelPosition]="'after'" (change)="update(setting.value[1], checked)">
             {{setting.key}}
           </mat-checkbox>
         </div>
 
-        <div class="fields" *ngIf="isInput(setting.value) && !isGroup(setting.value) && !isRadio(setting.key)">
+        <div class="fields" *ngIf="isInput(setting.value[0]) && !isGroup(setting.value[0]) && !isRadio(setting.key)">
           <label>{{setting.key}}</label>
-          <input type="text" name="{{setting.key}}" value="{{setting.value}}">
+          <input #inputField type="text" name="{{setting.key}}" value="{{setting.value[0]}}" (change)="update(setting.value[1], inputField.value)">
         </div>
 
-        <div *ngIf="isGroup(setting.value)" class="SingleSubSetting my-3">
+        <div *ngIf="isGroup(setting.value[1])" class="SingleSubSetting my-3">
           <h3>{{setting.key}}</h3>
           <hr>
           <div *ngFor="let sub of setting.value">
             <div *ngFor="let subset of sub | keyvalue">
-              <div *ngIf="isInput(subset.value)">
+              <div *ngIf="isInput(subset.value[0])">
                 <label>{{subset.key}}</label>
-                <input type="text" name="{{subset.key}}" value="{{subset.value}}">
+                <input #inputField type="text" name="{{subset.key}}" value="{{subset.value[0]}}" (change)="update(subset.value[1], inputField.value)">
               </div>
-              <mat-checkbox *ngIf="isBoo(subset.value)"
+              <mat-checkbox *ngIf="isBoo(subset.value[0])"
                             [(ngModel)]="checked"
-                            [labelPosition]="'after'">
+                            [labelPosition]="'after'" (change)="update(subset.value[1], checked)">
                 {{subset.key}}
               </mat-checkbox>
             </div>
@@ -37,7 +37,7 @@
         <div *ngIf="isLogLevel(setting.key)" class="radio">
           <label class="Radio-Button-Settings">{{setting.key}}:</label>
           <mat-radio-group aria-labelledby="Radio-Button-Settings" class="radioButtonSettingGroup">
-            <mat-radio-button *ngFor="let value of enums.logLevels" [value]="value">
+            <mat-radio-button *ngFor="let value of enums.logLevels" [value]="value" (change)="update(setting.value[1], value)">
               {{value}}
             </mat-radio-button>
           </mat-radio-group>
@@ -45,7 +45,7 @@
         <div *ngIf="isABRStrategy(setting.key)" class="radio">
           <label class="Radio-Button-Settings">{{setting.key}}:</label>
           <mat-radio-group aria-labelledby="Radio-Button-Settings" class="radioButtonSettingGroup">
-            <mat-radio-button *ngFor="let value of enums.ABRStrategy" [value]="value">
+            <mat-radio-button *ngFor="let value of enums.ABRStrategy" [value]="value" (change)="update(setting.value[1], value)">
               {{value}}
             </mat-radio-button>
           </mat-radio-group>
@@ -53,14 +53,15 @@
         <div *ngIf="isMovingAverageMethod(setting.key)" class="radio">
           <label class="Radio-Button-Settings">{{setting.key}}:</label>
           <mat-radio-group aria-labelledby="Radio-Button-Settings" class="radioButtonSettingGroup">
-            <mat-radio-button *ngFor="let value of enums.movingAverageMethod" [value]="value">
+            <mat-radio-button *ngFor="let value of enums.movingAverageMethod" [value]="value" (change)="update(setting.value[1], value)">
               {{value}}
             </mat-radio-button>
           </mat-radio-group>
         </div>
-
-
       </div>
     </div>
   </div>
 </div>
+
+
+

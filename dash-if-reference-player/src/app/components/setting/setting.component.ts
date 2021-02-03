@@ -1,5 +1,5 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import * as dashjs from 'dashjs';
+import {Component, Input, OnInit} from '@angular/core';
+import { PlayerService } from '../../services/player.service';
 
 @Component({
   selector: 'app-setting',
@@ -17,8 +17,8 @@ export class SettingComponent implements OnInit {
     ABRStrategy: ['Dynamic', 'BOLA']
   };
 
-  constructor() {
-  }
+  // playerService must be public to access it in the template
+  constructor(public playerService: PlayerService) { }
 
   ngOnInit(): void {
   }
@@ -53,11 +53,7 @@ export class SettingComponent implements OnInit {
    * Check if value has constants as value
    */
   isRadio(value: any): boolean {
-    if (value === 'ABRStrategy' || value === 'Log Level' || value === 'Moving Average Method'){
-      return true;
-    } else {
-      return false;
-    }
+    return value === 'ABRStrategy' || value === 'Log Level' || value === 'Moving Average Method';
   }
 
   isLogLevel(value: any): boolean {
@@ -72,7 +68,20 @@ export class SettingComponent implements OnInit {
     return value === 'Moving Average Method';
   }
 
-  // TODO description
-  updateSettings(): void {
+  /**
+   * Update Settings: call dash.js updateSettings function with the path of the setting
+   */
+  update(path: string, value: any): void {
+    // Build Object from path to pass to updateSettings function
+    const parts = path.split('.');
+    // @ts-ignore
+    const name = parts.pop().toString();
+    const root: {[index: string]: any} = {};
+    root[name] = value;
+    const settingObject = parts.reduceRight((obj: any, next: any ) => ({
+       [next]: obj
+    }), root);
+    this.playerService.player.updateSettings(settingObject);
+    console.log( this.playerService.player.getSettings());
   }
 }
