@@ -37,24 +37,27 @@
         <div *ngIf="isLogLevel(setting.key)" class="radio">
           <label class="Radio-Button-Settings">{{setting.key}}:</label>
           <mat-radio-group aria-labelledby="Radio-Button-Settings" class="radioButtonSettingGroup">
-            <mat-radio-button *ngFor="let value of enums.logLevels" [value]="value" (change)="update(setting.value[1], value)">
-              {{value}}
+            <mat-radio-button *ngFor="let option of logLevels" [value]="option[0]" [checked]="option[1]" (change)="updateLogLevel(option[0])">
+              {{option[0]}}
             </mat-radio-button>
           </mat-radio-group>
         </div>
+
+
         <div *ngIf="isABRStrategy(setting.key)" class="radio">
           <label class="Radio-Button-Settings">{{setting.key}}:</label>
           <mat-radio-group aria-labelledby="Radio-Button-Settings" class="radioButtonSettingGroup">
-            <mat-radio-button *ngFor="let value of enums.ABRStrategy" [value]="value" (change)="update(setting.value[1], value)">
-              {{value}}
+            <mat-radio-button *ngFor="let option of abrStrategy" [value]="option[0]" [checked]="option[1]" (change)="updateABRStrategy(option[0])">
+              {{option[0]}}
             </mat-radio-button>
           </mat-radio-group>
         </div>
+
         <div *ngIf="isMovingAverageMethod(setting.key)" class="radio">
           <label class="Radio-Button-Settings">{{setting.key}}:</label>
           <mat-radio-group aria-labelledby="Radio-Button-Settings" class="radioButtonSettingGroup">
-            <mat-radio-button *ngFor="let value of enums.movingAverageMethod" [value]="value" (change)="update(setting.value[1], value)">
-              {{value}}
+            <mat-radio-button *ngFor="let option of movingAverageMethods" [value]="option[0]" [checked]="option[1]" (change)="updateMovingAverageMethod(option[0])">
+              {{option[0]}}
             </mat-radio-button>
           </mat-radio-group>
         </div>

@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { PlayerService } from '../../services/player.service';
+import * as dashjs from 'dashjs';
 
 @Component({
   selector: 'app-setting',
@@ -11,11 +12,24 @@ export class SettingComponent implements OnInit {
   @Input() groups: any;
   checked = false;
 
-  enums = {
-    logLevels:  ['DEBUG', 'ERROR', 'FATAL', 'INFO', 'NONE', 'WARNING'],
-    movingAverageMethod: ['Sliding Window', 'EWMA'],
-    ABRStrategy: ['Dynamic', 'BOLA']
-  };
+  logLevels = [
+    ['NONE', false ],
+    ['FATAL', false ],
+    ['ERROR', false ],
+    ['WARNING', true ],
+    ['INFO', false ],
+    ['DEBUG', false ]
+  ];
+
+  movingAverageMethods = [
+    ['Sliding Window', true],
+    ['EWMA', false]
+  ];
+
+  abrStrategy = [
+    ['Dynamic', true],
+    ['BOLA', false ]
+  ];
 
   // playerService must be public to access it in the template
   constructor(public playerService: PlayerService) { }
@@ -83,5 +97,43 @@ export class SettingComponent implements OnInit {
     }), root);
     this.playerService.player.updateSettings(settingObject);
     console.log( this.playerService.player.getSettings());
+  }
+
+  updateLogLevel(value: any): void {
+    let level: any;
+    switch (value){
+      case 'NONE': level = dashjs.LogLevel.LOG_LEVEL_NONE; break;
+      case 'FATAL': level = dashjs.LogLevel.LOG_LEVEL_FATAL; break;
+      case 'ERROR': level = dashjs.LogLevel.LOG_LEVEL_ERROR; break;
+      case 'WARNING': level = dashjs.LogLevel.LOG_LEVEL_WARNING; break;
+      case 'INFO': level = dashjs.LogLevel.LOG_LEVEL_INFO; break;
+      case 'DEBUG': level = dashjs.LogLevel.LOG_LEVEL_DEBUG; break;
+      default: level = dashjs.LogLevel.LOG_LEVEL_WARNING;
+    }
+    this.playerService.player.updateSettings({
+      debug: {logLevel: level}
+    });
+  }
+
+  updateABRStrategy(value: any): void {
+    const strategy = (value === 'BOLA') ? 'abrBola' : 'abrDynamic';
+    this.playerService.player.updateSettings( {
+      streaming: {
+        abr: {
+          ABRStrategy: strategy
+        }
+      }
+    });
+  }
+
+  updateMovingAverageMethod(value: any): void {
+    const strategy = (value === 'EWMA') ? 'ewma' : 'slidingWindow';
+    this.playerService.player.updateSettings( {
+      streaming: {
+        abr: {
+          movingAverageMethod: strategy
+        }
+      }
+    });
   }
 }
