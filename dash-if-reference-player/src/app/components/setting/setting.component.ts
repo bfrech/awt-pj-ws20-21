@@ -8,7 +8,7 @@ import * as dashjs from 'dashjs';
 })
 
 export class SettingComponent implements OnInit {
-  @Input() groups;
+  @Input() groups: any;
   checked = false;
 
   enums = {
@@ -26,7 +26,7 @@ export class SettingComponent implements OnInit {
   /**
    * Check for grouped Settings
    */
-  isGroup(val): boolean {
+  isGroup(val: any): boolean {
     if (val == null || typeof val === 'string') {
       return false;
     } else {
