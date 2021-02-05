@@ -8,11 +8,8 @@ import {
   // ...
 } from '@angular/animations';
 import {MatExpansionPanel} from '@angular/material/expansion';
-
-import {PlayerService} from '../../services/player.service';
+import { PlayerService } from '../../services/player.service';
 import * as sources from '../../../assets/sources.json';
-import {MediaPlayer, MediaPlayerSettingClass} from 'dashjs';
-import * as dashjs from 'dashjs';
 
 declare const settingGroups: any;
 
@@ -73,6 +70,7 @@ declare const settingGroups: any;
 export class VideoConfigurationComponent implements OnInit {
   groups: any;
   defaultSettings: any;
+  paths: any;
 
   srcProvider: { [index: string]: object } = sources.provider;
   srcItems = sources.items;
@@ -88,7 +86,6 @@ export class VideoConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     this.groups = Object.entries(this.processSettings());
-    console.log(this.groups);
   }
 
   ////////////////////////////////////////
@@ -98,15 +95,15 @@ export class VideoConfigurationComponent implements OnInit {
    * Settings Preprocessing: get default Settings, traverse Nested Object and return Object
    * ordered according to our custom order from groups.js
    */
-
   processSettings(): object {
-    // TODO: Use MediaPlayer from playerService
-    const player = MediaPlayer().create();
+    const player = this.playerService.player;
     const defaultSettings = player.getSettings();
-
     const flattenedSettings: any[] = [];
+
+    // Array with [group, settingName, defaultValue, pathInNestedObject]
     Object.entries(this.flattenObject(defaultSettings)).map(setting => {
-      flattenedSettings.push([setting[0].split('.').slice(-2, -1).toString(), setting[0].split('.').slice(-1).toString(), setting[1]]);
+      flattenedSettings.push([setting[0].split('.').slice(-2, -1).toString(), setting[0].split('.')
+        .slice(-1).toString(), setting[1], setting[0]]);
     });
 
     // Find Related settings and group the settings
@@ -118,10 +115,10 @@ export class VideoConfigurationComponent implements OnInit {
           res[setting[0]] = [];
         }
         const formatted: {[index: string]: any} = {};
-        formatted[setting[1]] = setting[2];
+        formatted[setting[1]] = [setting[2], setting[3]];
         res[setting[0]].push(formatted);
       } else {
-        res[setting[1]] = setting[2];
+        res[setting[1]] = [setting[2], setting[3]];
       }
     });
 
@@ -154,6 +151,7 @@ export class VideoConfigurationComponent implements OnInit {
     });
     return resultNew;
   }
+
 
   ////////////////////////////////////////
   // Helper Functions

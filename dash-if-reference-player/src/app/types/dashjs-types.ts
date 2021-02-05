@@ -7,4 +7,6 @@ declare module 'dashjs' {
   export interface DashAdapter {
     getPeriodById(id: string): object;
   }
+
+
 }

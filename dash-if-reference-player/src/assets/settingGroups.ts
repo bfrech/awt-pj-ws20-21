@@ -3,7 +3,6 @@
  */
 const settingGroups  = {
   PLAYBACK: {
-    fastSwitchEnabled: false,
     flushBufferAtTrackSwitch: false,
     jumpGaps: true,
     jumpLargeGaps: true,
@@ -11,8 +10,12 @@ const settingGroups  = {
     lastBitrateCachingInfo: { enabled: true, ttl: 360000 },
     lastMediaSettingsCachingInfo: { enabled: true, ttl: 360000 },
     cacheLoadThresholds: { video: 50, audio: 5 },
+    scheduleWhilePaused: true,
+    calcSegmentAvailabilityRangeFromTimeline: true,
+    reuseExistingSourceBuffers: true,
   },
   ABR : {
+    fastSwitchEnabled: false,  // Fast Switching ABR
     movingAverageMethod: 'Constants.MOVING_AVERAGE_SLIDING_WINDOW',
     ABRStrategy: 'ABR Strategy',
     bandwidthSafetyFactor: 0.9,
@@ -21,19 +24,20 @@ const settingGroups  = {
     useDeadTimeLatency: true,
     limitBitrateByPortal: false,
     usePixelRatioInLimitBitrateByPortal: false,
-    maxBitrate: {audio: -1, video: -1},
-    minBitrate: {audio: -1, video: -1},
     maxRepresentationRatio: {audio: 1, video: 1},
     initialBitrate: {audio: -1, video: -1},
     initialRepresentationRatio: {audio: -1, video: -1},
-    autoSwitchBitrate: {audio: true, video: true}
+    autoSwitchBitrate: {audio: true, video: true},
+    fetchThroughputCalculationMode: 'Constants.ABR_FETCH_THROUGHPUT_CALCULATION_DOWNLOADED_DATA',
   },
   INITIAL : {
+    liveDelay: null,
     abandonLoadTimeout: 1000,
-    scheduleWhilePaused: true,
+    maxBitrate: {audio: -1, video: -1},
+    minBitrate: {audio: -1, video: -1},
+    selectionModeForInitialTrack: 'Constants.TRACK_SELECTION_MODE_HIGHEST_BITRATE',
   },
   LOWLATENCY : {
-    liveDelay: null,
     lowLatencyEnabled: false,
     liveCatchUpMinDrift: 0.02,
     liveCatchUpMaxDrift: 0,
@@ -41,9 +45,11 @@ const settingGroups  = {
     liveCatchupLatencyThreshold: NaN,
     lowLatencyMultiplyFactor: 5,
     liveDelayFragmentCount: NaN,
+    liveCatchup: true,
   },
   DEBUG : {
-    logLevel: 'logLevel',
+    logLevel: 'warning',
+    dispatchEvent: false,
   },
   CMCD : {
     enabled: false,
@@ -57,6 +63,12 @@ const settingGroups  = {
     stableBufferTime: 12,
     bufferTimeAtTopQuality: 30,
     bufferTimeAtTopQualityLongForm: 60,
+  },
+  'TRACK SWITCH': {
+    trackSwitchMode: 'CONSTANTS',
+  },
+  RETRY: {
+    retryIntervals: 'test'
   }
 };
 
@@ -64,7 +76,6 @@ const settingGroups  = {
 /* Still needs to be assigned to Group */
 const order = {
     metricsMaxListDepth: 1000,
-    calcSegmentAvailabilityRangeFromTimeline: true,
     longFormContentDurationThreshold: 600,
     wallclockTimeUpdateInterval: 50,
     keepProtectionMediaKeys: false,
