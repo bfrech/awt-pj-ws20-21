@@ -37,12 +37,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Default_Changelist]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Default_Changelist_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/setting/setting.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/setting/setting.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/setting/setting.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/setting/setting.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/types/dashjs-types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/types/dashjs-types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/assets/settingGroups.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/assets/settingGroups.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,6 +96,19 @@
     </key>
   </component>
   <component name="RunManager" selected="npm.Angular CLI Server">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="E2E Tests (dash-if-reference-player)" type="JavaScriptTestRunnerProtractor">
       <config-file value="$PROJECT_DIR$/dash-if-reference-player/e2e/protractor.conf.js" />
       <node-interpreter value="project" />
@@ -142,7 +152,7 @@
       <workItem from="1612341700252" duration="20000" />
       <workItem from="1612341747885" duration="9712000" />
       <workItem from="1612427110092" duration="20854000" />
-      <workItem from="1612516819666" duration="928000" />
+      <workItem from="1612516819666" duration="8374000" />
     </task>
     <task id="LOCAL-00001" summary="Add Formatting of Strings of Settings">
       <created>1608549075780</created>
@@ -165,7 +175,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612436656301</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="update dash.js">
+      <created>1612523153531</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1612523153531</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -216,22 +233,22 @@
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
     <state x="100" y="123" width="1848" height="1136" key="DiffContextDialog/0.23.2560.1337@0.23.2560.1337" timestamp="1609864890117" />
-    <state width="2062" height="264" key="GridCell.Tab.0.bottom" timestamp="1612523086683">
+    <state width="2062" height="538" key="GridCell.Tab.0.bottom" timestamp="1612537295968">
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
-    <state width="2062" height="264" key="GridCell.Tab.0.bottom/0.23.2560.1337@0.23.2560.1337" timestamp="1612523086683" />
-    <state width="2062" height="264" key="GridCell.Tab.0.center" timestamp="1612523086682">
+    <state width="2062" height="538" key="GridCell.Tab.0.bottom/0.23.2560.1337@0.23.2560.1337" timestamp="1612537295968" />
+    <state width="2062" height="538" key="GridCell.Tab.0.center" timestamp="1612537295968">
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
-    <state width="2062" height="264" key="GridCell.Tab.0.center/0.23.2560.1337@0.23.2560.1337" timestamp="1612523086682" />
-    <state width="2062" height="264" key="GridCell.Tab.0.left" timestamp="1612523086682">
+    <state width="2062" height="538" key="GridCell.Tab.0.center/0.23.2560.1337@0.23.2560.1337" timestamp="1612537295968" />
+    <state width="2062" height="538" key="GridCell.Tab.0.left" timestamp="1612537295967">
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
-    <state width="2062" height="264" key="GridCell.Tab.0.left/0.23.2560.1337@0.23.2560.1337" timestamp="1612523086682" />
-    <state width="2062" height="264" key="GridCell.Tab.0.right" timestamp="1612523086683">
+    <state width="2062" height="538" key="GridCell.Tab.0.left/0.23.2560.1337@0.23.2560.1337" timestamp="1612537295967" />
+    <state width="2062" height="538" key="GridCell.Tab.0.right" timestamp="1612537295968">
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
-    <state width="2062" height="264" key="GridCell.Tab.0.right/0.23.2560.1337@0.23.2560.1337" timestamp="1612523086683" />
+    <state width="2062" height="538" key="GridCell.Tab.0.right/0.23.2560.1337@0.23.2560.1337" timestamp="1612537295968" />
     <state x="0" y="25" width="1440" height="814" key="MergeDialog" timestamp="1611764438032">
       <screen x="0" y="25" width="1440" height="814" />
     </state>
@@ -255,6 +272,10 @@
     </state>
     <state x="443" y="379" key="git4idea.rebase.GitUnstructuredEditor/-961.-1055.1920.996/0.25.1440.875@0.25.1440.875" timestamp="1610294351292" />
     <state x="443" y="354" key="git4idea.rebase.GitUnstructuredEditor/0.25.1440.814@0.25.1440.814" timestamp="1611764440684" />
+    <state width="600" height="428" key="javadoc.popup" timestamp="1612526838313">
+      <screen x="0" y="23" width="2560" height="1337" />
+    </state>
+    <state width="600" height="428" key="javadoc.popup/0.23.2560.1337@0.23.2560.1337" timestamp="1612526838313" />
     <state x="384" y="165" width="670" height="676" key="search.everywhere.popup" timestamp="1610212105102">
       <screen x="0" y="25" width="1440" height="816" />
     </state>

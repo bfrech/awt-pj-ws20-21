@@ -35,6 +35,7 @@ const settingGroups  = {
     abandonLoadTimeout: 1000,
     maxBitrate: {audio: -1, video: -1},
     minBitrate: {audio: -1, video: -1},
+    selectionModeForInitialTrack: 'Constants.TRACK_SELECTION_MODE_HIGHEST_BITRATE',
   },
   LOWLATENCY : {
     lowLatencyEnabled: false,
@@ -63,9 +64,12 @@ const settingGroups  = {
     bufferTimeAtTopQuality: 30,
     bufferTimeAtTopQualityLongForm: 60,
   },
-  'TRACK SWITCH MODE': {
+  'TRACK SWITCH': {
     trackSwitchMode: 'CONSTANTS',
   },
+  RETRY: {
+    retryIntervals: 'test'
+  }
 };
 
 

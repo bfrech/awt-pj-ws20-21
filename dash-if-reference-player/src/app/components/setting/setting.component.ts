@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import { PlayerService } from '../../services/player.service';
 import * as dashjs from 'dashjs';
 
+
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.component.html',
@@ -35,6 +36,7 @@ export class SettingComponent implements OnInit {
   constructor(public playerService: PlayerService) { }
 
   ngOnInit(): void {
+
   }
 
   /**
@@ -67,20 +69,11 @@ export class SettingComponent implements OnInit {
    * Check if value has constants as value
    */
   isRadio(value: any): boolean {
-    // return value === 'ABRStrategy' || value === 'Log Level' || value === 'Moving Average Method';
     return (typeof value === 'string' && value !== 'null');
   }
 
   isLogLevel(value: any): boolean {
     return value === 'Log Level';
-  }
-
-  isABRStrategy(value: any): boolean {
-    return value === 'ABRStrategy';
-  }
-
-  isMovingAverageMethod(value: any): boolean {
-    return value === 'Moving Average Method';
   }
 
   /**
@@ -89,6 +82,10 @@ export class SettingComponent implements OnInit {
   update(path: string, value: any): void {
     // Build Object from path to pass to updateSettings function
     const parts = path.split('.');
+
+    // TODO:
+    // const name = parts.pop()?.toString();
+
     // @ts-ignore
     const name = parts.pop().toString();
     const root: {[index: string]: any} = {};
