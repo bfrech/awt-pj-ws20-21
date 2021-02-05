@@ -60,14 +60,15 @@ export class SettingComponent implements OnInit {
    * Check if setting value is a number or a string
    */
   isInput(value: any): boolean {
-    return (!this.isBoo(value));
+    return (!this.isBoo(value) && !this.isGroup(value) && !this.isRadio(value));
   }
 
   /**
    * Check if value has constants as value
    */
   isRadio(value: any): boolean {
-    return value === 'ABRStrategy' || value === 'Log Level' || value === 'Moving Average Method';
+    // return value === 'ABRStrategy' || value === 'Log Level' || value === 'Moving Average Method';
+    return (typeof value === 'string' && value !== 'null');
   }
 
   isLogLevel(value: any): boolean {

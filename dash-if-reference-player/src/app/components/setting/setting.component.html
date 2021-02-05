@@ -4,14 +4,14 @@
       <h2>{{group[0]}}</h2>
       <div class="singleSetting my-3" *ngFor="let setting of group[1] | keyvalue">
 
-        <div *ngIf="isBoo(setting.value[0]) && !isGroup(setting.value[0]) && !isRadio(setting.key)">
+        <div *ngIf="isBoo(setting.value[0])">
           <mat-checkbox [(ngModel)]="checked"
                         [labelPosition]="'after'" (change)="update(setting.value[1], checked)">
             {{setting.key}}
           </mat-checkbox>
         </div>
 
-        <div class="fields" *ngIf="isInput(setting.value[0]) && !isGroup(setting.value[0]) && !isRadio(setting.key)">
+        <div class="fields" *ngIf="isInput(setting.value[0]) && !isLogLevel(setting.key)">
           <label>{{setting.key}}</label>
           <input #inputField type="text" name="{{setting.key}}" value="{{setting.value[0]}}" (change)="update(setting.value[1], inputField.value)">
         </div>
@@ -30,6 +30,12 @@
                             [labelPosition]="'after'" (change)="update(subset.value[1], checked)">
                 {{subset.key}}
               </mat-checkbox>
+
+              <div *ngIf="isRadio(subset.value[0]) && !isLogLevel(setting.key)" class="radio">
+                <label class="Radio-Button-Settings">{{setting.key}}:</label>
+                <p>TODO</p>
+              </div>
+
             </div>
           </div>
         </div>
@@ -44,23 +50,12 @@
         </div>
 
 
-        <div *ngIf="isABRStrategy(setting.key)" class="radio">
+        <div *ngIf="isRadio(setting.value[0]) && !isLogLevel(setting.key)" class="radio">
           <label class="Radio-Button-Settings">{{setting.key}}:</label>
-          <mat-radio-group aria-labelledby="Radio-Button-Settings" class="radioButtonSettingGroup">
-            <mat-radio-button *ngFor="let option of abrStrategy" [value]="option[0]" [checked]="option[1]" (change)="updateABRStrategy(option[0])">
-              {{option[0]}}
-            </mat-radio-button>
-          </mat-radio-group>
+          <p>TODO</p>
         </div>
 
-        <div *ngIf="isMovingAverageMethod(setting.key)" class="radio">
-          <label class="Radio-Button-Settings">{{setting.key}}:</label>
-          <mat-radio-group aria-labelledby="Radio-Button-Settings" class="radioButtonSettingGroup">
-            <mat-radio-button *ngFor="let option of movingAverageMethods" [value]="option[0]" [checked]="option[1]" (change)="updateMovingAverageMethod(option[0])">
-              {{option[0]}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
+
       </div>
     </div>
   </div>
