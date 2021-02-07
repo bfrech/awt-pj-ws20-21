@@ -11,7 +11,8 @@
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  max-height: 2700px;
+  max-height: 3200px;
+  max-width: 100%;
 }
 
 .masonry-with-columns div {
@@ -22,13 +23,16 @@
   font-size: 14px;
 }
 
-
 .SingleSubSetting label {
   display: flex;
 }
+
+.groupSubsetting{
+  margin-bottom: 10px;
+}
+
 .settingsFrame {
   width: 32%;
-  margin: auto;
 }
 
 .content {
@@ -39,7 +43,7 @@
   box-shadow: 13px 13px 10px -10px rgba(130, 130, 130, 0.12);
 }
 
-.conten label {
+.content label {
   width: 100%;
 }
 
@@ -51,4 +55,10 @@
   display: flex;
   flex-direction: column;
   margin: 15px 0;
+}
+
+.info {
+  margin-left: 2px;
+  height: 11px;
+  width: auto;
 }
