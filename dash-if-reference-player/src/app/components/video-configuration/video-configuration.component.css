@@ -2,17 +2,6 @@
 * No view encapsulation
 */
 
-:root {
-  --primary: #1F8AF9;
-}
-
-* {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #707070;
-}
-.dropdown-item {
-}
-
 .vc-collapse {
   margin: 0;
   max-height: 30rem;
@@ -105,7 +94,3 @@
   height: auto;
 }
 
-#settingMenu{
-  margin:0 15px;
-  width: 100%;
-}

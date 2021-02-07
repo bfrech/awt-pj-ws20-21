@@ -68,7 +68,8 @@ const settingGroups  = {
     trackSwitchMode: 'CONSTANTS',
   },
   RETRY: {
-    retryIntervals: 'test'
+    retryIntervals: 'test',
+    retryAttempts: 'test',
   }
 };
 

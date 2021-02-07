@@ -1,9 +1,11 @@
 .footer{
   background-color: darkgrey;
-  color: white;
   font-size: 10px;
   padding-top: 15px;
   padding-bottom: 15px;
   position:absolute;
   width: 100%;
+}
+.text{
+  color: white;
 }
