@@ -23,3 +23,7 @@ td>p {
   margin: -0.3rem 0 0;
   padding: 0;
 }
+
+.mat-simple-snackbar span {
+  color: white !important;
+}

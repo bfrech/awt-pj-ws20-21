@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MetricsService } from '../../services/metrics.service';
@@ -8,7 +8,8 @@ import { MetricOption, METRICOPTIONS } from '../../metrics';
 @Component({
   selector: 'app-metrics-configuration',
   templateUrl: './metrics-configuration.component.html',
-  styleUrls: ['./metrics-configuration.component.css']
+  styleUrls: ['./metrics-configuration.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MetricsConfigurationComponent {
 
