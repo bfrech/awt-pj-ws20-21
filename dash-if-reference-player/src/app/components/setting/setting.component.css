@@ -1,43 +1,39 @@
-.masonry-with-columns {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  max-height: 3200px;
-  max-width: 100%;
+.accordionPanel {
+  color: #707070;
+  margin-top: 5px;
+  display: inline-block;
 }
 
-.masonry-with-columns div {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 auto;
-  -ms-flex: 1 0 auto;
-  flex: 1 0 auto;
-  font-size: 14px;
+h2 {
+  margin: auto 0 !important;
+}
+
+.accordionPanel .mat-expansion-panel-header.mat-expanded {
+  height: 48px !important;
+}
+
+.accordionPanel mat-accordion {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.accordionPanel mat-accordion .mat-expansion-panel {
+  border-radius: 0 !important;
 }
 
 .SingleSubSetting label {
   display: flex;
 }
 
-.groupSubsetting{
+.groupSubsetting {
   margin-bottom: 10px;
 }
 
 .settingsFrame {
-  width: 32%;
+  float: left;
 }
 
 .content {
-  padding: 10px;
-  margin-top: 20px;
   background-color: white;
   -webkit-box-shadow: 13px 13px 10px -10px rgba(130, 130, 130, 0.12);
   box-shadow: 13px 13px 10px -10px rgba(130, 130, 130, 0.12);
@@ -58,7 +54,7 @@
 }
 
 .info {
-  margin-left: 2px;
+  margin-left: 5px;
   height: 11px;
   width: auto;
 }

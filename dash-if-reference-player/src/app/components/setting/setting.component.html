@@ -1,14 +1,16 @@
-<div class="masonry-with-columns">
-  <div class="settingsFrame" *ngFor="let group of groups">
-    <div class="content">
-      <h2>{{group[0]}}</h2>
+<div class="accordionPanel">
+  <mat-accordion class="settingsFrame col-lg-4 col-md-6 col-xs-12" *ngFor="let group of groups">
+    <mat-expansion-panel class="content">
+      <mat-expansion-panel-header>
+        <h2>{{group[0]}}</h2>
+      </mat-expansion-panel-header>
       <div class="singleSetting my-3" *ngFor="let setting of group[1] | keyvalue">
 
         <div *ngIf="isBoo(setting.value[0])">
           <mat-checkbox [(ngModel)]="checked"
                         [labelPosition]="'after'" (change)="update(setting.value[1], checked)">
             {{setting.key}}<a [matTooltip]="'link to setting description'"
-                              [matTooltipPosition]="'before'"
+                              [matTooltipPosition]="'after'"
                               href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
                               target="_blank">
             <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
@@ -16,14 +18,15 @@
           </mat-checkbox>
         </div>
 
-        <div class="fields" *ngIf="isInput(setting.value[0]) && !isLogLevel(setting.key)">
+        <div *ngIf="isInput(setting.value[0]) && !isLogLevel(setting.key)" class="fields">
           <label>{{setting.key}}<a [matTooltip]="'link to setting description'"
-                                   [matTooltipPosition]="'before'"
+                                   [matTooltipPosition]="'after'"
                                    href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
                                    target="_blank">
-            <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+            <img class="info" alt="Info Icon with link to  setting description" src="assets/images/question.png">
           </a></label>
-          <input #inputField type="text" name="{{setting.key}}" value="{{setting.value[0]}}"
+          <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" name="{{setting.key}}"
+                 value="{{setting.value[0]}}"
                  (change)="update(setting.value[1], inputField.value)">
         </div>
 
@@ -34,19 +37,20 @@
             <div class="groupSubsetting" *ngFor="let subset of sub | keyvalue">
               <div *ngIf="isInput(subset.value[0])">
                 <label>{{subset.key}}<a [matTooltip]="'link to setting description'"
-                                        [matTooltipPosition]="'before'"
+                                        [matTooltipPosition]="'after'"
                                         href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
                                         target="_blank">
                   <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
                 </a></label>
-                <input #inputField type="text" name="{{subset.key}}" value="{{subset.value[0]}}"
+                <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" name="{{subset.key}}"
+                       value="{{subset.value[0]}}"
                        (change)="update(subset.value[1], inputField.value)">
               </div>
               <mat-checkbox *ngIf="isBoo(subset.value[0])"
                             [(ngModel)]="checked"
                             [labelPosition]="'after'" (change)="update(subset.value[1], checked)">
                 {{subset.key}}  <a [matTooltip]="'link to setting description'"
-                                   [matTooltipPosition]="'before'"
+                                   [matTooltipPosition]="'after'"
                                    href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
                                    target="_blank">
                 <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
@@ -55,7 +59,7 @@
 
               <div *ngIf="isRadio(subset.value[0]) && !isLogLevel(setting.key)" class="radio">
                 <label class="Radio-Button-Settings">{{setting.key}}:<a [matTooltip]="'link to setting description'"
-                                                                        [matTooltipPosition]="'before'"
+                                                                        [matTooltipPosition]="'after'"
                                                                         href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
                                                                         target="_blank">
                   <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
@@ -69,7 +73,7 @@
 
         <div *ngIf="isLogLevel(setting.key)" class="radio">
           <label class="Radio-Button-Settings">{{setting.key}}:<a [matTooltip]="'link to setting description'"
-                                                                  [matTooltipPosition]="'before'"
+                                                                  [matTooltipPosition]="'after'"
                                                                   href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
                                                                   target="_blank">
             <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
@@ -85,18 +89,16 @@
 
         <div *ngIf="isRadio(setting.value[0]) && !isLogLevel(setting.key)" class="radio">
           <label class="Radio-Button-Settings">{{setting.key}}:<a [matTooltip]="'link to setting description'"
-                                                                  [matTooltipPosition]="'before'"
+                                                                  [matTooltipPosition]="'after'"
                                                                   href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
                                                                   target="_blank">
             <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
           </a></label>
           <p>TODO</p>
         </div>
-
-
       </div>
-    </div>
-  </div>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>
 
 

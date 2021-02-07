@@ -7,19 +7,11 @@
   "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-html {
-}
-
 body {
   background-color: #eff3f6;
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   height: 100%;
-}
-
-* {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #707070;
 }
 
 h2 {
@@ -29,7 +21,6 @@ h2 {
 }
 
 h3 {
-  color: #707070;
   margin-bottom: -10px !important;
   font-size: 14px !important;
   font-weight: bold !important;
@@ -37,7 +28,6 @@ h3 {
 
 .mat-checkbox-label {
   font-size: 14px;
-  color: #707070;;
 }
 
 .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
@@ -47,11 +37,6 @@ h3 {
 
 .mat-label {
   font-size: 14px;
-  color: #707070;
-}
-
-input.mat-input-element {
-  color: black;
 }
 
 .mat-checkbox-frame {
@@ -114,6 +99,11 @@ input.mat-input-element {
 .mat-form-field.mat-focused.mat-accent .mat-select-arrow {
   color: #1F8AF9
 }
-.mat-checkbox-layout{
+
+.mat-checkbox-layout {
   white-space: unset !important;
+}
+
+.mat-expansion-panel .mat-expansion-panel-header.cdk-keyboard-focused:not([aria-disabled=true]), .mat-expansion-panel .mat-expansion-panel-header.cdk-program-focused:not([aria-disabled=true]), .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]) {
+  background: rgba(31, 138, 249, .04)
 }
