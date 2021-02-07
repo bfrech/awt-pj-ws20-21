@@ -1,15 +1,116 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 
-*{
+* {
   margin: 0;
   padding: 0;
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji",
-    "Segoe UI Emoji","Segoe UI Symbol";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+  "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-body{
+html {
+}
+
+body {
   background-color: #eff3f6;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  height: 100%;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+* {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #707070;
+}
+
+h2 {
+  font-size: 14px !important;
+  font-weight: bold;
+  color: #1F8AF9;
+}
+
+h3 {
+  color: #707070;
+  margin-bottom: -10px !important;
+  font-size: 14px !important;
+  font-weight: bold !important;
+}
+
+.mat-checkbox-label {
+  font-size: 14px;
+  color: #707070;;
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
+  opacity: 0.03 !important;
+  background-color: #1F8AF9;
+}
+
+.mat-label {
+  font-size: 14px;
+  color: #707070;
+}
+
+input.mat-input-element {
+  color: black;
+}
+
+.mat-checkbox-frame {
+  border-width: 1px !important;
+}
+
+.mat-accent .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: #1F8AF9
+}
+
+.mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate, .mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate {
+  background: #1F8AF9
+}
+
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: #1F8AF9
+}
+
+.mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element, .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element {
+  background: #1F8AF9
+}
+
+.mat-form-field.mat-focused .mat-form-field-label.mat-accent {
+  color: #1F8AF9
+}
+
+.mat-focused .mat-form-field-required-marker {
+  color: #1F8AF9
+}
+
+.mat-form-field.mat-focused .mat-form-field-ripple.mat-accent {
+  background-color: #1F8AF9
+}
+
+.mat-form-field-type-mat-native-select.mat-focused:not(.mat-form-field-invalid).mat-accent .mat-form-field-infix::after {
+  color: #1F8AF9
+}
+
+.mat-form-field-appearance-outline.mat-focused.mat-accent .mat-form-field-outline-thick {
+  color: #1F8AF9
+}
+
+.mat-form-field.mat-accent .mat-input-element {
+  caret-color: #1F8AF9
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-width: 1px;
+  border-color: #1F8AF9
+}
+
+.mat-radio-button .mat-radio-outer-circle {
+  border-width: 1px;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle, .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+  background-color: #1F8AF9
+}
+
+.mat-form-field.mat-focused.mat-accent .mat-select-arrow {
+  color: #1F8AF9
+}
