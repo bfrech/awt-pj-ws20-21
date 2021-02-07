@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import { PlayerService } from '../../services/player.service';
 import * as dashjs from 'dashjs';
 
@@ -7,6 +7,7 @@ import * as dashjs from 'dashjs';
   selector: 'app-setting',
   templateUrl: './setting.component.html',
   styleUrls: ['./setting.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 
 export class SettingComponent implements OnInit {

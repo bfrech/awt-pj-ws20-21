@@ -114,3 +114,6 @@ input.mat-input-element {
 .mat-form-field.mat-focused.mat-accent .mat-select-arrow {
   color: #1F8AF9
 }
+.mat-checkbox-layout{
+  white-space: unset !important;
+}
