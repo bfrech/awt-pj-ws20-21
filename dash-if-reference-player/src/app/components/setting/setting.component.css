@@ -26,6 +26,7 @@
 .SingleSubSetting label {
   display: flex;
 }
+
 .settingsFrame {
   width: 32%;
   margin: auto;
@@ -51,4 +52,11 @@
   display: flex;
   flex-direction: column;
   margin: 15px 0;
+}
+
+.info {
+  margin-left: 3px;
+  opacity: 0.7;
+  height: 11px;
+  width: auto;
 }
