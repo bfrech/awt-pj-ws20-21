@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,7 +10,8 @@ import { MetricOption, METRICOPTIONS, Metrics } from '../../../assets/metrics';
 @Component({
   selector: 'app-metrics-configuration',
   templateUrl: './metrics-configuration.component.html',
-  styleUrls: ['./metrics-configuration.component.css']
+  styleUrls: ['./metrics-configuration.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MetricsConfigurationComponent implements OnInit, OnDestroy {
 

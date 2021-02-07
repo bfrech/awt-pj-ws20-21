@@ -1,7 +1,7 @@
 <div class="container">
-  <form class="form-inline">
-    <div class="form-group col-12 p-0">
-      <div class="input-group flex-grow-1">
+  <form class="row form-inline">
+    <div class="col-12 form-group p-0">
+      <div class="col-md-8 col-12 input-group flex-grow-1">
         <div class="input-group-prepend dropdown-container">
           <button (click)="streamsDropdownToggle()" class="defaultbtn btn btn-primary dropdown-toggle"
                   aria-haspopup="true" aria-expanded="false">
@@ -39,12 +39,14 @@
         <input [(ngModel)]="inputVarStreamAddr" name="inputNameStreamAddr" type="text" class="form-control"
                placeholder="Stream Address" aria-label="Stream Address">
       </div>
-      <div class="btn-group col-2">
+      <div class="col-md-2 col-12 btn-group">
         <button (click)="playerService.stop()" class="defaultbtn btn btn-secondary">Stop</button>
         <button (click)="playerService.load(inputVarStreamAddr)" class="defaultbtn btn btn-primary">Load</button>
       </div>
-      <button (click)="settingsSectionToggle()" id="settingsBtn" class="col-1 defaultbtn btn btn-primary">Settings
-      </button>
+      <div class="col-md-2 col-12">
+        <button (click)="settingsSectionToggle()" id="settingsBtn" class="defaultbtn btn btn-primary">Settings
+        </button>
+      </div>
     </div>
   </form>
 

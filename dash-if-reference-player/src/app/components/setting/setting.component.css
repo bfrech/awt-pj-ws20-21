@@ -1,5 +1,4 @@
 .accordionPanel {
-  color: #707070;
   margin-top: 5px;
   display: inline-block;
 }
@@ -55,6 +54,6 @@ h2 {
 
 .info {
   margin-left: 5px;
-  height: 11px;
+  height: 12px;
   width: auto;
 }
