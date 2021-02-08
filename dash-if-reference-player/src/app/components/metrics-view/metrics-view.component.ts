@@ -221,9 +221,21 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       if (this.chartData[fullKey]) {
 
         const key = fullKey.split('.');
-        const name = METRICOPTIONS.find(element => element.key === key[0])?.name ?? '';
+        const metricInfo = METRICOPTIONS.find(element => element.key === key[0]);
         const typeString = key[1].charAt(0).toUpperCase() + key[1].slice(1);
-        const fullName = `${name} ${typeString}`;
+
+        let name = '';
+        let unit = '';
+
+        if (metricInfo) {
+          name = metricInfo.name;
+
+          if (metricInfo.unit) {
+            unit = `(${metricInfo.unit})`;
+          }
+        }
+
+        const fullName = `${name} ${typeString} ${unit}`;
 
         const yaxis: ApexYAxis = {
           seriesName: fullName,

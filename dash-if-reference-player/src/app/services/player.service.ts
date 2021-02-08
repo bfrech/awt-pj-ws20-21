@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as dashjs from 'dashjs';
 import '../types/dashjs-types';
+import { hasOwnProperty } from '../../assets/hasownproperty';
 import { Metrics } from '../metrics';
+
 
 /*
  * This service provides a dashjs player object and some helper methods that can be accessed from every component where
@@ -44,8 +46,16 @@ export class PlayerService {
   /** Provide metrics to be displayed in live chart */
   getMetrics(): Metrics {
 
+    if (!this.streamInfo) {
+      return {};
+    }
+
     const dashMetrics: dashjs.DashMetrics = this._player.getDashMetrics();
     const dashAdapter: dashjs.DashAdapter = this._player.getDashAdapter();
+    const period: (dashjs.Period | null) = dashAdapter.getPeriodById(this.streamInfo.id);
+    const periodIndex = period ? period.index : this.streamInfo.index;
+    const repSwitchAudio = dashMetrics.getCurrentRepresentationSwitch('audio');
+    const repSwitchVideo = dashMetrics.getCurrentRepresentationSwitch('video');
     const metrics: Metrics = {};
 
     metrics.bufferLevel = {
@@ -53,8 +63,20 @@ export class PlayerService {
       video: dashMetrics.getCurrentBufferLevel('video')
     };
 
-    // dashjs.LogLevel.LOG_LEVEL_DEBUG
-    // const period = dashAdapter.getPeriodById(this.streamInfo.id);
+    if (typeof repSwitchAudio === 'object' && hasOwnProperty(repSwitchAudio, 'to')
+        && typeof repSwitchAudio.to === 'string') {
+
+      if (typeof repSwitchVideo === 'object' && hasOwnProperty(repSwitchVideo, 'to')
+          && typeof repSwitchVideo.to === 'string') {
+
+        const bitrateAudio = Math.round(dashAdapter.getBandwidthForRepresentation(repSwitchAudio.to, periodIndex)
+          / 1000);
+        const bitrateVideo = Math.round(dashAdapter.getBandwidthForRepresentation(repSwitchVideo.to, periodIndex)
+          / 1000);
+
+        metrics.bitrateDownload = { audio: bitrateAudio, video: bitrateVideo };
+      }
+    }
 
     // TODO: more metrics..
 

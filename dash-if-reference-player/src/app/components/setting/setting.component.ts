@@ -120,7 +120,8 @@ export class SettingComponent implements OnInit {
       streaming: {
         abr: {
           ABRStrategy: strategy
-        }
+        },
+        liveCatchup: {}
       }
     });
   }
@@ -131,7 +132,8 @@ export class SettingComponent implements OnInit {
       streaming: {
         abr: {
           movingAverageMethod: strategy
-        }
+        },
+        liveCatchup: {}
       }
     });
   }

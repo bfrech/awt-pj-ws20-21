@@ -26,13 +26,13 @@ export interface Metrics {
 
 
 /** Interface for selectable metric options */
-export interface MetricOption { name: string; type: 'a' | 'v' | 'av'; key: string; }
+export interface MetricOption { name: string; type: 'a' | 'v' | 'av'; key: string; unit?: string; }
 
 
 /** Array of available options */
 export const METRICOPTIONS: MetricOption[] = [
-  { name: 'Buffer Length', type: 'av', key: 'bufferLevel' },
-  { name: 'Bitrate Downloading', type: 'av', key: 'bitrateDownload' },
+  { name: 'Buffer Length', type: 'av', key: 'bufferLevel', unit: 'seconds' },
+  { name: 'Bitrate Downloading', type: 'av', key: 'bitrateDownload', unit: 'kbps' },
   { name: 'Quality Index', type: 'av', key: 'qualityIndex' },
   { name: 'Quality Index Pending', type: 'av', key: 'qualityIndexPending' },
   { name: 'Dropped Frames', type: 'av', key: 'droppedFrames' },
