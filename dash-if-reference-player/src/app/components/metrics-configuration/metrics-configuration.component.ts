@@ -62,7 +62,7 @@ export class MetricsConfigurationComponent implements OnInit, OnDestroy {
 
     if (event.checked) {
       // Option was selected. If more is allowed, push its key into the selectedOptions array and send to service
-      if (this.selectedOptionKeys.length < this.maxNumOfSelectedOptions) {
+      if (this.selectedOptionKeys.length < this.maxNumOfSelectedOptions ) {
         this.selectedOptionKeys.push(fullKey);
         this.metricsService.updateMetricsSelection(this.selectedOptionKeys);
       }

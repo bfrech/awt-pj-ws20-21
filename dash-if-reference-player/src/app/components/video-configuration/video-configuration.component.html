@@ -8,7 +8,7 @@
             Stream
           </button>
           <mat-accordion [@streamsDropdownShowHide]="streamsDropdownIsVisible"
-                         displayMode=flat class="vc-dropdown-menu">
+                         displayMode=flat class="vc-dropdown-menu" multi>
             <mat-expansion-panel #expPanel *ngFor="let item of srcItems"
                                  (opened)="setStreamsDropdownExpandedPanel(expPanel)">
 
@@ -22,8 +22,10 @@
                 <li *ngFor="let subItem of item['submenu']">
                   <a (click)="selectStream(subItem['url'])" class="dropdown-item vc-custom-dropdown-item text-truncate"
                      [class.vc-custom-active]="inputVarStreamAddr === subItem['url']">
-                    <span class="badge badge-pill badge-secondary"
-                          matTooltip="{{ srcProvider[subItem['provider']]['name'] }}" matTooltipPosition="above">
+                    <span class="badge badge-pill" [style.color]="'white'"
+                          [style.background-color]="setBadgeColor(srcProvider[subItem['provider']]['acronym'])"
+                          matTooltip="{{ srcProvider[subItem['provider']]['name'] }}"
+                          matTooltipPosition="above">
                       {{ srcProvider[subItem['provider']]['acronym'] }}
                     </span>
                     <span matTooltip="{{ subItem['name'] }}" matTooltipPosition="above" matTooltipShowDelay="1000">
