@@ -192,10 +192,10 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       for (const [typeObjKey, typeObjVal] of Object.entries(metricObjVal)) {
 
         let fullKey = '';
-        let metricValue = -1;
+        let metricValue = NaN;
 
         // Handle plain numbers
-        if (typeObjVal && typeof typeObjVal === 'number') {
+        if (typeof typeObjVal === 'number') {
           metricValue = typeObjVal;
         }
         // Handle objects with current vs. max value (We show current on chart and max on overlay)
@@ -244,12 +244,12 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
         const key = fullKey.split('.');
         const metricInfo = METRICOPTIONS.find(element => element.key === key[0]);
-        const typeString = key[1].charAt(0).toUpperCase() + key[1].slice(1);
 
         if (!metricInfo) {
-          return;
+          continue;
         }
 
+        const typeString = key[1].charAt(0).toUpperCase() + key[1].slice(1);
         const chartInfo = metricInfo.chartInfo ? ` ${metricInfo.chartInfo}` : '';
         const fullName = `${metricInfo.name} ${typeString} ${chartInfo}`;
 

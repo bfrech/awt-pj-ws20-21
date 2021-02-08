@@ -18,6 +18,7 @@ export class PlayerService {
   // tslint:disable-next-line:variable-name
   private readonly _player: dashjs.MediaPlayerClass;
   private streamInfo: dashjs.StreamInfo | null | undefined;
+  private pendingIndex = { audio: NaN, video: NaN };
 
   constructor() {
 
@@ -25,6 +26,11 @@ export class PlayerService {
     this._player = dashjs.MediaPlayer().create();
     this._player.on(dashjs.MediaPlayer.events.PERIOD_SWITCH_COMPLETED, (e) => {
       this.streamInfo = e.toStreamInfo;
+    });
+    this._player.on(dashjs.MediaPlayer.events.QUALITY_CHANGE_REQUESTED, (e) => {
+      if (e.mediaType === 'audio' || e.mediaType === 'video') {
+        this.pendingIndex[e.mediaType] = e.newQuality + 1;
+      }
     });
   }
 
@@ -66,8 +72,8 @@ export class PlayerService {
     ////
 
     // Bitrate Downloading
-    let bitrateAudio = -1;
-    let bitrateVideo = -1;
+    let bitrateAudio = NaN;
+    let bitrateVideo = NaN;
 
     if (repSwitchAudio && typeof repSwitchAudio === 'object' && hasOwnProperty(repSwitchAudio, 'to')
         && typeof repSwitchAudio.to === 'string') {
@@ -98,6 +104,17 @@ export class PlayerService {
       }
     };
     ////
+
+    // Quality Index Pending
+    metrics.qualityIndexPending = this.pendingIndex;
+    ////
+
+    // Dropped Frames
+    const droppedFrames = dashMetrics.getCurrentDroppedFrames()?.droppedFrames ?? 0;
+    metrics.droppedFrames = { video: droppedFrames };
+    ////
+
+
 
     // TODO: more metrics..
 

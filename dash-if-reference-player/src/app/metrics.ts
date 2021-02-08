@@ -8,7 +8,7 @@ export interface Metrics {
     video: { current: number, max: number }
   };
   qualityIndexPending?: { audio: number, video: number };
-  droppedFrames?: { audio: number, video: number };
+  droppedFrames?: { video: number };
   latency?: {
     audio: { min: number, avg: number, max: number },
     video: { min: number, avg: number, max: number }
@@ -37,7 +37,7 @@ export const METRICOPTIONS: MetricOption[] = [
   { name: 'Bitrate Downloading', type: 'av', key: 'bitrateDownload', chartInfo: '/ kbps' },
   { name: 'Quality Index', type: 'av', key: 'qualityIndex', chartInfo: 'avg' },
   { name: 'Quality Index Pending', type: 'av', key: 'qualityIndexPending' },
-  { name: 'Dropped Frames', type: 'av', key: 'droppedFrames' },
+  { name: 'Dropped Frames', type: 'v', key: 'droppedFrames' },
   { name: 'Download Time', type: 'av', key: 'segDownloadTime' },
   { name: 'Playback Ratio', type: 'av', key: 'playbackDownloadTimeRatio' },
   { name: 'Latency', type: 'av', key: 'latency' },
