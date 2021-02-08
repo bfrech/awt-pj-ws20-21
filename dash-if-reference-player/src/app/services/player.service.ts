@@ -58,25 +58,46 @@ export class PlayerService {
     const repSwitchVideo = dashMetrics.getCurrentRepresentationSwitch('video');
     const metrics: Metrics = {};
 
+    // Buffer Length
     metrics.bufferLevel = {
       audio: dashMetrics.getCurrentBufferLevel('audio'),
       video: dashMetrics.getCurrentBufferLevel('video')
     };
+    ////
 
-    if (typeof repSwitchAudio === 'object' && hasOwnProperty(repSwitchAudio, 'to')
+    // Bitrate Downloading
+    let bitrateAudio = -1;
+    let bitrateVideo = -1;
+
+    if (repSwitchAudio && typeof repSwitchAudio === 'object' && hasOwnProperty(repSwitchAudio, 'to')
         && typeof repSwitchAudio.to === 'string') {
 
-      if (typeof repSwitchVideo === 'object' && hasOwnProperty(repSwitchVideo, 'to')
-          && typeof repSwitchVideo.to === 'string') {
-
-        const bitrateAudio = Math.round(dashAdapter.getBandwidthForRepresentation(repSwitchAudio.to, periodIndex)
-          / 1000);
-        const bitrateVideo = Math.round(dashAdapter.getBandwidthForRepresentation(repSwitchVideo.to, periodIndex)
-          / 1000);
-
-        metrics.bitrateDownload = { audio: bitrateAudio, video: bitrateVideo };
-      }
+      bitrateAudio = Math.round(dashAdapter.getBandwidthForRepresentation(repSwitchAudio.to, periodIndex) / 1000);
     }
+    if (repSwitchVideo && typeof repSwitchVideo === 'object' && hasOwnProperty(repSwitchVideo, 'to')
+      && typeof repSwitchVideo.to === 'string') {
+
+      bitrateVideo = Math.round(dashAdapter.getBandwidthForRepresentation(repSwitchVideo.to, periodIndex) / 1000);
+    }
+
+    metrics.bitrateDownload = {
+      audio: bitrateAudio,
+      video: bitrateVideo
+    };
+    ////
+
+    // Quality Index
+    metrics.qualityIndex = {
+      audio: {
+        current: this._player.getQualityFor('audio'),
+        max: dashAdapter.getMaxIndexForBufferType('audio', periodIndex)
+      },
+      video: {
+        current: this._player.getQualityFor('video'),
+        max: dashAdapter.getMaxIndexForBufferType('video', periodIndex)
+      }
+    };
+    ////
 
     // TODO: more metrics..
 

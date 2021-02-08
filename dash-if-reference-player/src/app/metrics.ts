@@ -3,9 +3,11 @@
 export interface Metrics {
   bufferLevel?: { audio: number, video: number };
   bitrateDownload?: { audio: number, video: number };
-  qualityIndex?: { audio: number, video: number };
+  qualityIndex?: {
+    audio: { current: number, max: number },
+    video: { current: number, max: number }
+  };
   qualityIndexPending?: { audio: number, video: number };
-  qualityIndexMax?: { audio: number, video: number };
   droppedFrames?: { audio: number, video: number };
   latency?: {
     audio: { min: number, avg: number, max: number },
@@ -26,14 +28,14 @@ export interface Metrics {
 
 
 /** Interface for selectable metric options */
-export interface MetricOption { name: string; type: 'a' | 'v' | 'av'; key: string; unit?: string; }
+export interface MetricOption { name: string; type: 'a' | 'v' | 'av'; key: string; chartInfo?: string; }
 
 
 /** Array of available options */
 export const METRICOPTIONS: MetricOption[] = [
-  { name: 'Buffer Length', type: 'av', key: 'bufferLevel', unit: 'seconds' },
-  { name: 'Bitrate Downloading', type: 'av', key: 'bitrateDownload', unit: 'kbps' },
-  { name: 'Quality Index', type: 'av', key: 'qualityIndex' },
+  { name: 'Buffer Length', type: 'av', key: 'bufferLevel', chartInfo: '/ seconds' },
+  { name: 'Bitrate Downloading', type: 'av', key: 'bitrateDownload', chartInfo: '/ kbps' },
+  { name: 'Quality Index', type: 'av', key: 'qualityIndex', chartInfo: 'avg' },
   { name: 'Quality Index Pending', type: 'av', key: 'qualityIndexPending' },
   { name: 'Dropped Frames', type: 'av', key: 'droppedFrames' },
   { name: 'Download Time', type: 'av', key: 'segDownloadTime' },

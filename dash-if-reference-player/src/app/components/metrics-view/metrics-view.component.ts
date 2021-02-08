@@ -15,6 +15,7 @@ import {
 import { PlayerService } from '../../services/player.service';
 import { MetricsService } from '../../services/metrics.service';
 import { Metrics, METRICOPTIONS } from '../../metrics';
+import { hasOwnProperty } from '../../../assets/hasownproperty';
 import * as dashjs from 'dashjs';
 
 
@@ -186,20 +187,41 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
     const metrics: Metrics = this.playerService.getMetrics();
 
     // Iterate through all available metrics and push their data into this.chartData
-    for (const [metricKey, metricVal] of Object.entries(metrics)) {
+    for (const [metricObjKey, metricObjVal] of Object.entries(metrics)) {
 
-      for (const [typeKey, typeVal] of Object.entries(metricVal)) {
+      for (const [typeObjKey, typeObjVal] of Object.entries(metricObjVal)) {
 
-        if (typeof typeVal === 'number') {
+        let fullKey = '';
+        let metricValue = -1;
 
-          const fullKey = `${metricKey}.${typeKey}`;
-
-          if (!this.chartData[fullKey]) {
-            this.chartData[fullKey] = new Array<[number, number]>();
-          }
-
-          this.chartData[fullKey].push([this.iteration, typeVal]);
+        // Handle plain numbers
+        if (typeObjVal && typeof typeObjVal === 'number') {
+          metricValue = typeObjVal;
         }
+        // Handle objects with current vs. max value (We show current on chart and max on overlay)
+        else if (typeObjVal && typeof typeObjVal === 'object'
+          && hasOwnProperty(typeObjVal, 'current')
+          && hasOwnProperty(typeObjVal, 'max')) {
+
+          metricValue = typeObjVal.current as number;                                 // Type is safe number
+        }
+        // Handle objects with min / avg / max values (We show avg on chart, min and max on overlay)
+        else if (typeObjVal && typeof typeObjVal === 'object'
+          && hasOwnProperty(typeObjVal, 'min')
+          && hasOwnProperty(typeObjVal, 'avg')
+          && hasOwnProperty(typeObjVal, 'max')) {
+
+          metricValue = typeObjVal.avg as number;                                     // Type is safe number
+        }
+
+        fullKey = `${metricObjKey}.${typeObjKey}`;
+
+        if (!this.chartData[fullKey]) {
+          this.chartData[fullKey] = new Array<[number, number]>();
+        }
+
+        this.chartData[fullKey].push([this.iteration, metricValue]);
+
       }
     }
   }
@@ -224,18 +246,12 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
         const metricInfo = METRICOPTIONS.find(element => element.key === key[0]);
         const typeString = key[1].charAt(0).toUpperCase() + key[1].slice(1);
 
-        let name = '';
-        let unit = '';
-
-        if (metricInfo) {
-          name = metricInfo.name;
-
-          if (metricInfo.unit) {
-            unit = `(${metricInfo.unit})`;
-          }
+        if (!metricInfo) {
+          return;
         }
 
-        const fullName = `${name} ${typeString} ${unit}`;
+        const chartInfo = metricInfo.chartInfo ? ` ${metricInfo.chartInfo}` : '';
+        const fullName = `${metricInfo.name} ${typeString} ${chartInfo}`;
 
         const yaxis: ApexYAxis = {
           seriesName: fullName,
