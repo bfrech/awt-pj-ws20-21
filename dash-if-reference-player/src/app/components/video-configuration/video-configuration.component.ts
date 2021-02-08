@@ -86,7 +86,6 @@ export class VideoConfigurationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(settingGroups);
     this.groups = Object.entries(this.processSettings());
   }
 
@@ -190,7 +189,6 @@ export class VideoConfigurationComponent implements OnInit {
    * defined in settingGroups.js
    */
   findGroup(name: string): any {
-    console.log(settingGroups);
     for (const key of Object.keys(settingGroups)) {
       if (settingGroups[key].hasOwnProperty(name)) {
         return key;
@@ -224,4 +222,31 @@ export class VideoConfigurationComponent implements OnInit {
     this.settingsSectionIsVisible = !this.settingsSectionIsVisible;
   }
 
+  setBadgeColor(e): string {
+    switch (e) {
+      case 'DASH-IF':
+        return '#1F8AF9';
+      case 'Envivio':
+        return '#1b7ce0';
+      case 'BBC':
+        return '#186ec7';
+      case 'Unified Streaming':
+        return '#1560ae';
+      case 'Axinom':
+        return '#125295';
+      case 'Streamroot':
+        return '#0f457c';
+      case 'Wowza':
+        return '#0c3763';
+      case 'AWS':
+        return '#62adfa';
+      case 'CTA':
+        return '#62adfa';
+      case 'Akamai':
+        return '#8fc4fc';
+      case 'Microsoft':
+        return '#061b31';
+    }
+  }
 }
+

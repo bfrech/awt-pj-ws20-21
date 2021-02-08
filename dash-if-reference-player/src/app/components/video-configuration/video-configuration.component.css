@@ -42,8 +42,8 @@
   border: 1px solid transparent;
 }
 
-.vc-custom-active {
-  border: 1px dotted #007bff;
+.vc-custom-active{
+  background-color: #e9ecef;
 }
 
 .vc-dropdown-menu {

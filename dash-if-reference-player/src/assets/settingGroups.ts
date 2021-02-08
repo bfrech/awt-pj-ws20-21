@@ -73,7 +73,6 @@ const settingGroups  = {
   }
 };
 
-
 /* Still needs to be assigned to Group */
 const order = {
     metricsMaxListDepth: 1000,
