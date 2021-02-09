@@ -22,6 +22,7 @@ h2 {
 
 .SingleSubSetting label {
   display: flex;
+  color: #707070;
 }
 
 .groupSubsetting {
@@ -33,17 +34,10 @@ h2 {
 }
 
 .content {
+  width: 100%;
   background-color: white;
   -webkit-box-shadow: 13px 13px 10px -10px rgba(130, 130, 130, 0.12);
   box-shadow: 13px 13px 10px -10px rgba(130, 130, 130, 0.12);
-}
-
-.content label {
-  width: 100%;
-}
-
-.content input {
-  width: 100%;
 }
 
 .radioButtonSettingGroup {
@@ -56,4 +50,17 @@ h2 {
   margin-left: 5px;
   height: 12px;
   width: auto;
+}
+
+.setting {
+  cursor: pointer;
+  margin-top: 5px;
+  height: 20px;
+  -webkit-transition: -webkit-transform 2.0s ease-in-out;
+  transition: transform 2.0s ease-in-out;
+}
+
+.setting:hover {
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
 }

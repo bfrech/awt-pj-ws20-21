@@ -222,7 +222,10 @@ export class VideoConfigurationComponent implements OnInit {
     this.settingsSectionIsVisible = !this.settingsSectionIsVisible;
   }
 
-  setBadgeColor(e): string {
+  /**
+   * Checks for provider and set Badge color
+   */
+  setBadgeColor(e: any): any {
     switch (e) {
       case 'DASH-IF':
         return '#1F8AF9';
