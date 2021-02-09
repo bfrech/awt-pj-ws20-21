@@ -102,11 +102,8 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       show: true,
       showForSingleSeries: true,
       showForNullSeries: false,
-      showForZeroSeries: false,
+      showForZeroSeries: true,
       position: 'top',
-      horizontalAlign: 'right',
-      floating: true,
-      offsetY: -20,
       onItemClick: {
         toggleDataSeries: false
       },
@@ -248,8 +245,6 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
         if (!metricInfo) {
           continue;
         }
-
-        // TODO: show legend for 0-series
 
         const typeString = key[1].charAt(0).toUpperCase() + key[1].slice(1);
         const chartInfo = metricInfo.chartInfo ? ` ${metricInfo.chartInfo}` : '';
