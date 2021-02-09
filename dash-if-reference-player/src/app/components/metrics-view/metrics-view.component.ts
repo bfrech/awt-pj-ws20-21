@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { interval, Subscription } from 'rxjs';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {interval, Subscription} from 'rxjs';
 import {
   ChartComponent,
   ApexChart,
@@ -12,9 +12,9 @@ import {
   ApexMarkers,
   ApexLegend
 } from 'ng-apexcharts';
-import { PlayerService } from '../../services/player.service';
-import { MetricsService } from '../../services/metrics.service';
-import { Metrics, METRICOPTIONS } from '../../metrics';
+import {PlayerService} from '../../services/player.service';
+import {MetricsService} from '../../services/metrics.service';
+import {Metrics, METRICOPTIONS} from '../../metrics';
 import * as dashjs from 'dashjs';
 
 
@@ -54,8 +54,8 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
   // Set chart options
   private yAxisMock: ApexYAxis = {
-    title: { text: '' },
-    axisBorder: { show: false },
+    title: {text: ''},
+    axisBorder: {show: false},
     labels: {
       formatter: (val) => {
         return val.toFixed(0);
@@ -85,12 +85,25 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
     },
     series: this.emptySeries,
     title: {
-      text: 'Stream Metrics'
+      text: 'Stream Metrics',
+      style: {
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol"',
+        color: '#707070',
+        fontWeight: '500',
+        fontSize: '16px'
+      },
     },
     xaxis: {
       type: 'numeric',
       range: 10,
-      title: { text: 't / Seconds' }
+      title: {
+        text: 't / Seconds',
+        style: {
+          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol"',
+          color: '#707070',
+          fontWeight: 'normal'
+        },
+      }
     },
     yaxis: this.yAxisMock,
     stroke: {
@@ -120,8 +133,8 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
   private iteration = 0;
 
-  constructor( private playerService: PlayerService,
-               private metricsService: MetricsService ) {
+  constructor(private playerService: PlayerService,
+              private metricsService: MetricsService) {
 
     // Subscribe to the service observable to receive metrics selection
     this.metricsService.updateMetricsSelectionCalled$.subscribe(
@@ -139,7 +152,9 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
     this.subscription = source.subscribe(() => this.intervalMain());
 
     // Setup listener for stream initialization. That event triggers a full chart reset
-    this.playerService.player.on(dashjs.MediaPlayer.events.STREAM_INITIALIZED, () => { this.reset(); });
+    this.playerService.player.on(dashjs.MediaPlayer.events.STREAM_INITIALIZED, () => {
+      this.reset();
+    });
   }
 
   ngOnDestroy(): void {
@@ -156,7 +171,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       this.updateChartData();
 
       // If user has selected some metric to display, update chart
-      if ( Array.isArray(this.selectedOptionKeys) && this.selectedOptionKeys.length ) {
+      if (Array.isArray(this.selectedOptionKeys) && this.selectedOptionKeys.length) {
         this.updateChart();
       }
 
@@ -227,14 +242,14 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
         const yaxis: ApexYAxis = {
           seriesName: fullName,
-          title: { text: fullName },
+          title: {text: fullName},
           opposite: false,
-          axisBorder: { show: false }
+          axisBorder: {show: false}
         };
 
         if (chartYAxes.length > 0) {
           yaxis.opposite = true;
-          yaxis.axisBorder = { show: true };
+          yaxis.axisBorder = {show: true};
         }
 
         chartSeries.push({
@@ -243,7 +258,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
         });
 
         // Note that we assign to a copy of this.yAxisMock so that this.yAxisMock itself is not changed
-        chartYAxes.push( Object.assign({...this.yAxisMock}, yaxis) );
+        chartYAxes.push(Object.assign({...this.yAxisMock}, yaxis));
       }
     }
 
