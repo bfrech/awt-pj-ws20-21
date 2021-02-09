@@ -3,7 +3,6 @@
 * {
   margin: 0;
   padding: 0;
-  color: #707070;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
   "Segoe UI Emoji", "Segoe UI Symbol";
 }
@@ -21,13 +20,24 @@ h2 {
 }
 
 h3 {
+  color: #707070;
   margin-bottom: -10px !important;
   font-size: 14px !important;
   font-weight: bold !important;
 }
 
+/**
+ * Styles for Angular Material
+ */
+
 .mat-checkbox-label {
+  color: #707070 !important;
   font-size: 14px;
+}
+
+input {
+  width: 100%;
+  color: #707070;
 }
 
 .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
@@ -36,10 +46,12 @@ h3 {
 }
 
 .mat-label {
+  color: #707070 !important;
   font-size: 14px;
 }
 
 .mat-checkbox-frame {
+  color: #707070 !important;
   border-width: 1px !important;
 }
 
@@ -106,4 +118,8 @@ h3 {
 
 .mat-expansion-panel .mat-expansion-panel-header.cdk-keyboard-focused:not([aria-disabled=true]), .mat-expansion-panel .mat-expansion-panel-header.cdk-program-focused:not([aria-disabled=true]), .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]) {
   background: rgba(31, 138, 249, .04)
+}
+.mat-expansion-panel {
+  background: #fff;
+  color: #707070;
 }

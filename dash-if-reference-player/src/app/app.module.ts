@@ -32,8 +32,7 @@ import {MatButtonModule} from '@angular/material/button';
     PlayerComponent,
     SettingComponent,
     MetricsViewComponent,
-    MetricsConfigurationComponent
-  ],
+    MetricsConfigurationComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -49,10 +48,10 @@ import {MatButtonModule} from '@angular/material/button';
     MatSnackBarModule,
     BrowserAnimationsModule,
     MatCardModule,
-    NgApexchartsModule
-  ],
+    NgApexchartsModule],
   providers: [],
   bootstrap: [AppComponent]
+
 })
 export class AppModule {
 }

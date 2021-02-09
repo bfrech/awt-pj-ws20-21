@@ -13,7 +13,8 @@ import * as dashjs from 'dashjs';
 export class SettingComponent implements OnInit {
   @Input() groups: any;
   checked = false;
-
+  closeResult = '';
+  settings: string[] = [];
   logLevels = [
     ['NONE', false],
     ['FATAL', false],
@@ -38,7 +39,10 @@ export class SettingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.groups.forEach((group: any) => {
+      this.settings.push(group[0]);
+    });
+    console.log(this.settings);
   }
 
   /**
