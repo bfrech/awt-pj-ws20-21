@@ -54,12 +54,13 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   }];
 
   // Set chart options
+  private refreshInterval = 1000;
   private yAxisMock: ApexYAxis = {
     title: { text: '' },
     axisBorder: { show: false },
     labels: {
       formatter: (val) => {
-        return val.toFixed(0);
+        return val.toPrecision(2);
       }
     }
   };
@@ -74,7 +75,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
         enabled: true,
         easing: 'linear',
         dynamicAnimation: {
-          speed: 1000
+          speed: this.refreshInterval
         }
       },
     },
@@ -131,7 +132,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     // Setup an rxjs interval and subscribe updater method
-    const source = interval(1000);
+    const source = interval(this.refreshInterval);
     this.subscription = source.subscribe(() => this.intervalMain());
 
     // Setup listener for stream initialization. That event triggers a full chart reset

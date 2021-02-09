@@ -11,6 +11,25 @@ declare module 'dashjs' {
     mpd: object;
   }
 
+  export interface HTTPRequest {
+    tcpid: any;
+    type: string;
+    url: string;
+    actualurl: any;
+    range: any;
+    trequest: Date;
+    tresponse: Date;
+    responsecode: number;
+    interval: number;
+    trace: object;
+    _stream: string;
+    _tfinish: Date;
+    _mediaduration: number;
+    _quality: number;
+    _responseHeaders: string;
+    _serviceLocation: string;
+  }
+
   export interface DashAdapter {
     getPeriodById(id: string): (Period | null);
   }

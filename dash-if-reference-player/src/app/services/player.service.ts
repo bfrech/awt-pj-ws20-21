@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as dashjs from 'dashjs';
 import '../types/dashjs-types';
 import { hasOwnProperty } from '../../assets/hasownproperty';
-import { Metrics } from '../metrics';
+import { MetricsAVG, Metrics } from '../metrics';
 
 
 /*
@@ -18,7 +18,7 @@ export class PlayerService {
   // tslint:disable-next-line:variable-name
   private readonly _player: dashjs.MediaPlayerClass;
   private streamInfo: dashjs.StreamInfo | null | undefined;
-  private pendingIndex = { audio: NaN, video: NaN };
+  private pendingIndex: { [index: string]: number } = {};
 
   constructor() {
 
@@ -28,9 +28,7 @@ export class PlayerService {
       this.streamInfo = e.toStreamInfo;
     });
     this._player.on(dashjs.MediaPlayer.events.QUALITY_CHANGE_REQUESTED, (e) => {
-      if (e.mediaType === 'audio' || e.mediaType === 'video') {
-        this.pendingIndex[e.mediaType] = e.newQuality + 1;
-      }
+      this.pendingIndex[e.mediaType] = e.newQuality + 1;
     });
   }
 
@@ -60,88 +58,88 @@ export class PlayerService {
     const dashAdapter: dashjs.DashAdapter = this._player.getDashAdapter();
     const period: (dashjs.Period | null) = dashAdapter.getPeriodById(this.streamInfo.id);
     const periodIndex = period ? period.index : this.streamInfo.index;
-    const repSwitchAudio = dashMetrics.getCurrentRepresentationSwitch('audio');
-    const repSwitchVideo = dashMetrics.getCurrentRepresentationSwitch('video');
+
     const metrics: Metrics = {};
+    // Define metricsMediaTypes with const assertion to get type safe object keys
+    const metricsMediaTypes = ['audio', 'video'] as const;
 
-    // Buffer Length
-    metrics.bufferLevel = {
-      audio: dashMetrics.getCurrentBufferLevel('audio'),
-      video: dashMetrics.getCurrentBufferLevel('video')
-    };
-    ////
+    // Iterate over metrics media types
+    for (const type of metricsMediaTypes) {
 
-    // Bitrate Downloading
-    let bitrateAudio = NaN;
-    let bitrateVideo = NaN;
+      const repSwitch = dashMetrics.getCurrentRepresentationSwitch(type);
 
-    if (repSwitchAudio && typeof repSwitchAudio === 'object' && hasOwnProperty(repSwitchAudio, 'to')
-        && typeof repSwitchAudio.to === 'string') {
+      // Buffer Length
+      if (!metrics.bufferLevel) {
+        metrics.bufferLevel = {};
+      }
+      metrics.bufferLevel[type] = dashMetrics.getCurrentBufferLevel(type);
+      ////
 
-      bitrateAudio = Math.round(dashAdapter.getBandwidthForRepresentation(repSwitchAudio.to, periodIndex) / 1000);
-    }
-    if (repSwitchVideo && typeof repSwitchVideo === 'object' && hasOwnProperty(repSwitchVideo, 'to')
-      && typeof repSwitchVideo.to === 'string') {
+      // Bitrate Downloading
+      if (repSwitch && typeof repSwitch === 'object' && hasOwnProperty(repSwitch, 'to')
+        && typeof repSwitch.to === 'string') {
 
-      bitrateVideo = Math.round(dashAdapter.getBandwidthForRepresentation(repSwitchVideo.to, periodIndex) / 1000);
-    }
+        if (!metrics.bitrateDownload) {
+          metrics.bitrateDownload = {};
+        }
+        metrics.bitrateDownload[type] = Math.round(dashAdapter.getBandwidthForRepresentation(repSwitch.to,
+          periodIndex) / 1000);
+      }
+      ////
 
-    metrics.bitrateDownload = {
-      audio: bitrateAudio,
-      video: bitrateVideo
-    };
-    ////
-
-    // Quality Index
-    metrics.qualityIndex = {
-      audio: {
+      // Quality Index
+      if (!metrics.qualityIndex) {
+        metrics.qualityIndex = {};
+      }
+      metrics.qualityIndex[type] = {
         current: this._player.getQualityFor('audio'),
         max: dashAdapter.getMaxIndexForBufferType('audio', periodIndex)
-      },
-      video: {
-        current: this._player.getQualityFor('video'),
-        max: dashAdapter.getMaxIndexForBufferType('video', periodIndex)
+      };
+      ////
+
+      // Quality Index Pending
+      if (this.pendingIndex[type]) {
+
+        if (!metrics.qualityIndexPending) {
+          metrics.qualityIndexPending = {};
+        }
+        metrics.qualityIndexPending[type] = this.pendingIndex[type];
       }
-    };
-    ////
+      ////
 
-    // Quality Index Pending
-    metrics.qualityIndexPending = this.pendingIndex;
-    ////
+      // Dropped Frames (video only)
+      if (type === 'video') {
+        if (!metrics.droppedFrames) {
+          metrics.droppedFrames = {};
+        }
+        const droppedFrames = dashMetrics.getCurrentDroppedFrames()?.droppedFrames ?? 0;
+        metrics.droppedFrames[type] = droppedFrames;
+      }
+      ////
 
-    // Dropped Frames
-    const droppedFrames = dashMetrics.getCurrentDroppedFrames()?.droppedFrames ?? 0;
-    metrics.droppedFrames = { video: droppedFrames };
-    ////
+      // HTTP Metrics
+      const httpRequests = dashMetrics.getHttpRequests(type) as Array<dashjs.HTTPRequest>;
+      const httpMetrics = this.calculateHTTPMetrics(type, httpRequests);
 
-    // Download Time
-    const m: object[] = dashMetrics.getHttpRequests('video');
-    ////
+      if (httpMetrics) {
 
-    /*
-    var httpMetrics = calculateHTTPMetrics(type, dashMetrics.getHttpRequests(type));
-            if (httpMetrics) {
-                $scope[type + 'Download'] = httpMetrics.download[type].low.toFixed(2) + ' | ' + httpMetrics.download[type].average.toFixed(2) + ' | ' + httpMetrics.download[type].high.toFixed(2);
-                $scope[type + 'Latency'] = httpMetrics.latency[type].low.toFixed(2) + ' | ' + httpMetrics.latency[type].average.toFixed(2) + ' | ' + httpMetrics.latency[type].high.toFixed(2);
-                $scope[type + 'Ratio'] = httpMetrics.ratio[type].low.toFixed(2) + ' | ' + httpMetrics.ratio[type].average.toFixed(2) + ' | ' + httpMetrics.ratio[type].high.toFixed(2);
-            }
+        if (!metrics.latency) {
+          metrics.latency = {};
+        }
+        metrics.latency[type] = httpMetrics.latency;
 
-            if ($scope.chartCount % 2 === 0) {
-                var time = getTimeForPlot();
-                $scope.plotPoint('buffer', type, bufferLevel, time);
-                $scope.plotPoint('index', type, index, time);
-                $scope.plotPoint('bitrate', type, bitrate, time);
-                $scope.plotPoint('droppedFPS', type, droppedFPS, time);
-                $scope.plotPoint('liveLatency', type, liveLatency, time);
+        if (!metrics.segDownloadTime) {
+          metrics.segDownloadTime = {};
+        }
+        metrics.segDownloadTime[type] = httpMetrics.segDownloadTime;
 
-                if (httpMetrics) {
-                    $scope.plotPoint('download', type, httpMetrics.download[type].average.toFixed(2), time);
-                    $scope.plotPoint('latency', type, httpMetrics.latency[type].average.toFixed(2), time);
-                    $scope.plotPoint('ratio', type, httpMetrics.ratio[type].average.toFixed(2), time);
-                }
-                $scope.safeApply();
-            }
-    */
+        if (!metrics.playbackDownloadTimeRatio) {
+          metrics.playbackDownloadTimeRatio = {};
+        }
+        metrics.playbackDownloadTimeRatio[type] = httpMetrics.playbackDownloadTimeRatio;
+      }
+      ////
+    }
 
     // TODO: more metrics..
 
@@ -149,83 +147,53 @@ export class PlayerService {
 
   }
 
-  calculateHTTPMetrics(type: 'audio' | 'video', requests: object[]): number {
+  calculateHTTPMetrics(type: 'audio' | 'video', requests: Array<dashjs.HTTPRequest>): { latency: MetricsAVG,
+                                                                        segDownloadTime: MetricsAVG,
+                                                                        playbackDownloadTimeRatio: MetricsAVG } | null {
 
+    let latency: MetricsAVG;
+    let segDownloadTime: MetricsAVG;
+    let playbackDownloadTimeRatio: MetricsAVG;
 
-    return 0;
-  }
+    const requestWindow = requests.slice(-20).filter( req => req.responsecode >= 200 && req.responsecode < 300
+                                                              && req.type === 'MediaSegment' && req._stream === type
+                                                              && !!req._mediaduration ).slice(-4);
 
-  /*
-  function calculateHTTPMetrics(type, requests) {
-        var latency = {},
-            download = {},
-            ratio = {};
+    if (requestWindow.length > 0) {
 
-        var requestWindow = requests.slice(-20).filter(function (req) {
-            return req.responsecode >= 200 && req.responsecode < 300 && req.type === 'MediaSegment' && req._stream === type && !!req._mediaduration;
-        }).slice(-4);
+      const latencyTimes = requestWindow.map( req => Math.abs(req.tresponse.getTime() - req.trequest.getTime()));
 
-        if (requestWindow.length > 0) {
-            var latencyTimes = requestWindow.map(function (req) {
-                return Math.abs(req.tresponse.getTime() - req.trequest.getTime()) / 1000;
-            });
+      latency = {
+        min: latencyTimes.reduce((l, r) => l < r ? l : r),
+        avg: latencyTimes.reduce((l, r) => l + r) / latencyTimes.length,
+        max: latencyTimes.reduce((l, r) => l < r ? r : l)
+      };
 
-            latency[type] = {
-                average: latencyTimes.reduce(function (l, r) {
-                    return l + r;
-                }) / latencyTimes.length,
-                high: latencyTimes.reduce(function (l, r) {
-                    return l < r ? r : l;
-                }),
-                low: latencyTimes.reduce(function (l, r) {
-                    return l < r ? l : r;
-                }),
-                count: latencyTimes.length
-            };
+      const downloadTimes = requestWindow.map(req => Math.abs(req._tfinish.getTime() - req.tresponse.getTime()));
 
-            var downloadTimes = requestWindow.map(function (req) {
-                return Math.abs(req._tfinish.getTime() - req.tresponse.getTime()) / 1000;
-            });
+      segDownloadTime = {
+        min: downloadTimes.reduce((l, r) => l < r ? l : r),
+        avg: downloadTimes.reduce((l, r) => l + r) / downloadTimes.length,
+        max: downloadTimes.reduce((l, r) => l < r ? r : l)
+      };
 
-            download[type] = {
-                average: downloadTimes.reduce(function (l, r) {
-                    return l + r;
-                }) / downloadTimes.length,
-                high: downloadTimes.reduce(function (l, r) {
-                    return l < r ? r : l;
-                }),
-                low: downloadTimes.reduce(function (l, r) {
-                    return l < r ? l : r;
-                }),
-                count: downloadTimes.length
-            };
+      const durationTimes = requestWindow.map(req => req._mediaduration);
 
-            var durationTimes = requestWindow.map(function (req) {
-                return req._mediaduration;
-            });
+      playbackDownloadTimeRatio = {
+        min: durationTimes.reduce((l, r) => l < r ? l : r) / segDownloadTime.max,
+        avg: (durationTimes.reduce((l, r) => l + r) / downloadTimes.length) / segDownloadTime.avg,
+        max: durationTimes.reduce((l, r) => l < r ? r : l) / segDownloadTime.min
+      };
 
-            ratio[type] = {
-                average: (durationTimes.reduce(function (l, r) {
-                    return l + r;
-                }) / downloadTimes.length) / download[type].average,
-                high: durationTimes.reduce(function (l, r) {
-                    return l < r ? r : l;
-                }) / download[type].low,
-                low: durationTimes.reduce(function (l, r) {
-                    return l < r ? l : r;
-                }) / download[type].high,
-                count: durationTimes.length
-            };
+      return {
+        latency,
+        segDownloadTime,
+        playbackDownloadTimeRatio
+      };
 
-            return {
-                latency: latency,
-                download: download,
-                ratio: ratio
-            };
-
-        }
-        return null;
     }
-  */
+
+    return null;
+  }
 
 }
