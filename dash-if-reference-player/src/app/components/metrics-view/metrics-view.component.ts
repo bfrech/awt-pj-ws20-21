@@ -212,7 +212,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
           metricValue = typeObjVal.avg as number;                                     // Type is safe number
         }
 
-        // If value is NaN, change it to -1 in order to avoid breaking the chart
+        // Apexcharts actually supports null values but is buggy. Use -1 instead
         metricValue = isNaN(metricValue) ? -1 : metricValue;
         const fullKey = `${metricObjKey}.${typeObjKey}`;
 

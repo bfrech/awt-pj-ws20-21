@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as dashjs from 'dashjs';
 import '../types/dashjs-types';
 import { hasOwnProperty } from '../../assets/hasownproperty';
-import { MetricsAVG, Metrics } from '../metrics';
+import { Metrics, MetricsAVG } from '../metrics';
 
 
 /*
@@ -18,7 +18,10 @@ export class PlayerService {
   // tslint:disable-next-line:variable-name
   private readonly _player: dashjs.MediaPlayerClass;
   private streamInfo: dashjs.StreamInfo | null | undefined;
-  private pendingIndex: { [index: string]: number } = {};
+  private pendingIndex: { [index: string]: number } = {
+    audio: NaN,
+    video: NaN
+  };
 
   constructor() {
 
@@ -98,13 +101,10 @@ export class PlayerService {
       ////
 
       // Quality Index Pending
-      if (this.pendingIndex[type]) {
-
-        if (!metrics.qualityIndexPending) {
-          metrics.qualityIndexPending = {};
-        }
-        metrics.qualityIndexPending[type] = this.pendingIndex[type];
+      if (!metrics.qualityIndexPending) {
+        metrics.qualityIndexPending = {};
       }
+      metrics.qualityIndexPending[type] = this.pendingIndex[type];
       ////
 
       // Dropped Frames (video only)
@@ -112,8 +112,7 @@ export class PlayerService {
         if (!metrics.droppedFrames) {
           metrics.droppedFrames = {};
         }
-        const droppedFrames = dashMetrics.getCurrentDroppedFrames()?.droppedFrames ?? 0;
-        metrics.droppedFrames[type] = droppedFrames;
+        metrics.droppedFrames[type] = dashMetrics.getCurrentDroppedFrames()?.droppedFrames ?? 0;
       }
       ////
 
@@ -139,12 +138,18 @@ export class PlayerService {
         metrics.playbackDownloadTimeRatio[type] = httpMetrics.playbackDownloadTimeRatio;
       }
       ////
+
+      // Live Latency (audio only)
+      if (type === 'audio') {
+        if (!metrics.liveLatency) {
+          metrics.liveLatency = {};
+        }
+        metrics.liveLatency[type] = this._player.getCurrentLiveLatency();
+      }
+      ////
     }
 
-    // TODO: more metrics..
-
     return metrics;
-
   }
 
   calculateHTTPMetrics(type: 'audio' | 'video', requests: Array<dashjs.HTTPRequest>): { latency: MetricsAVG,

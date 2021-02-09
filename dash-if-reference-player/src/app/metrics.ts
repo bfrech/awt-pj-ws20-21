@@ -16,7 +16,7 @@ export interface Metrics {
     video?: MetricsAVG
   };
   liveLatency?: {
-    audio?: MetricsAVG
+    audio?: number
   };
   segDownloadTime?: {
     audio?: MetricsAVG,
