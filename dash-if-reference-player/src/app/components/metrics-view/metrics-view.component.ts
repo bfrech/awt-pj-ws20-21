@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { interval, Subscription } from 'rxjs';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {interval, Subscription} from 'rxjs';
 import {
   ChartComponent,
   ApexChart,
@@ -86,12 +86,25 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
     },
     series: this.emptySeries,
     title: {
-      text: 'Stream Metrics'
+      text: 'Stream Metrics',
+      style: {
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol"',
+        color: '#707070',
+        fontWeight: '500',
+        fontSize: '16px'
+      },
     },
     xaxis: {
       type: 'numeric',
       range: 10,
-      title: { text: 't / Seconds' }
+      title: {
+        text: 't / Seconds',
+        style: {
+          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol"',
+          color: '#707070',
+          fontWeight: 'normal'
+        },
+      }
     },
     yaxis: this.yAxisMock,
     stroke: {
@@ -119,8 +132,8 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
   private sessionStart = NaN;
 
-  constructor( private playerService: PlayerService,
-               private metricsService: MetricsService ) {
+  constructor(private playerService: PlayerService,
+              private metricsService: MetricsService) {
 
     // Subscribe to the service observable to receive metrics selection
     this.metricsService.updateMetricsSelectionCalled$.subscribe(
@@ -138,7 +151,9 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
     this.subscription = source.subscribe(() => this.intervalMain());
 
     // Setup listener for stream initialization. That event triggers a full chart reset
-    this.playerService.player.on(dashjs.MediaPlayer.events.STREAM_INITIALIZED, () => { this.reset(); });
+    this.playerService.player.on(dashjs.MediaPlayer.events.STREAM_INITIALIZED, () => {
+      this.reset();
+    });
   }
 
   ngOnDestroy(): void {
