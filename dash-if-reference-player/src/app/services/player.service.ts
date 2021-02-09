@@ -114,12 +114,118 @@ export class PlayerService {
     metrics.droppedFrames = { video: droppedFrames };
     ////
 
+    // Download Time
+    const m: object[] = dashMetrics.getHttpRequests('video');
+    ////
 
+    /*
+    var httpMetrics = calculateHTTPMetrics(type, dashMetrics.getHttpRequests(type));
+            if (httpMetrics) {
+                $scope[type + 'Download'] = httpMetrics.download[type].low.toFixed(2) + ' | ' + httpMetrics.download[type].average.toFixed(2) + ' | ' + httpMetrics.download[type].high.toFixed(2);
+                $scope[type + 'Latency'] = httpMetrics.latency[type].low.toFixed(2) + ' | ' + httpMetrics.latency[type].average.toFixed(2) + ' | ' + httpMetrics.latency[type].high.toFixed(2);
+                $scope[type + 'Ratio'] = httpMetrics.ratio[type].low.toFixed(2) + ' | ' + httpMetrics.ratio[type].average.toFixed(2) + ' | ' + httpMetrics.ratio[type].high.toFixed(2);
+            }
+
+            if ($scope.chartCount % 2 === 0) {
+                var time = getTimeForPlot();
+                $scope.plotPoint('buffer', type, bufferLevel, time);
+                $scope.plotPoint('index', type, index, time);
+                $scope.plotPoint('bitrate', type, bitrate, time);
+                $scope.plotPoint('droppedFPS', type, droppedFPS, time);
+                $scope.plotPoint('liveLatency', type, liveLatency, time);
+
+                if (httpMetrics) {
+                    $scope.plotPoint('download', type, httpMetrics.download[type].average.toFixed(2), time);
+                    $scope.plotPoint('latency', type, httpMetrics.latency[type].average.toFixed(2), time);
+                    $scope.plotPoint('ratio', type, httpMetrics.ratio[type].average.toFixed(2), time);
+                }
+                $scope.safeApply();
+            }
+    */
 
     // TODO: more metrics..
 
     return metrics;
 
   }
+
+  calculateHTTPMetrics(type: 'audio' | 'video', requests: object[]): number {
+
+
+    return 0;
+  }
+
+  /*
+  function calculateHTTPMetrics(type, requests) {
+        var latency = {},
+            download = {},
+            ratio = {};
+
+        var requestWindow = requests.slice(-20).filter(function (req) {
+            return req.responsecode >= 200 && req.responsecode < 300 && req.type === 'MediaSegment' && req._stream === type && !!req._mediaduration;
+        }).slice(-4);
+
+        if (requestWindow.length > 0) {
+            var latencyTimes = requestWindow.map(function (req) {
+                return Math.abs(req.tresponse.getTime() - req.trequest.getTime()) / 1000;
+            });
+
+            latency[type] = {
+                average: latencyTimes.reduce(function (l, r) {
+                    return l + r;
+                }) / latencyTimes.length,
+                high: latencyTimes.reduce(function (l, r) {
+                    return l < r ? r : l;
+                }),
+                low: latencyTimes.reduce(function (l, r) {
+                    return l < r ? l : r;
+                }),
+                count: latencyTimes.length
+            };
+
+            var downloadTimes = requestWindow.map(function (req) {
+                return Math.abs(req._tfinish.getTime() - req.tresponse.getTime()) / 1000;
+            });
+
+            download[type] = {
+                average: downloadTimes.reduce(function (l, r) {
+                    return l + r;
+                }) / downloadTimes.length,
+                high: downloadTimes.reduce(function (l, r) {
+                    return l < r ? r : l;
+                }),
+                low: downloadTimes.reduce(function (l, r) {
+                    return l < r ? l : r;
+                }),
+                count: downloadTimes.length
+            };
+
+            var durationTimes = requestWindow.map(function (req) {
+                return req._mediaduration;
+            });
+
+            ratio[type] = {
+                average: (durationTimes.reduce(function (l, r) {
+                    return l + r;
+                }) / downloadTimes.length) / download[type].average,
+                high: durationTimes.reduce(function (l, r) {
+                    return l < r ? r : l;
+                }) / download[type].low,
+                low: durationTimes.reduce(function (l, r) {
+                    return l < r ? l : r;
+                }) / download[type].high,
+                count: durationTimes.length
+            };
+
+            return {
+                latency: latency,
+                download: download,
+                ratio: ratio
+            };
+
+        }
+        return null;
+    }
+  */
 
 }

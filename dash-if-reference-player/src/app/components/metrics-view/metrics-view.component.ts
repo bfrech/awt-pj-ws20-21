@@ -61,9 +61,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       formatter: (val) => {
         return val.toFixed(0);
       }
-    },
-    min: 0,
-    tickAmount: 5
+    }
   };
   public chartOptions: ChartOptions = {
     chart: {
@@ -214,6 +212,8 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
           metricValue = typeObjVal.avg as number;                                     // Type is safe number
         }
 
+        // If value is NaN, change it to -1 in order to avoid breaking the chart
+        metricValue = isNaN(metricValue) ? -1 : metricValue;
         fullKey = `${metricObjKey}.${typeObjKey}`;
 
         if (!this.chartData[fullKey]) {
@@ -248,6 +248,8 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
         if (!metricInfo) {
           continue;
         }
+
+        // TODO: show legend for 0-series
 
         const typeString = key[1].charAt(0).toUpperCase() + key[1].slice(1);
         const chartInfo = metricInfo.chartInfo ? ` ${metricInfo.chartInfo}` : '';
