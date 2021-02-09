@@ -114,7 +114,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   };
 
   private subscription!: Subscription;
-  private iteration = 0;
+  private sessionStart = NaN;
 
   constructor( private playerService: PlayerService,
                private metricsService: MetricsService ) {
@@ -148,7 +148,10 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
     // If player is initialized and source is applied, update all available metric data
     if (this.playerService.player.isReady()) {
 
-      this.iteration += 1;
+      if (isNaN(this.sessionStart)) {
+        this.sessionStart = new Date().getTime() / 1000;
+      }
+
       this.updateChartData();
 
       // If user has selected some metric to display, update chart
@@ -157,10 +160,10 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       }
 
       /*
-       * Get rid of old data every 3600 iterations (about 30 min) minutes. This should not be done too often since it
+       * Get rid of old data every 30 minutes. This should not be done too often since it
        * destroys the horizontal realtime animation.
        */
-      if (this.iteration % 3600 === 0) {
+      if (this.getDataTime() % 3600 === 0) {
 
         const keys = Object.keys(this.chartData);
         const slice = (this.chartOptions.xaxis.range) ? ((this.chartOptions.xaxis.range + 1) * -1) : -1;
@@ -186,7 +189,6 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
       for (const [typeObjKey, typeObjVal] of Object.entries(metricObjVal)) {
 
-        let fullKey = '';
         let metricValue = NaN;
 
         // Handle plain numbers
@@ -211,13 +213,13 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
         // If value is NaN, change it to -1 in order to avoid breaking the chart
         metricValue = isNaN(metricValue) ? -1 : metricValue;
-        fullKey = `${metricObjKey}.${typeObjKey}`;
+        const fullKey = `${metricObjKey}.${typeObjKey}`;
 
         if (!this.chartData[fullKey]) {
           this.chartData[fullKey] = new Array<[number, number]>();
         }
 
-        this.chartData[fullKey].push([this.iteration, metricValue]);
+        this.chartData[fullKey].push([this.getDataTime(), metricValue]);
 
       }
     }
@@ -296,11 +298,19 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   /** Reset: Clear chart and data. */
   reset(): void {
 
-    this.iteration = 0;
+    this.sessionStart = NaN;
     this.chartData = {};
     this.chart.updateOptions({
       series: this.emptySeries,
       yaxis: this.yAxisMock
     });
   }
+
+  /** Return time in seconds since session start */
+  getDataTime(): number {
+
+    const now = new Date().getTime() / 1000;
+    return Math.max(now - this.sessionStart, 0);
+  }
+
 }
