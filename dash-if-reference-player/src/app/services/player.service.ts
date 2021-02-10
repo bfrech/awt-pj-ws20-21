@@ -95,8 +95,8 @@ export class PlayerService {
         metrics.qualityIndex = {};
       }
       metrics.qualityIndex[type] = {
-        current: this._player.getQualityFor('audio'),
-        max: dashAdapter.getMaxIndexForBufferType('audio', periodIndex)
+        current: this._player.getQualityFor(type),
+        max: dashAdapter.getMaxIndexForBufferType(type, periodIndex)
       };
       ////
 
