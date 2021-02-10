@@ -47,6 +47,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   // Get a reference of the chart object
   @ViewChild('chartObj') chart!: ChartComponent;
 
+  private chartYAxesJson = '';
   private chartData: { [index: string]: Array<[number, number]> } = {};
   private emptySeries: ApexAxisChartSeries = [{
     name: '',
@@ -97,6 +98,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       curve: 'smooth',
     },
     markers: {
+      // Markers are buggy on livecharts
       size: 0,
     },
     legend: {
@@ -156,7 +158,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       this.updateChartData();
 
       // If user has selected some metric to display, update chart
-      if ( Array.isArray(this.selectedOptionKeys) && this.selectedOptionKeys.length ) {
+      if (Array.isArray(this.selectedOptionKeys) && this.selectedOptionKeys.length) {
         this.updateChart();
       }
 
@@ -234,8 +236,8 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const chartSeries: ApexAxisChartSeries = [];
-    const chartYAxes = [];
+    const chartSeriesNew: ApexAxisChartSeries = [];
+    const chartYAxesNew: Array<ApexYAxis> = [];
 
     // Iterate through all selected options and create a series and y-axis for each
     for (const fullKey of this.selectedOptionKeys) {
@@ -260,28 +262,34 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
           axisBorder: { show: false }
         };
 
-        if (chartYAxes.length > 0) {
+        if (chartYAxesNew.length > 0) {
           yaxis.opposite = true;
           yaxis.axisBorder = { show: true };
         }
 
-        chartSeries.push({
+        chartSeriesNew.push({
           name: fullName,
           data: this.chartData[fullKey],
         });
 
         // Note that we assign to a copy of this.yAxisMock so that this.yAxisMock itself is not changed
-        chartYAxes.push( Object.assign({...this.yAxisMock}, yaxis) );
+        chartYAxesNew.push( Object.assign({...this.yAxisMock}, yaxis) );
       }
     }
 
-    // TODO: Use updateSeries() for series and only if axes changed, update them via updateOptions()
-    //        This is better since updateOptions triggers a full chart re-rendering and breaks markers
-    this.chart.updateOptions({
-      series: chartSeries,
-      yaxis: chartYAxes
-    });
-    // this.chart.updateSeries(chartSeries);
+    // Update series only if y axes have not changed, otherwise update whole chart
+    const chartYAxesNewJson = JSON.stringify(chartYAxesNew);
+    if (this.chartYAxesJson === chartYAxesNewJson) {
+      this.chart.updateSeries(chartSeriesNew);
+    }
+    else {
+      this.chartYAxesJson = chartYAxesNewJson;
+      this.chart.updateOptions({
+        series: chartSeriesNew,
+        yaxis: chartYAxesNew
+      });
+    }
+
   }
 
   /** Called on changed metrics selection. Perhaps the chart has to be cleaned */
