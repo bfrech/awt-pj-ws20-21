@@ -166,6 +166,7 @@ export class PlayerService {
 
     if (requestWindow.length > 0) {
 
+      // latency times in ms
       const latencyTimes = requestWindow.map( req => Math.abs(req.tresponse.getTime() - req.trequest.getTime()));
 
       latency = {
@@ -174,6 +175,7 @@ export class PlayerService {
         max: latencyTimes.reduce((l, r) => l < r ? r : l)
       };
 
+      // download times in ms
       const downloadTimes = requestWindow.map(req => Math.abs(req._tfinish.getTime() - req.tresponse.getTime()));
 
       segDownloadTime = {
@@ -182,7 +184,8 @@ export class PlayerService {
         max: downloadTimes.reduce((l, r) => l < r ? r : l)
       };
 
-      const durationTimes = requestWindow.map(req => req._mediaduration);
+      // duration times in ms
+      const durationTimes = requestWindow.map(req => req._mediaduration * 1000);
 
       playbackDownloadTimeRatio = {
         min: durationTimes.reduce((l, r) => l < r ? l : r) / segDownloadTime.max,
