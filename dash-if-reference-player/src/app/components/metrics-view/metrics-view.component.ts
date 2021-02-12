@@ -15,6 +15,7 @@ import {
 import { PlayerService } from '../../services/player.service';
 import { MetricsService } from '../../services/metrics.service';
 import { Metrics, METRICOPTIONS } from '../../metrics';
+import { hasOwnProperty } from '../../../assets/hasownproperty';
 import * as dashjs from 'dashjs';
 
 
@@ -46,6 +47,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   // Get a reference of the chart object
   @ViewChild('chartObj') chart!: ChartComponent;
 
+  private chartYAxesJson = '';
   private chartData: { [index: string]: Array<[number, number]> } = {};
   private emptySeries: ApexAxisChartSeries = [{
     name: '',
@@ -53,16 +55,15 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   }];
 
   // Set chart options
+  private refreshInterval = 1000;
   private yAxisMock: ApexYAxis = {
     title: { text: '' },
     axisBorder: { show: false },
     labels: {
       formatter: (val) => {
-        return val.toFixed(0);
+        return val.toPrecision(2);
       }
-    },
-    min: 0,
-    tickAmount: 5
+    }
   };
   public chartOptions: ChartOptions = {
     chart: {
@@ -75,7 +76,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
         enabled: true,
         easing: 'linear',
         dynamicAnimation: {
-          speed: 1000
+          speed: this.refreshInterval
         }
       },
     },
@@ -97,17 +98,15 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       curve: 'smooth',
     },
     markers: {
+      // Markers are buggy on livecharts
       size: 0,
     },
     legend: {
       show: true,
       showForSingleSeries: true,
       showForNullSeries: false,
-      showForZeroSeries: false,
+      showForZeroSeries: true,
       position: 'top',
-      horizontalAlign: 'right',
-      floating: true,
-      offsetY: -20,
       onItemClick: {
         toggleDataSeries: false
       },
@@ -118,7 +117,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   };
 
   private subscription!: Subscription;
-  private iteration = 0;
+  private sessionStart = NaN;
 
   constructor( private playerService: PlayerService,
                private metricsService: MetricsService ) {
@@ -135,7 +134,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     // Setup an rxjs interval and subscribe updater method
-    const source = interval(1000);
+    const source = interval(this.refreshInterval);
     this.subscription = source.subscribe(() => this.intervalMain());
 
     // Setup listener for stream initialization. That event triggers a full chart reset
@@ -152,19 +151,22 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
     // If player is initialized and source is applied, update all available metric data
     if (this.playerService.player.isReady()) {
 
-      this.iteration += 1;
+      if (isNaN(this.sessionStart)) {
+        this.sessionStart = new Date().getTime() / 1000;
+      }
+
       this.updateChartData();
 
       // If user has selected some metric to display, update chart
-      if ( Array.isArray(this.selectedOptionKeys) && this.selectedOptionKeys.length ) {
+      if (Array.isArray(this.selectedOptionKeys) && this.selectedOptionKeys.length) {
         this.updateChart();
       }
 
       /*
-       * Get rid of old data every 3600 iterations (about 30 min) minutes. This should not be done too often since it
+       * Get rid of old data every 30 minutes. This should not be done too often since it
        * destroys the horizontal realtime animation.
        */
-      if (this.iteration % 3600 === 0) {
+      if (this.getDataTime() % 3600 === 0) {
 
         const keys = Object.keys(this.chartData);
         const slice = (this.chartOptions.xaxis.range) ? ((this.chartOptions.xaxis.range + 1) * -1) : -1;
@@ -183,23 +185,45 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   /** Get fresh metrics dataset and push it into chartData */
   updateChartData(): void {
 
-    const metrics: Metrics = this.playerService.getMetrics();
+    const metrics: Metrics = this.playerService.getMetrics(true);
 
     // Iterate through all available metrics and push their data into this.chartData
-    for (const [metricKey, metricVal] of Object.entries(metrics)) {
+    for (const [metricObjKey, metricObjVal] of Object.entries(metrics)) {
 
-      for (const [typeKey, typeVal] of Object.entries(metricVal)) {
+      for (const [typeObjKey, typeObjVal] of Object.entries(metricObjVal)) {
 
-        if (typeof typeVal === 'number') {
+        let metricValue = NaN;
 
-          const fullKey = `${metricKey}.${typeKey}`;
-
-          if (!this.chartData[fullKey]) {
-            this.chartData[fullKey] = new Array<[number, number]>();
-          }
-
-          this.chartData[fullKey].push([this.iteration, typeVal]);
+        // Handle plain numbers
+        if (typeof typeObjVal === 'number') {
+          metricValue = typeObjVal;
         }
+        // Handle objects with current vs. max value (We show current on chart and max on overlay)
+        else if (typeObjVal && typeof typeObjVal === 'object'
+          && hasOwnProperty(typeObjVal, 'current')
+          && hasOwnProperty(typeObjVal, 'max')) {
+
+          metricValue = typeObjVal.current as number;                                 // Type is safe number
+        }
+        // Handle objects with min / avg / max values (We show avg on chart, min and max on overlay)
+        else if (typeObjVal && typeof typeObjVal === 'object'
+          && hasOwnProperty(typeObjVal, 'min')
+          && hasOwnProperty(typeObjVal, 'avg')
+          && hasOwnProperty(typeObjVal, 'max')) {
+
+          metricValue = typeObjVal.avg as number;                                     // Type is safe number
+        }
+
+        // Apexcharts actually supports null values but is buggy. Use -1 instead
+        metricValue = isNaN(metricValue) ? -1 : metricValue;
+        const fullKey = `${metricObjKey}.${typeObjKey}`;
+
+        if (!this.chartData[fullKey]) {
+          this.chartData[fullKey] = new Array<[number, number]>();
+        }
+
+        this.chartData[fullKey].push([this.getDataTime(), metricValue]);
+
       }
     }
   }
@@ -212,8 +236,8 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const chartSeries: ApexAxisChartSeries = [];
-    const chartYAxes = [];
+    const chartSeriesNew: ApexAxisChartSeries = [];
+    const chartYAxesNew: Array<ApexYAxis> = [];
 
     // Iterate through all selected options and create a series and y-axis for each
     for (const fullKey of this.selectedOptionKeys) {
@@ -221,9 +245,15 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       if (this.chartData[fullKey]) {
 
         const key = fullKey.split('.');
-        const name = METRICOPTIONS.find(element => element.key === key[0])?.name ?? '';
+        const metricInfo = METRICOPTIONS.find(element => element.key === key[0]);
+
+        if (!metricInfo) {
+          continue;
+        }
+
         const typeString = key[1].charAt(0).toUpperCase() + key[1].slice(1);
-        const fullName = `${name} ${typeString}`;
+        const chartInfo = metricInfo.chartInfo ? ` ${metricInfo.chartInfo}` : '';
+        const fullName = `${metricInfo.name} ${typeString} ${chartInfo}`;
 
         const yaxis: ApexYAxis = {
           seriesName: fullName,
@@ -232,28 +262,34 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
           axisBorder: { show: false }
         };
 
-        if (chartYAxes.length > 0) {
+        if (chartYAxesNew.length > 0) {
           yaxis.opposite = true;
           yaxis.axisBorder = { show: true };
         }
 
-        chartSeries.push({
+        chartSeriesNew.push({
           name: fullName,
           data: this.chartData[fullKey],
         });
 
         // Note that we assign to a copy of this.yAxisMock so that this.yAxisMock itself is not changed
-        chartYAxes.push( Object.assign({...this.yAxisMock}, yaxis) );
+        chartYAxesNew.push( Object.assign({...this.yAxisMock}, yaxis) );
       }
     }
 
-    // TODO: Use updateSeries() for series and only if axes changed, update them via updateOptions()
-    //        This is better since updateOptions triggers a full chart re-rendering and breaks markers
-    this.chart.updateOptions({
-      series: chartSeries,
-      yaxis: chartYAxes
-    });
-    // this.chart.updateSeries(chartSeries);
+    // Update series only if y axes have not changed, otherwise update whole chart
+    const chartYAxesNewJson = JSON.stringify(chartYAxesNew);
+    if (this.chartYAxesJson === chartYAxesNewJson) {
+      this.chart.updateSeries(chartSeriesNew);
+    }
+    else {
+      this.chartYAxesJson = chartYAxesNewJson;
+      this.chart.updateOptions({
+        series: chartSeriesNew,
+        yaxis: chartYAxesNew
+      });
+    }
+
   }
 
   /** Called on changed metrics selection. Perhaps the chart has to be cleaned */
@@ -271,11 +307,19 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   /** Reset: Clear chart and data. */
   reset(): void {
 
-    this.iteration = 0;
+    this.sessionStart = NaN;
     this.chartData = {};
     this.chart.updateOptions({
       series: this.emptySeries,
       yaxis: this.yAxisMock
     });
   }
+
+  /** Return time in seconds since session start */
+  getDataTime(): number {
+
+    const now = new Date().getTime() / 1000;
+    return Math.max(now - this.sessionStart, 0);
+  }
+
 }

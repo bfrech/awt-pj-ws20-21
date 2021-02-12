@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as dashjs from 'dashjs';
 import '../types/dashjs-types';
-import { Metrics } from '../metrics';
+import { hasOwnProperty } from '../../assets/hasownproperty';
+import { Metrics, MetricsAVG } from '../metrics';
+
 
 /*
  * This service provides a dashjs player object and some helper methods that can be accessed from every component where
@@ -16,6 +18,11 @@ export class PlayerService {
   // tslint:disable-next-line:variable-name
   private readonly _player: dashjs.MediaPlayerClass;
   private streamInfo: dashjs.StreamInfo | null | undefined;
+  private pendingIndex: { [index: string]: number } = {
+    audio: NaN,
+    video: NaN
+  };
+  private metrics: Metrics = {};
 
   constructor() {
 
@@ -23,6 +30,9 @@ export class PlayerService {
     this._player = dashjs.MediaPlayer().create();
     this._player.on(dashjs.MediaPlayer.events.PERIOD_SWITCH_COMPLETED, (e) => {
       this.streamInfo = e.toStreamInfo;
+    });
+    this._player.on(dashjs.MediaPlayer.events.QUALITY_CHANGE_REQUESTED, (e) => {
+      this.pendingIndex[e.mediaType] = e.newQuality + 1;
     });
   }
 
@@ -42,24 +52,159 @@ export class PlayerService {
   }
 
   /** Provide metrics to be displayed in live chart */
-  getMetrics(): Metrics {
+  getMetrics(recalculate: boolean = false): Metrics {
+
+    if (!recalculate) {
+      return this.metrics;
+    }
+
+    if (!this.streamInfo) {
+      this.metrics = {};
+      return this.metrics;
+    }
 
     const dashMetrics: dashjs.DashMetrics = this._player.getDashMetrics();
     const dashAdapter: dashjs.DashAdapter = this._player.getDashAdapter();
-    const metrics: Metrics = {};
+    const period: (dashjs.Period | null) = dashAdapter.getPeriodById(this.streamInfo.id);
+    const periodIndex = period ? period.index : this.streamInfo.index;
 
-    metrics.bufferLevel = {
-      audio: dashMetrics.getCurrentBufferLevel('audio'),
-      video: dashMetrics.getCurrentBufferLevel('video')
-    };
+    // Define metricsMediaTypes with const assertion to get type safe object keys
+    const metricsMediaTypes = ['audio', 'video'] as const;
 
-    // dashjs.LogLevel.LOG_LEVEL_DEBUG
-    // const period = dashAdapter.getPeriodById(this.streamInfo.id);
+    // Iterate over metrics media types
+    for (const type of metricsMediaTypes) {
 
-    // TODO: more metrics..
+      const repSwitch = dashMetrics.getCurrentRepresentationSwitch(type);
 
-    return metrics;
+      // Buffer Length
+      if (!this.metrics.bufferLevel) {
+        this.metrics.bufferLevel = {};
+      }
+      this.metrics.bufferLevel[type] = dashMetrics.getCurrentBufferLevel(type);
+      ////
 
+      // Bitrate Downloading
+      if (repSwitch && typeof repSwitch === 'object' && hasOwnProperty(repSwitch, 'to')
+        && typeof repSwitch.to === 'string') {
+
+        if (!this.metrics.bitrateDownload) {
+          this.metrics.bitrateDownload = {};
+        }
+        this.metrics.bitrateDownload[type] = Math.round(dashAdapter.getBandwidthForRepresentation(repSwitch.to,
+          periodIndex) / 1000);
+      }
+      ////
+
+      // Quality Index
+      if (!this.metrics.qualityIndex) {
+        this.metrics.qualityIndex = {};
+      }
+      this.metrics.qualityIndex[type] = {
+        current: this._player.getQualityFor(type),
+        max: dashAdapter.getMaxIndexForBufferType(type, periodIndex)
+      };
+      ////
+
+      // Quality Index Pending
+      if (!this.metrics.qualityIndexPending) {
+        this.metrics.qualityIndexPending = {};
+      }
+      this.metrics.qualityIndexPending[type] = this.pendingIndex[type];
+      ////
+
+      // Dropped Frames (video only)
+      if (type === 'video') {
+        if (!this.metrics.droppedFrames) {
+          this.metrics.droppedFrames = {};
+        }
+        this.metrics.droppedFrames[type] = dashMetrics.getCurrentDroppedFrames()?.droppedFrames ?? 0;
+      }
+      ////
+
+      // HTTP Metrics
+      const httpRequests = dashMetrics.getHttpRequests(type) as Array<dashjs.HTTPRequest>;
+      const httpMetrics = this.calculateHTTPMetrics(type, httpRequests);
+
+      if (httpMetrics) {
+
+        if (!this.metrics.latency) {
+          this.metrics.latency = {};
+        }
+        this.metrics.latency[type] = httpMetrics.latency;
+
+        if (!this.metrics.segDownloadTime) {
+          this.metrics.segDownloadTime = {};
+        }
+        this.metrics.segDownloadTime[type] = httpMetrics.segDownloadTime;
+
+        if (!this.metrics.playbackDownloadTimeRatio) {
+          this.metrics.playbackDownloadTimeRatio = {};
+        }
+        this.metrics.playbackDownloadTimeRatio[type] = httpMetrics.playbackDownloadTimeRatio;
+      }
+      ////
+    }
+
+    // Live Latency (stream)
+    if (!this.metrics.liveLatency) {
+      this.metrics.liveLatency = {};
+    }
+    this.metrics.liveLatency.stream = this._player.getCurrentLiveLatency();
+    ////
+
+    return this.metrics;
+  }
+
+  calculateHTTPMetrics(type: 'audio' | 'video', requests: Array<dashjs.HTTPRequest>): { latency: MetricsAVG,
+                                                                        segDownloadTime: MetricsAVG,
+                                                                        playbackDownloadTimeRatio: MetricsAVG } | null {
+
+    let latency: MetricsAVG;
+    let segDownloadTime: MetricsAVG;
+    let playbackDownloadTimeRatio: MetricsAVG;
+
+    const requestWindow = requests.slice(-20).filter( req => req.responsecode >= 200 && req.responsecode < 300
+                                                              && req.type === 'MediaSegment' && req._stream === type
+                                                              && !!req._mediaduration ).slice(-4);
+
+    if (requestWindow.length > 0) {
+
+      // latency times in ms
+      const latencyTimes = requestWindow.map( req => Math.abs(req.tresponse.getTime() - req.trequest.getTime()));
+
+      latency = {
+        min: latencyTimes.reduce((l, r) => l < r ? l : r),
+        avg: latencyTimes.reduce((l, r) => l + r) / latencyTimes.length,
+        max: latencyTimes.reduce((l, r) => l < r ? r : l)
+      };
+
+      // download times in ms
+      const downloadTimes = requestWindow.map(req => Math.abs(req._tfinish.getTime() - req.tresponse.getTime()));
+
+      segDownloadTime = {
+        min: downloadTimes.reduce((l, r) => l < r ? l : r),
+        avg: downloadTimes.reduce((l, r) => l + r) / downloadTimes.length,
+        max: downloadTimes.reduce((l, r) => l < r ? r : l)
+      };
+
+      // duration times in ms
+      const durationTimes = requestWindow.map(req => req._mediaduration * 1000);
+
+      playbackDownloadTimeRatio = {
+        min: durationTimes.reduce((l, r) => l < r ? l : r) / segDownloadTime.max,
+        avg: (durationTimes.reduce((l, r) => l + r) / downloadTimes.length) / segDownloadTime.avg,
+        max: durationTimes.reduce((l, r) => l < r ? r : l) / segDownloadTime.min
+      };
+
+      return {
+        latency,
+        segDownloadTime,
+        playbackDownloadTimeRatio
+      };
+
+    }
+
+    return null;
   }
 
 }
