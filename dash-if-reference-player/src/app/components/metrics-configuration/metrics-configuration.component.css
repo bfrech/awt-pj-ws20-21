@@ -20,23 +20,27 @@ th, td {
 }
 
 td {
-  padding: 0.7rem 0 0.2rem;
+  padding: 0 0.2rem;
 }
 
-td.tName > div {
-  text-align: left;
+.cBox {
+  padding-top: 0.6rem;
 }
 
-td.tMetrics > div {
+td > div {
+  padding: 0;
+  margin: 0;
+}
+
+.tName {
+  padding: 0.6rem 0 !important;
+}
+
+.tMetrics {
   text-align: right;
   font-size: 0.7rem;
   white-space: nowrap;
   padding-right: 2px;
-}
-
-td > div {
-  margin: -0.4rem 0 0;
-  padding: 0;
 }
 
 .mValue, .badge {
