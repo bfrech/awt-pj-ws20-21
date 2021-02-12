@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import { interval, Subscription } from 'rxjs';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PlayerService } from '../../services/player.service';
 import { MetricsService } from '../../services/metrics.service';
-import { MetricOption, METRICOPTIONS } from '../../metrics';
+import { MetricOption, METRICOPTIONS, Metrics } from '../../metrics';
 
 
 @Component({
@@ -10,24 +12,51 @@ import { MetricOption, METRICOPTIONS } from '../../metrics';
   templateUrl: './metrics-configuration.component.html',
   styleUrls: ['./metrics-configuration.component.css']
 })
-export class MetricsConfigurationComponent {
+export class MetricsConfigurationComponent implements OnInit, OnDestroy {
 
   // What metrics can be selected to be displayed
   options: MetricOption[] = METRICOPTIONS;
+  metrics: Metrics = {};
 
   // What options are selected
-  selectedOptionKeys: Array<string> = [];
-
+  private selectedOptionKeys: Array<string> = [];
   // Max allowed number of selected options
-  maxNumOfSelectedOptions = 5;
-  messageTooManySelections = `Please select a maximum of ${this.maxNumOfSelectedOptions} metrics only.`;
+  private maxNumOfSelectedOptions = 5;
+  private messageTooManySelections = `Please select a maximum of ${this.maxNumOfSelectedOptions} metrics only.`;
+  private refreshInterval = 1000;
+  private subscription!: Subscription;
 
 
   constructor( private snackBar: MatSnackBar,
+               private playerService: PlayerService,
                private metricsService: MetricsService ) { }
 
-  /** Handle selection change */
-  optionChange(checkbox: MatCheckbox, event: MatCheckboxChange, key: string, typeKey: 'audio' | 'video'): void {
+  ngOnInit(): void {
+
+    // Setup an rxjs interval and subscribe update method
+    const source = interval(this.refreshInterval);
+    this.subscription = source.subscribe(() => this.updateMetrics());
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  /** If player is ready, fetch current metrics from player service */
+  updateMetrics(): void {
+
+    if (this.playerService.player.isReady()) {
+      this.metrics = this.playerService.getMetrics();
+      console.log(this.metrics);
+    }
+    else {
+      this.metrics = {};
+    }
+  }
+
+  /** Handle checkbox checked change */
+  optionChange(checkbox: MatCheckbox, event: MatCheckboxChange, key: string,
+               typeKey: 'audio' | 'video' | 'stream'): void {
 
     const fullKey = `${key}.${typeKey}`;
 
@@ -53,5 +82,19 @@ export class MetricsConfigurationComponent {
       }
     }
 
+  }
+
+  ////////////////////////////////////////
+  // Template Helpers
+  ////////////////////////////////////////
+  /** Returns true, if x is of type number. False otherwise. */
+  _isNumber(x: any): boolean {
+    // console.log('NUM');
+    return typeof x === 'number';
+  }
+
+  /** Returns true, if x is NaN. False otherwise. */
+  _isNaN(x: number): boolean {
+    return isNaN(x);
   }
 }

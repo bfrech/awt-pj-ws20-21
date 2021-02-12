@@ -2,7 +2,16 @@ table {
   width: 100%;
 }
 
-tbody > tr:hover {
+thead th {
+  transform: rotate(-45deg);
+  position: relative;
+  left: 0.4rem;
+  padding-bottom: 0.4rem;
+  font-weight: 600;
+  font-size: 95%;
+}
+
+tbody tr:hover {
   background-color: #f2f2f2;
 }
 
@@ -11,15 +20,35 @@ th, td {
 }
 
 td {
-  padding: 0.45rem 0 0;
+  padding: 0.7rem 0 0.2rem;
 }
 
-td:nth-child(3) {
+td.tName > div {
   text-align: left;
 }
 
-td>p {
-  /** Very hard to align the mat checkboxes. So instead we move the text up a bit. **/
-  margin: -0.3rem 0 0;
+td.tMetrics > div {
+  text-align: right;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  padding-right: 2px;
+}
+
+td > div {
+  margin: -0.4rem 0 0;
   padding: 0;
+}
+
+.mValue, .badge {
+  display: inline-block;
+  padding: 0.25em 0.4em;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  position: relative;
+  top: -0.1em;
+}
+
+.mValue {
+  vertical-align: bottom;
 }

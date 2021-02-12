@@ -22,6 +22,7 @@ export class PlayerService {
     audio: NaN,
     video: NaN
   };
+  private metrics: Metrics = {};
 
   constructor() {
 
@@ -51,10 +52,15 @@ export class PlayerService {
   }
 
   /** Provide metrics to be displayed in live chart */
-  getMetrics(): Metrics {
+  getMetrics(recalculate: boolean = false): Metrics {
+
+    if (!recalculate) {
+      return this.metrics;
+    }
 
     if (!this.streamInfo) {
-      return {};
+      this.metrics = {};
+      return this.metrics;
     }
 
     const dashMetrics: dashjs.DashMetrics = this._player.getDashMetrics();
@@ -62,7 +68,6 @@ export class PlayerService {
     const period: (dashjs.Period | null) = dashAdapter.getPeriodById(this.streamInfo.id);
     const periodIndex = period ? period.index : this.streamInfo.index;
 
-    const metrics: Metrics = {};
     // Define metricsMediaTypes with const assertion to get type safe object keys
     const metricsMediaTypes = ['audio', 'video'] as const;
 
@@ -72,47 +77,47 @@ export class PlayerService {
       const repSwitch = dashMetrics.getCurrentRepresentationSwitch(type);
 
       // Buffer Length
-      if (!metrics.bufferLevel) {
-        metrics.bufferLevel = {};
+      if (!this.metrics.bufferLevel) {
+        this.metrics.bufferLevel = {};
       }
-      metrics.bufferLevel[type] = dashMetrics.getCurrentBufferLevel(type);
+      this.metrics.bufferLevel[type] = dashMetrics.getCurrentBufferLevel(type);
       ////
 
       // Bitrate Downloading
       if (repSwitch && typeof repSwitch === 'object' && hasOwnProperty(repSwitch, 'to')
         && typeof repSwitch.to === 'string') {
 
-        if (!metrics.bitrateDownload) {
-          metrics.bitrateDownload = {};
+        if (!this.metrics.bitrateDownload) {
+          this.metrics.bitrateDownload = {};
         }
-        metrics.bitrateDownload[type] = Math.round(dashAdapter.getBandwidthForRepresentation(repSwitch.to,
+        this.metrics.bitrateDownload[type] = Math.round(dashAdapter.getBandwidthForRepresentation(repSwitch.to,
           periodIndex) / 1000);
       }
       ////
 
       // Quality Index
-      if (!metrics.qualityIndex) {
-        metrics.qualityIndex = {};
+      if (!this.metrics.qualityIndex) {
+        this.metrics.qualityIndex = {};
       }
-      metrics.qualityIndex[type] = {
+      this.metrics.qualityIndex[type] = {
         current: this._player.getQualityFor(type),
         max: dashAdapter.getMaxIndexForBufferType(type, periodIndex)
       };
       ////
 
       // Quality Index Pending
-      if (!metrics.qualityIndexPending) {
-        metrics.qualityIndexPending = {};
+      if (!this.metrics.qualityIndexPending) {
+        this.metrics.qualityIndexPending = {};
       }
-      metrics.qualityIndexPending[type] = this.pendingIndex[type];
+      this.metrics.qualityIndexPending[type] = this.pendingIndex[type];
       ////
 
       // Dropped Frames (video only)
       if (type === 'video') {
-        if (!metrics.droppedFrames) {
-          metrics.droppedFrames = {};
+        if (!this.metrics.droppedFrames) {
+          this.metrics.droppedFrames = {};
         }
-        metrics.droppedFrames[type] = dashMetrics.getCurrentDroppedFrames()?.droppedFrames ?? 0;
+        this.metrics.droppedFrames[type] = dashMetrics.getCurrentDroppedFrames()?.droppedFrames ?? 0;
       }
       ////
 
@@ -122,34 +127,32 @@ export class PlayerService {
 
       if (httpMetrics) {
 
-        if (!metrics.latency) {
-          metrics.latency = {};
+        if (!this.metrics.latency) {
+          this.metrics.latency = {};
         }
-        metrics.latency[type] = httpMetrics.latency;
+        this.metrics.latency[type] = httpMetrics.latency;
 
-        if (!metrics.segDownloadTime) {
-          metrics.segDownloadTime = {};
+        if (!this.metrics.segDownloadTime) {
+          this.metrics.segDownloadTime = {};
         }
-        metrics.segDownloadTime[type] = httpMetrics.segDownloadTime;
+        this.metrics.segDownloadTime[type] = httpMetrics.segDownloadTime;
 
-        if (!metrics.playbackDownloadTimeRatio) {
-          metrics.playbackDownloadTimeRatio = {};
+        if (!this.metrics.playbackDownloadTimeRatio) {
+          this.metrics.playbackDownloadTimeRatio = {};
         }
-        metrics.playbackDownloadTimeRatio[type] = httpMetrics.playbackDownloadTimeRatio;
-      }
-      ////
-
-      // Live Latency (audio only)
-      if (type === 'audio') {
-        if (!metrics.liveLatency) {
-          metrics.liveLatency = {};
-        }
-        metrics.liveLatency[type] = this._player.getCurrentLiveLatency();
+        this.metrics.playbackDownloadTimeRatio[type] = httpMetrics.playbackDownloadTimeRatio;
       }
       ////
     }
 
-    return metrics;
+    // Live Latency (stream)
+    if (!this.metrics.liveLatency) {
+      this.metrics.liveLatency = {};
+    }
+    this.metrics.liveLatency.stream = this._player.getCurrentLiveLatency();
+    ////
+
+    return this.metrics;
   }
 
   calculateHTTPMetrics(type: 'audio' | 'video', requests: Array<dashjs.HTTPRequest>): { latency: MetricsAVG,

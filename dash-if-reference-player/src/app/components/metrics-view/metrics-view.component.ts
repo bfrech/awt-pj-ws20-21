@@ -185,7 +185,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   /** Get fresh metrics dataset and push it into chartData */
   updateChartData(): void {
 
-    const metrics: Metrics = this.playerService.getMetrics();
+    const metrics: Metrics = this.playerService.getMetrics(true);
 
     // Iterate through all available metrics and push their data into this.chartData
     for (const [metricObjKey, metricObjVal] of Object.entries(metrics)) {
