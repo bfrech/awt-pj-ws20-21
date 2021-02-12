@@ -47,7 +47,6 @@ export class MetricsConfigurationComponent implements OnInit, OnDestroy {
 
     if (this.playerService.player.isReady()) {
       this.metrics = this.playerService.getMetrics();
-      console.log(this.metrics);
     }
     else {
       this.metrics = {};
