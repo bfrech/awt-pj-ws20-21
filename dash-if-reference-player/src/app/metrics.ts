@@ -84,5 +84,5 @@ export const METRICOPTIONS: MetricOption[] = [
       ' not include the time taken by the encoder to encode the content',
     type: 'stream',
     key: 'liveLatency',
-    chartInfo: '/ ms' }
+    chartInfo: '/ seconds' }
 ];
