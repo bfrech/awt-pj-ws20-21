@@ -14,7 +14,7 @@ import {
 } from 'ng-apexcharts';
 import { PlayerService } from '../../services/player.service';
 import { MetricsService } from '../../services/metrics.service';
-import { Metrics, METRICOPTIONS } from '../../metrics';
+import { Metrics, METRICOPTIONS } from '../../../assets/metrics';
 import { hasOwnProperty } from '../../../assets/hasownproperty';
 import * as dashjs from 'dashjs';
 

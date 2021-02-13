@@ -4,7 +4,7 @@ import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PlayerService } from '../../services/player.service';
 import { MetricsService } from '../../services/metrics.service';
-import { MetricOption, METRICOPTIONS, Metrics } from '../../metrics';
+import { MetricOption, METRICOPTIONS, Metrics } from '../../../assets/metrics';
 
 
 @Component({
