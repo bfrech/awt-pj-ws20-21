@@ -309,6 +309,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
     this.sessionStart = NaN;
     this.chartData = {};
+    this.chartYAxesJson = '';
     this.chart.updateOptions({
       series: this.emptySeries,
       yaxis: this.yAxisMock
