@@ -20,19 +20,29 @@ h2 {
   border-radius: 0 !important;
 }
 
+.SingleSubSetting{
+  margin: 5px 0px !important;
+}
+.SingleSubSetting hr{
+  margin-bottom: unset !important
+}
 .SingleSubSetting label {
   display: flex;
   color: #707070;
 }
-
-.groupSubsetting {
-  margin-bottom: 10px;
+.groupSubsetting{
+  padding-top: 4px;
 }
-
 .settingsFrame {
   float: left;
 }
-
+.singleSetting{
+  margin: unset !important;
+  padding: 4px 0px !important
+}
+.singleSetting label{
+margin-bottom: 5px !important;
+}
 .content {
   width: 100%;
   background-color: white;
@@ -43,7 +53,6 @@ h2 {
 .radioButtonSettingGroup {
   display: flex;
   flex-direction: column;
-  margin: 15px 0;
 }
 
 .info {

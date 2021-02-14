@@ -232,17 +232,17 @@ export class VideoConfigurationComponent implements OnInit {
       case 'Envivio':
         return '#1b7ce0';
       case 'BBC':
-        return '#186ec7';
-      case 'Unified Streaming':
         return '#1560ae';
+      case 'Unified Streaming':
+        return '#62adfa';
       case 'Axinom':
-        return '#125295';
+        return '#186ec7';
       case 'Streamroot':
-        return '#0f457c';
+        return '#506594';
       case 'Wowza':
         return '#0c3763';
       case 'AWS':
-        return '#62adfa';
+        return '#0C83AB';
       case 'CTA':
         return '#62adfa';
       case 'Akamai':

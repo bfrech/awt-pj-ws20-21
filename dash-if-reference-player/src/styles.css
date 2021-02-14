@@ -7,6 +7,10 @@
   "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+app-root {
+  min-height: 100%;
+}
+
 body {
   background-color: #eff3f6;
   margin: 0;
@@ -119,6 +123,7 @@ input {
 .mat-expansion-panel .mat-expansion-panel-header.cdk-keyboard-focused:not([aria-disabled=true]), .mat-expansion-panel .mat-expansion-panel-header.cdk-program-focused:not([aria-disabled=true]), .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]) {
   background: rgba(31, 138, 249, .04)
 }
+
 .mat-expansion-panel {
   background: #fff;
   color: #707070;
