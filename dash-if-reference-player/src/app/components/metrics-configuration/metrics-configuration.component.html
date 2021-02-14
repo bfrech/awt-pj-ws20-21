@@ -36,7 +36,7 @@
             <div *ngIf="metrics[option.key] && ( _isNumber(metrics[option.key].stream)
                                                 || _isNumber(metrics[option.key].video)
                                                 || _isNumber(metrics[option.key].audio) ); else mIsObject">
-              <div *ngIf="_isNumber(metrics[option.key].stream)">
+              <div *ngIf="_isNumber(metrics[option.key].stream)" class="mContainer">
                 <span class="mValue">
                   <span *ngIf="_isNaN(metrics[option.key].stream); then NaNBlock else elseBlock"></span>
                   <ng-template #NaNBlock>NaN</ng-template>
@@ -44,7 +44,7 @@
                 </span>
                 <span class="badge badge-secondary">Stream</span>
               </div>
-              <div *ngIf="_isNumber(metrics[option.key].video)">
+              <div *ngIf="_isNumber(metrics[option.key].video)" class="mContainer">
                 <span class="mValue">
                   <span *ngIf="_isNaN(metrics[option.key].video); then NaNBlock else elseBlock"></span>
                   <ng-template #NaNBlock>NaN</ng-template>
@@ -52,7 +52,7 @@
                 </span>
                 <span class="badge badge-secondary">Video</span>
               </div>
-              <div *ngIf="_isNumber(metrics[option.key].audio)">
+              <div *ngIf="_isNumber(metrics[option.key].audio)" class="mContainer">
                 <span class="mValue">
                   <span *ngIf="_isNaN(metrics[option.key].audio); then NaNBlock else elseBlock" class="mValue"></span>
                   <ng-template #NaNBlock>NaN</ng-template>
@@ -66,7 +66,8 @@
             <ng-template #mIsObject>
               <!-- ..with props current and max -->
               <div *ngIf="metrics[option.key] && metrics[option.key].video
-                && _isNumber(metrics[option.key].video['current']) && _isNumber(metrics[option.key].video['max'])">
+                && _isNumber(metrics[option.key].video['current']) && _isNumber(metrics[option.key].video['max'])"
+                class="mContainer">
                 <span class="mValue" matTooltip="current | max" matTooltipPosition="above">
                   <span *ngIf="_isNaN(metrics[option.key].video['current']); then NaNBlock else elseBlockCurrent"></span>
                   <ng-template #elseBlockCurrent>
@@ -82,7 +83,8 @@
                 <span class="badge badge-secondary">Video</span>
               </div>
               <div *ngIf="metrics[option.key] && metrics[option.key].audio
-                && _isNumber(metrics[option.key].audio['current']) && _isNumber(metrics[option.key].audio['max'])">
+                && _isNumber(metrics[option.key].audio['current']) && _isNumber(metrics[option.key].audio['max'])"
+                class="mContainer">
                 <span class="mValue" matTooltip="current | max" matTooltipPosition="above">
                   <span *ngIf="_isNaN(metrics[option.key].audio['current']); then NaNBlock
                     else elseBlockCurrent"></span>
@@ -102,7 +104,8 @@
               <!-- ..with props min, avg and max -->
               <div *ngIf="metrics[option.key] && metrics[option.key].video
                 && _isNumber(metrics[option.key].video['min']) && _isNumber(metrics[option.key].video['avg'])
-                && _isNumber(metrics[option.key].video['max'])">
+                && _isNumber(metrics[option.key].video['max'])"
+                class="mContainer">
                 <span class="mValue" matTooltip="min | avg | max" matTooltipPosition="above">
                   <span *ngIf="_isNaN(metrics[option.key].video['min']); then NaNBlock else elseBlockMin"></span>
                   <ng-template #elseBlockMin>
@@ -120,11 +123,12 @@
                   </ng-template>
                   <ng-template #NaNBlock>NaN</ng-template>
                 </span>
-                  <span class="badge badge-secondary">Video</span>
+                <span class="badge badge-secondary">Video</span>
                 </div>
                 <div *ngIf="metrics[option.key] && metrics[option.key].audio
                   && _isNumber(metrics[option.key].audio['min']) && _isNumber(metrics[option.key].audio['avg'])
-                  && _isNumber(metrics[option.key].audio['max'])">
+                  && _isNumber(metrics[option.key].audio['max'])"
+                  class="mContainer">
                   <span class="mValue" matTooltip="min | avg | max" matTooltipPosition="above">
                     <span *ngIf="_isNaN(metrics[option.key].audio['min']); then NaNBlock else elseBlockMin"></span>
                     <ng-template #elseBlockMin>

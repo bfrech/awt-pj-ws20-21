@@ -27,11 +27,6 @@ td {
   padding-top: 0.6rem;
 }
 
-td > div {
-  padding: 0;
-  margin: 0;
-}
-
 .tName {
   padding: 0.6rem 0 !important;
 }
@@ -43,6 +38,10 @@ td > div {
   padding-right: 2px;
 }
 
+.mContainer {
+  height: 1rem;
+}
+
 .mValue, .badge {
   display: inline-block;
   padding: 0.25em 0.4em;
@@ -50,11 +49,13 @@ td > div {
   text-align: center;
   white-space: nowrap;
   position: relative;
-  top: -0.1em;
+  top: -0.4em;
+  font-weight: 400;
 }
 
 .mValue {
   vertical-align: bottom;
+  padding: 0.16em 0.4em !important;
 }
 
 .mat-simple-snackbar span {
