@@ -10,8 +10,7 @@ import { MetricOption, METRICOPTIONS, Metrics } from '../../../assets/metrics';
 @Component({
   selector: 'app-metrics-configuration',
   templateUrl: './metrics-configuration.component.html',
-  styleUrls: ['./metrics-configuration.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./metrics-configuration.component.css']
 })
 export class MetricsConfigurationComponent implements OnInit, OnDestroy {
 

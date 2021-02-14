@@ -27,9 +27,12 @@
   background: #888;
 }
 
-
 .vc-collapse > li {
   list-style-type: none;
+}
+
+.vc-collapse .badge {
+  vertical-align: text-bottom;
 }
 
 .vc-custom-dropdown-item {
