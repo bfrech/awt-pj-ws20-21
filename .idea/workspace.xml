@@ -35,10 +35,7 @@
   <component name="ChangeListManager">
     <list default="true" id="769f4b77-bdac-45f1-96ab-bc2798154698" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/assets/groups 2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/footer/footer.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/footer/footer.component.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
