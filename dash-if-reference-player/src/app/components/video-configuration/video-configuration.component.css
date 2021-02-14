@@ -43,6 +43,7 @@
 }
 
 .vc-dropdown-menu {
+  padding-right: unset;
   -webkit-box-shadow: 13px 13px 10px -10px rgba(130, 130, 130, 0.12);
   box-shadow: 13px 13px 10px -10px rgba(130, 130, 130, 0.12);
   position: absolute;
@@ -88,6 +89,10 @@
   text-transform: uppercase;
   font-size: 12px;
   height: auto;
+}
+
+.input-group {
+  padding-right: unset !important;
 }
 
 .btn-group {

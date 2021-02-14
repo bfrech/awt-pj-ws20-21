@@ -35,7 +35,13 @@
   <component name="ChangeListManager">
     <list default="true" id="769f4b77-bdac-45f1-96ab-bc2798154698" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/footer/footer.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/footer/footer.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/app.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/app.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/app.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/metrics-configuration/metrics-configuration.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/metrics-configuration/metrics-configuration.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/setting/setting.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/setting/setting.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +89,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -349,9 +356,10 @@
       <screen x="0" y="23" width="2560" height="1337" />
     </state>
     <state width="600" height="428" key="javadoc.popup/0.23.2560.1337@0.23.2560.1337" timestamp="1612526838313" />
-    <state x="-449" y="-874" width="894" height="875" key="search.everywhere.popup" timestamp="1612868976826">
-      <screen x="-961" y="-1055" width="1920" height="1055" />
+    <state x="384" y="164" width="671" height="675" key="search.everywhere.popup" timestamp="1613310566334">
+      <screen x="0" y="25" width="1440" height="813" />
     </state>
+    <state x="384" y="164" width="671" height="675" key="search.everywhere.popup/-961.-1055.1920.1055/0.25.1440.813@0.25.1440.813" timestamp="1613310566334" />
     <state x="-449" y="-874" width="894" height="875" key="search.everywhere.popup/-961.-1055.1920.1055/0.25.1440.814@-961.-1055.1920.1055" timestamp="1612868976826" />
     <state x="384" y="165" width="670" height="676" key="search.everywhere.popup/-961.-1055.1920.1055/0.25.1440.816@0.25.1440.816" timestamp="1610212105102" />
     <state x="384" y="175" width="670" height="725" key="search.everywhere.popup/-961.-1055.1920.994/0.25.1440.875@0.25.1440.875" timestamp="1612717245893" />
