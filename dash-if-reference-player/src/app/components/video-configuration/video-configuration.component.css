@@ -32,10 +32,6 @@
   list-style-type: none;
 }
 
-.vc-collapse .badge {
-  vertical-align: text-top;
-}
-
 .vc-custom-dropdown-item {
   cursor: pointer;
   padding: 0.25rem 3px;

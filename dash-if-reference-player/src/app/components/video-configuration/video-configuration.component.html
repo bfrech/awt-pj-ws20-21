@@ -8,7 +8,7 @@
             Stream
           </button>
           <mat-accordion [@streamsDropdownShowHide]="streamsDropdownIsVisible"
-                         displayMode=flat class="vc-dropdown-menu" multi>
+                         displayMode=flat class="vc-dropdown-menu col-md-12">
             <mat-expansion-panel #expPanel *ngFor="let item of srcItems"
                                  (opened)="setStreamsDropdownExpandedPanel(expPanel)">
 
@@ -36,7 +36,6 @@
               </ul>
             </mat-expansion-panel>
           </mat-accordion>
-
         </div>
         <input [(ngModel)]="inputVarStreamAddr" name="inputNameStreamAddr" type="text" class="form-control"
                placeholder="Stream Address" aria-label="Stream Address">
