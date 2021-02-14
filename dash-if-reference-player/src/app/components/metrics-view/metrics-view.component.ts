@@ -57,12 +57,22 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   // Set chart options
   private refreshInterval = 1000;
   private yAxisMock: ApexYAxis = {
-    title: { text: '' },
+    title: {
+      text: '',
+      style: {
+        fontWeight: '500',
+        fontSize: '11px',
+      },
+    },
     axisBorder: { show: false },
     labels: {
       formatter: (val) => {
         return val.toPrecision(2);
-      }
+      },
+      style: {
+        fontWeight: 'normal',
+        fontSize: '12px',
+      },
     }
   };
   public chartOptions: ChartOptions = {
@@ -79,6 +89,8 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
           speed: this.refreshInterval
         }
       },
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol"',
+      foreColor: '#707070'
     },
     theme: {
       mode: 'light',
@@ -88,8 +100,6 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
     title: {
       text: 'Stream Metrics',
       style: {
-        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol"',
-        color: '#707070',
         fontWeight: '500',
         fontSize: '16px'
       },
@@ -100,9 +110,8 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       title: {
         text: 't / Seconds',
         style: {
-          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol"',
-          color: '#707070',
-          fontWeight: 'normal'
+          fontWeight: '500',
+          fontSize: '12px',
         },
       }
     },
@@ -272,7 +281,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
         const yaxis: ApexYAxis = {
           seriesName: fullName,
-          title: { text: fullName },
+          title: Object.assign({...this.yAxisMock.title}, { text: fullName }),
           opposite: false,
           axisBorder: { show: false }
         };
