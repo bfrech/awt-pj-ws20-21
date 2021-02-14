@@ -1,18 +1,6 @@
 /**
 * No view encapsulation
 */
-
-:root {
-  --primary: #1F8AF9;
-}
-
-* {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #707070;
-}
-.dropdown-item {
-}
-
 .vc-collapse {
   margin: 0;
   max-height: 30rem;
@@ -44,18 +32,14 @@
   list-style-type: none;
 }
 
-.vc-collapse .badge {
-  vertical-align: text-top;
-}
-
 .vc-custom-dropdown-item {
   cursor: pointer;
   padding: 0.25rem 3px;
   border: 1px solid transparent;
 }
 
-.vc-custom-active {
-  border: 1px dotted #007bff;
+.vc-custom-active{
+  background-color: #e9ecef;
 }
 
 .vc-dropdown-menu {
@@ -89,14 +73,15 @@
   font-size: 16px;
 }
 
-.defaultbtn{
+.defaultbtn {
+  width: 100%;
   text-transform: uppercase !important;
   font-size: 12px !important;
   border-radius: 4px;
 }
 
-.settingsBtn{
-  margin-left: 15px;
+#settingsBtn {
+  width: 100%;
 }
 
 .form-control {
@@ -105,7 +90,14 @@
   height: auto;
 }
 
-#settingMenu{
-  margin:0 15px;
-  width: 100%;
+.btn-group {
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
+
+@media (min-width: 768px ) {
+  .btn-group {
+    margin: unset;
+  }
+}
+

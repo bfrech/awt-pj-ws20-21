@@ -68,10 +68,10 @@ const settingGroups  = {
     trackSwitchMode: 'CONSTANTS',
   },
   RETRY: {
-    retryIntervals: 'test'
+    retryIntervals: 'test',
+    retryAttempts: 'test',
   }
 };
-
 
 /* Still needs to be assigned to Group */
 const order = {

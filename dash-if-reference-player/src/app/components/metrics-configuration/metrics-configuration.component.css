@@ -56,3 +56,7 @@ td > div {
 .mValue {
   vertical-align: bottom;
 }
+
+.mat-simple-snackbar span {
+  color: white !important;
+}

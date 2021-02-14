@@ -7,19 +7,10 @@
   "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-html {
-}
-
 body {
   background-color: #eff3f6;
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
   height: 100%;
-}
-
-* {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #707070;
 }
 
 h2 {
@@ -35,9 +26,18 @@ h3 {
   font-weight: bold !important;
 }
 
+/**
+ * Styles for Angular Material
+ */
+
 .mat-checkbox-label {
+  color: #707070 !important;
   font-size: 14px;
-  color: #707070;;
+}
+
+input {
+  width: 100%;
+  color: #707070;
 }
 
 .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
@@ -46,15 +46,12 @@ h3 {
 }
 
 .mat-label {
+  color: #707070 !important;
   font-size: 14px;
-  color: #707070;
-}
-
-input.mat-input-element {
-  color: black;
 }
 
 .mat-checkbox-frame {
+  color: #707070 !important;
   border-width: 1px !important;
 }
 
@@ -114,6 +111,19 @@ input.mat-input-element {
 .mat-form-field.mat-focused.mat-accent .mat-select-arrow {
   color: #1F8AF9
 }
-.mat-checkbox-layout{
+
+.mat-checkbox-layout {
   white-space: unset !important;
+}
+
+.mat-expansion-panel .mat-expansion-panel-header.cdk-keyboard-focused:not([aria-disabled=true]), .mat-expansion-panel .mat-expansion-panel-header.cdk-program-focused:not([aria-disabled=true]), .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]) {
+  background: rgba(31, 138, 249, .04)
+}
+.mat-expansion-panel {
+  background: #fff;
+  color: #707070;
+}
+
+.mat-card {
+  color: #707070;
 }

@@ -8,7 +8,7 @@ import {
   // ...
 } from '@angular/animations';
 import {MatExpansionPanel} from '@angular/material/expansion';
-import { PlayerService } from '../../services/player.service';
+import {PlayerService} from '../../services/player.service';
 import * as sources from '../../../assets/sources.json';
 
 declare const settingGroups: any;
@@ -35,8 +35,8 @@ declare const settingGroups: any;
       })),
       transition('false => true', [
         /**  Set scaleY(1) initially, then start animation */
-        style({ transform: 'scaleY(1)', opacity: 0 }),
-        animate(100, style({ opacity: 1 }))
+        style({transform: 'scaleY(1)', opacity: 0}),
+        animate(100, style({opacity: 1}))
       ]),
       transition('true => false',
         animate(100, style({opacity: 0}))
@@ -55,11 +55,11 @@ declare const settingGroups: any;
       })),
       transition('false => true', [
         /**  Set scaleY(1) initially, then start animation */
-        style({ transform: 'scaleY(1)', height: '0px' }),
-        animate(500, style({ height: '*' }))
+        style({transform: 'scaleY(1)', height: '0px'}),
+        animate(500, style({height: '*'}))
       ]),
       transition('true => false',
-        animate(500, style({ height: '0px' }))
+        animate(500, style({height: '0px'}))
         /** After the animation, scaleY(0) is set automatically by state declaration */
       )
     ]),
@@ -82,7 +82,8 @@ export class VideoConfigurationComponent implements OnInit {
   settingsSectionIsVisible = false;
 
   // playerService must be public to access it in the template
-  constructor(public playerService: PlayerService) { }
+  constructor(public playerService: PlayerService) {
+  }
 
   ngOnInit(): void {
     this.groups = Object.entries(this.processSettings());
@@ -93,7 +94,7 @@ export class VideoConfigurationComponent implements OnInit {
   ////////////////////////////////////////
   /**
    * Settings Preprocessing: get default Settings, traverse Nested Object and return Object
-   * ordered according to our custom order from groups.js
+   * ordered according to our custom order from SettingGroups.js
    */
   processSettings(): object {
     const player = this.playerService.player;
@@ -114,7 +115,7 @@ export class VideoConfigurationComponent implements OnInit {
         if (!res[setting[0]]) {
           res[setting[0]] = [];
         }
-        const formatted: {[index: string]: any} = {};
+        const formatted: { [index: string]: any } = {};
         formatted[setting[1]] = [setting[2], setting[3]];
         res[setting[0]].push(formatted);
       } else {
@@ -134,13 +135,13 @@ export class VideoConfigurationComponent implements OnInit {
       if (setting[0] === undefined) {
         setting[0] = 'OTHER';
       }
-      const formatted: {[index: string]: any} = {};
+      const formatted: { [index: string]: any } = {};
       formatted[setting[1]] = setting[2];
       return ([setting[0], formatted]);
     });
 
     // Grouping
-    const resultNew: {[index: string]: any} = {};
+    const resultNew: { [index: string]: any } = {};
     formatSet.forEach(setting => {
       const key = setting[0];
       if (!resultNew[key]) {
@@ -159,8 +160,8 @@ export class VideoConfigurationComponent implements OnInit {
   /**
    * Traverse Object until leaf node
    */
-  flattenObject(obj: {[index: string]: any}): object {
-    const result: {[index: string]: any} = {};
+  flattenObject(obj: { [index: string]: any }): object {
+    const result: { [index: string]: any } = {};
     for (const i in obj) {
       if (!obj.hasOwnProperty(i)) {
         continue;
@@ -169,7 +170,7 @@ export class VideoConfigurationComponent implements OnInit {
         obj[i] = 'null';
       }
       if ((typeof obj[i]) === 'object') {
-        const flatObject: {[index: string]: any} = this.flattenObject(obj[i]);
+        const flatObject: { [index: string]: any } = this.flattenObject(obj[i]);
         for (const x in flatObject) {
           if (!flatObject.hasOwnProperty(x)) {
             continue;
@@ -221,4 +222,34 @@ export class VideoConfigurationComponent implements OnInit {
     this.settingsSectionIsVisible = !this.settingsSectionIsVisible;
   }
 
+  /**
+   * Checks for provider and set Badge color
+   */
+  setBadgeColor(e: any): any {
+    switch (e) {
+      case 'DASH-IF':
+        return '#1F8AF9';
+      case 'Envivio':
+        return '#1b7ce0';
+      case 'BBC':
+        return '#186ec7';
+      case 'Unified Streaming':
+        return '#1560ae';
+      case 'Axinom':
+        return '#125295';
+      case 'Streamroot':
+        return '#0f457c';
+      case 'Wowza':
+        return '#0c3763';
+      case 'AWS':
+        return '#62adfa';
+      case 'CTA':
+        return '#62adfa';
+      case 'Akamai':
+        return '#8fc4fc';
+      case 'Microsoft':
+        return '#061b31';
+    }
+  }
 }
+

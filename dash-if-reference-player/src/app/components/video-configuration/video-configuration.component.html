@@ -1,14 +1,14 @@
 <div class="container">
-  <form class="form-inline">
-    <div class="form-group col-12 p-0">
-      <div class="input-group flex-grow-1">
+  <form class="row form-inline">
+    <div class="col-12 form-group p-0">
+      <div class="col-md-8 col-12 input-group flex-grow-1">
         <div class="input-group-prepend dropdown-container">
           <button (click)="streamsDropdownToggle()" class="defaultbtn btn btn-primary dropdown-toggle"
                   aria-haspopup="true" aria-expanded="false">
             Stream
           </button>
           <mat-accordion [@streamsDropdownShowHide]="streamsDropdownIsVisible"
-                         displayMode=flat class="vc-dropdown-menu">
+                         displayMode=flat class="vc-dropdown-menu col-md-12">
             <mat-expansion-panel #expPanel *ngFor="let item of srcItems"
                                  (opened)="setStreamsDropdownExpandedPanel(expPanel)">
 
@@ -22,8 +22,10 @@
                 <li *ngFor="let subItem of item['submenu']">
                   <a (click)="selectStream(subItem['url'])" class="dropdown-item vc-custom-dropdown-item text-truncate"
                      [class.vc-custom-active]="inputVarStreamAddr === subItem['url']">
-                    <span class="badge badge-pill badge-secondary"
-                          matTooltip="{{ srcProvider[subItem['provider']]['name'] }}" matTooltipPosition="above">
+                    <span class="badge badge-pill" [style.color]="'white'"
+                          [style.background-color]="setBadgeColor(srcProvider[subItem['provider']]['acronym'])"
+                          matTooltip="{{ srcProvider[subItem['provider']]['name'] }}"
+                          matTooltipPosition="above">
                       {{ srcProvider[subItem['provider']]['acronym'] }}
                     </span>
                     <span matTooltip="{{ subItem['name'] }}" matTooltipPosition="above" matTooltipShowDelay="1000">
@@ -34,22 +36,23 @@
               </ul>
             </mat-expansion-panel>
           </mat-accordion>
-
         </div>
         <input [(ngModel)]="inputVarStreamAddr" name="inputNameStreamAddr" type="text" class="form-control"
                placeholder="Stream Address" aria-label="Stream Address">
       </div>
-      <div class="btn-group col-2">
+      <div class="col-md-2 col-12 btn-group">
         <button (click)="playerService.stop()" class="defaultbtn btn btn-secondary">Stop</button>
         <button (click)="playerService.load(inputVarStreamAddr)" class="defaultbtn btn btn-primary">Load</button>
       </div>
-      <button (click)="settingsSectionToggle()" id="settingsBtn" class="col-1 defaultbtn btn btn-primary">Settings
-      </button>
+      <div class="col-md-2 col-12">
+        <button (click)="settingsSectionToggle()" id="settingsBtn" class="defaultbtn btn btn-primary">Settings</button>
+      </div>
     </div>
   </form>
 
   <div [@settingsShowHide]="settingsSectionIsVisible ? true : false" class="row">
-    <div id="settingMenu" class="container">
-      <app-setting [groups]="groups"></app-setting></div>
+    <div id="settingMenu">
+      <app-setting [groups]="groups"></app-setting>
+    </div>
   </div>
 </div>
