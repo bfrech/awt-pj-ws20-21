@@ -1,7 +1,6 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {PlayerService} from '../../services/player.service';
 import * as dashjs from 'dashjs';
-import set = Reflect.set;
 
 @Component({
   selector: 'app-setting',
@@ -10,11 +9,10 @@ import set = Reflect.set;
   encapsulation: ViewEncapsulation.None,
 })
 
-export class SettingComponent implements OnInit {
+export class SettingComponent implements OnInit, OnChanges {
   @Input() groups: any;
   @Input() settingGroup: any;
   description: any;
-  descriptionLevelDown: any;
   tooltip: any;
   checked = false;
   closeResult = '';
@@ -46,6 +44,12 @@ export class SettingComponent implements OnInit {
     this.groups.forEach((group: any) => {
       this.settings.push(group[0]);
     });
+    console.log('test');
+    console.log(this.playerService.player.getInitialMediaSettingsFor('audio'));
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.playerService.player.getInitialMediaSettingsFor('audio'));
   }
 
   /**

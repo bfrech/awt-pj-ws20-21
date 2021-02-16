@@ -66,7 +66,6 @@ declare const settingGroups: any;
   ]
 })
 
-
 export class VideoConfigurationComponent implements OnInit {
   groups: any;
   defaultSettings: any;
@@ -86,7 +85,6 @@ export class VideoConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     this.groups = Object.entries(this.processSettings());
-    console.log(this.groups);
   }
 
   ////////////////////////////////////////
