@@ -71,7 +71,7 @@ export class VideoConfigurationComponent implements OnInit {
   groups: any;
   defaultSettings: any;
   paths: any;
-
+  orderGroups = settingGroups;
   srcProvider: { [index: string]: object } = sources.provider;
   srcItems = sources.items;
   inputVarStreamAddr = this.srcItems[0].submenu[4].url;

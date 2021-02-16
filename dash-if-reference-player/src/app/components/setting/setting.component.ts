@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {PlayerService} from '../../services/player.service';
 import * as dashjs from 'dashjs';
-
+import set = Reflect.set;
 
 @Component({
   selector: 'app-setting',
@@ -12,6 +12,10 @@ import * as dashjs from 'dashjs';
 
 export class SettingComponent implements OnInit {
   @Input() groups: any;
+  @Input() settingGroup: any;
+  description: any;
+  descriptionLevelDown: any;
+  tooltip: any;
   checked = false;
   closeResult = '';
   settings: string[] = [];
@@ -42,7 +46,6 @@ export class SettingComponent implements OnInit {
     this.groups.forEach((group: any) => {
       this.settings.push(group[0]);
     });
-    console.log(this.settings);
   }
 
   /**
@@ -100,7 +103,6 @@ export class SettingComponent implements OnInit {
       [next]: obj
     }), root);
     this.playerService.player.updateSettings(settingObject);
-    console.log(this.playerService.player.getSettings());
   }
 
   updateLogLevel(value: any): void {
@@ -155,4 +157,24 @@ export class SettingComponent implements OnInit {
       }
     });
   }
+
+  /**
+   * Get Api description from SettingGroup
+   */
+  getApiDescription(groupName: string, setting: any, isGroup: boolean): string {
+    Object.entries(this.settingGroup).map(([key, value]) => {
+      if (key === groupName) {
+        this.description = value;
+      }
+    });
+    Object.entries(this.description).map(([key, value]) => {
+      key = key.charAt(0).toUpperCase() + key.replace(/([a-z0-9])([A-Z])/g, '$1 $2').slice(1);
+      if (key === setting) {
+        this.tooltip = value;
+      }
+    });
+    return this.tooltip;
+  }
+
 }
+

@@ -41,7 +41,7 @@
   border: 1px solid transparent;
 }
 
-.vc-custom-active{
+.vc-custom-active {
   background-color: #e9ecef;
 }
 
@@ -94,18 +94,20 @@
   height: auto;
 }
 
-.input-group {
-  padding-right: unset !important;
-}
-
 .btn-group {
   margin-bottom: 10px;
   margin-top: 10px;
 }
 
+
 @media (min-width: 768px ) {
+
   .btn-group {
     margin: unset;
+  }
+
+  .input-group {
+    padding-right: unset !important;
   }
 }
 
