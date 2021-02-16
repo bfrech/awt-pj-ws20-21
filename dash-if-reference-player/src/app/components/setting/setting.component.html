@@ -9,7 +9,7 @@
         <div *ngIf="isBoo(setting.value[0])">
           <mat-checkbox [(ngModel)]="checked"
                         [labelPosition]="'after'" (change)="update(setting.value[1], checked)">
-            {{setting.key}}<a [matTooltip]="getApiDescription(group[0], setting.key, false)"
+            {{setting.key}}<a [matTooltip]="getApiDescription(group[0], setting.key)"
                               [matTooltipPosition]="'after'"
                               href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
                               target="_blank">
@@ -19,7 +19,7 @@
         </div>
 
         <div *ngIf="isInput(setting.value[0]) && !isLogLevel(setting.key)" class="fields">
-          <label>{{setting.key}}<a [matTooltip]="getApiDescription(group[0], setting.key, false)"
+          <label>{{setting.key}}<a [matTooltip]="getApiDescription(group[0], setting.key)"
                                    [matTooltipPosition]="'after'"
                                    href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
                                    target="_blank">
@@ -31,7 +31,7 @@
         </div>
 
         <div *ngIf="isGroup(setting.value[1])" class="SingleSubSetting my-3">
-          <h3>{{setting.key}}<a [matTooltip]="getApiDescription(group[0], setting.key, true)"
+          <h3>{{setting.key}}<a [matTooltip]="getApiDescription(group[0], setting.key)"
                                       [matTooltipPosition]="'after'"
                                       href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
                                       target="_blank">
@@ -63,7 +63,7 @@
 
         <div *ngIf="isLogLevel(setting.key)" class="radio">
           <label class="Radio-Button-Settings">{{setting.key}}:<a
-            [matTooltip]="getApiDescription(group[0], setting.key, false)"
+            [matTooltip]="getApiDescription(group[0], setting.key)"
             [matTooltipPosition]="'after'"
             href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
             target="_blank">
@@ -79,7 +79,7 @@
 
         <div *ngIf="isRadio(setting.value[0]) && !isLogLevel(setting.key)" class="radio">
           <label class="Radio-Button-Settings">{{setting.key}}:<a
-            [matTooltip]="getApiDescription(group[0], setting.key, false)"
+            [matTooltip]="getApiDescription(group[0], setting.key)"
             [matTooltipPosition]="'after'"
             href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
             target="_blank">

@@ -46,6 +46,8 @@ export class SettingComponent implements OnInit {
     this.groups.forEach((group: any) => {
       this.settings.push(group[0]);
     });
+
+    console.log(this.settingGroup);
   }
 
   /**
@@ -161,7 +163,7 @@ export class SettingComponent implements OnInit {
   /**
    * Get Api description from SettingGroup
    */
-  getApiDescription(groupName: string, setting: any, isGroup: boolean): string {
+  getApiDescription(groupName: string, setting: any): string {
     Object.entries(this.settingGroup).map(([key, value]) => {
       if (key === groupName) {
         this.description = value;
