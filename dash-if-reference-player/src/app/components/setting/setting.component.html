@@ -4,8 +4,39 @@
       <mat-expansion-panel-header>
         <h2>{{group[0]}}</h2>
       </mat-expansion-panel-header>
-      <div class="singleSetting my-3" *ngFor="let setting of group[1] | keyvalue">
+      <div *ngIf="group[0] === 'INITIAL'">
+        <mat-checkbox [(ngModel)]="checked"
+                      [labelPosition]="'after'"
+                      [matTooltip]="'Enable subtitle on loading text'"
+                      [matTooltipPosition]="'after'">
+          Enable Text At Loading
+          <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+        </mat-checkbox>
+        <mat-checkbox [(ngModel)]="checked"
+                      [labelPosition]="'after'"
+                      [matTooltip]="'Force Text Streaming'"
+                      [matTooltipPosition]="'after'">
+          Force Text Streaming
+          <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+        </mat-checkbox>
 
+        <div class="fields">
+          <label>Text:</label>
+          <input class="initialText" #inputField [type]="'text'" [placeholder]="'text initial lang, e.g. \'en\''">
+          <input class="initialText" #inputField [type]="'text'" [placeholder]="'text initial role, e.g. \'caption\''">
+        </div>
+
+        <div class="fields">
+          <label>Audio:</label>
+          <input class="initialText" #inputField [type]="'text'" [placeholder]="'audio initial lang, e.g. \'en\''">
+        </div>
+        <div class="fields">
+          <label>Video:</label>
+          <input class="initialText" #inputField [type]="'text'"
+                 [placeholder]="'video initial role, e.g. \'alternate\''">
+        </div>
+      </div>
+      <div class="singleSetting my-3" *ngFor="let setting of group[1] | keyvalue">
         <div *ngIf="isBoo(setting.value[0])">
           <mat-checkbox [(ngModel)]="checked"
                         [labelPosition]="'after'" (change)="update(setting.value[1], checked)">
@@ -32,11 +63,11 @@
 
         <div *ngIf="isGroup(setting.value[1])" class="SingleSubSetting my-3">
           <h3>{{setting.key}}<a [matTooltip]="getApiDescription(group[0], setting.key)"
-                                      [matTooltipPosition]="'after'"
-                                      href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
-                                      target="_blank">
-          <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
-        </a></h3>
+                                [matTooltipPosition]="'after'"
+                                href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
+                                target="_blank">
+            <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+          </a></h3>
           <hr>
           <div *ngFor="let sub of setting.value">
             <div class="groupSubsetting" *ngFor="let subset of sub | keyvalue">

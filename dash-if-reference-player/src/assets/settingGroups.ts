@@ -55,17 +55,13 @@ const settingGroups = {
   },
   INITIAL: {
     liveDelay: 'Equivalent in seconds of setLiveDelayFragmentCount Lowering this value will lower latency but may decrease the player\'s ability to build a stable buffer. This value should be less than the manifest duration by a couple of segment durations to avoid playback issues If set, this parameter will take precedence over setLiveDelayFragmentCount and manifest info',
-    abandonLoadTimeout: 'A timeout value in seconds, which during the ABRController will block switch-up events. This will only take effect after an abandoned fragment event occurs',
     maxBitrate: 'The maximum bitrate that the ABR algorithms will choose. Use NaN for no limit.',
     minBitrate: 'The minimum bitrate that the ABR algorithms will choose. Use NaN for no limit.',
     selectionModeForInitialTrack: 'no description available yet',
-    metricsMaxListDepth: 'Maximum list depth of metrics.',
     wallclockTimeUpdateInterval: 'How frequently the wallclockTimeUpdated internal event is triggered (in milliseconds).',
     keepProtectionMediaKeys: 'Set the value for the ProtectionController and MediaKeys life cycle. If true, the ProtectionController and then created MediaKeys and MediaKeySessions will be preserved during the MediaPlayer lifetime.',
     useManifestDateHeaderTimeSource: 'Allows you to enable the use of the Date Header, if exposed with CORS, as a timing source for live edge detection. The use of the date header will happen only after the other timing source that take precedence fail or are omitted as described.',
     useSuggestedPresentationDelay: 'Set to true if you would like to override the default live delay and honor the SuggestedPresentationDelay attribute in by the manifest.',
-    manifestUpdateRetryInterval: 'For live streams, set the interval-frequency in milliseconds at which dash.js will check if the current manifest is still processed before downloading the next manifest once the minimumUpdatePeriod time has',
-
   },
   LOWLATENCY: {
     lowLatencyEnabled: 'Enable or disable low latency mode',
@@ -102,6 +98,8 @@ const settingGroups = {
     trackSwitchMode: 'no description available yet',
   },
   RETRY: {
+    manifestUpdateRetryInterval: 'For live streams, set the interval-frequency in milliseconds at which dash.js will check if the current manifest is still processed before downloading the next manifest once the minimumUpdatePeriod time has',
+    abandonLoadTimeout: 'A timeout value in seconds, which during the ABRController will block switch-up events. This will only take effect after an abandoned fragment event occurs',
     retryIntervals: 'Time in milliseconds of which to reload a failed file load attempt. For low latency mode these values are divided by lowLatencyReductionFactor.',
     retryAttempts: 'Total number of retry attempts that will occur on a file load before it fails. For low latency mode these values are multiplied by lowLatencyMultiplyFactor.',
     fragmentRequestTimeout: 'Time in milliseconds before timing out on loading a media fragment. Fragments that timeout are retried as if they failed',

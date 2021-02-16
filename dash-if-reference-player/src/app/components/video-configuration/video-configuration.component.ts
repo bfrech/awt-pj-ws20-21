@@ -75,7 +75,6 @@ export class VideoConfigurationComponent implements OnInit {
   srcProvider: { [index: string]: object } = sources.provider;
   srcItems = sources.items;
   inputVarStreamAddr = this.srcItems[0].submenu[4].url;
-
   streamsDropdownIsVisible = false;
   streamsDropdownExpandedPanel: MatExpansionPanel | null = null;
 
@@ -87,6 +86,7 @@ export class VideoConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     this.groups = Object.entries(this.processSettings());
+    console.log(this.groups);
   }
 
   ////////////////////////////////////////

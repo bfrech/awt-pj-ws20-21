@@ -46,8 +46,6 @@ export class SettingComponent implements OnInit {
     this.groups.forEach((group: any) => {
       this.settings.push(group[0]);
     });
-
-    console.log(this.settingGroup);
   }
 
   /**
