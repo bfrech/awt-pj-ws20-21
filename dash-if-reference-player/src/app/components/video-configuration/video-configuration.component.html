@@ -52,7 +52,7 @@
 
   <div [@settingsShowHide]="settingsSectionIsVisible ? true : false" class="row">
     <div id="settingMenu">
-      <app-setting [groups]="groups"></app-setting>
+      <app-setting [groups]="groups" [settingGroup]="this.orderGroups"></app-setting>
     </div>
   </div>
 </div>
