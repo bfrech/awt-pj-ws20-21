@@ -9,7 +9,7 @@ import * as dashjs from 'dashjs';
   encapsulation: ViewEncapsulation.None,
 })
 
-export class SettingComponent implements OnInit, OnChanges {
+export class SettingComponent implements OnInit {
   @Input() groups: any;
   @Input() settingGroup: any;
   description: any;
@@ -44,12 +44,7 @@ export class SettingComponent implements OnInit, OnChanges {
     this.groups.forEach((group: any) => {
       this.settings.push(group[0]);
     });
-    console.log('test');
-    console.log(this.playerService.player.getInitialMediaSettingsFor('audio'));
-  }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.playerService.player.getInitialMediaSettingsFor('audio'));
   }
 
   /**
@@ -160,6 +155,37 @@ export class SettingComponent implements OnInit, OnChanges {
         liveCatchup: {}
       }
     });
+  }
+
+  updateTextDefaultEnabled(checked: boolean): void {
+    this.playerService.player.setTextDefaultEnabled(checked);
+  }
+
+  updateEnableForcedTextStreaming(checked: boolean): void {
+    this.playerService.player.enableForcedTextStreaming(checked);
+  }
+
+  updateMediaSettings(type: string, event: any): void {
+    if (type === 'audio') {
+      this.playerService.player.setInitialMediaSettingsFor('audio', {
+        lang: event.target.value
+      });
+    }
+    if (type === 'video') {
+      this.playerService.player.setInitialMediaSettingsFor('video', {
+        role: event.target.value
+      });
+    }
+    if (type === 'lang') {
+      this.playerService.player.setInitialMediaSettingsFor('fragmentedText', {
+        lang: event.target.value
+      });
+    }
+    if (type === 'role') {
+      this.playerService.player.setInitialMediaSettingsFor('fragmentedText', {
+        role: event.target.value
+      });
+    }
   }
 
   /**
