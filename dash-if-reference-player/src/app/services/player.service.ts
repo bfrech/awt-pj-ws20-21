@@ -4,6 +4,7 @@ import '../types/dashjs-types';
 import { hasOwnProperty } from '../../assets/hasownproperty';
 import { Metrics, MetricsAVG } from '../../assets/metrics';
 
+declare var ControlBar: any;
 
 /*
  * This service provides a dashjs player object and some helper methods that can be accessed from every component where
@@ -15,8 +16,11 @@ import { Metrics, MetricsAVG } from '../../assets/metrics';
 })
 export class PlayerService {
 
+
   // tslint:disable-next-line:variable-name
   private readonly _player: dashjs.MediaPlayerClass;
+  // tslint:disable-next-line:variable-name
+  private _controlBar: any;
   private streamInfo: dashjs.StreamInfo | null | undefined;
   private pendingIndex: { [index: string]: number } = {
     audio: NaN,
@@ -39,6 +43,25 @@ export class PlayerService {
   /** Getter for dashjs player object */
   get player(): dashjs.MediaPlayerClass {
     return this._player;
+  }
+
+  /** Getter for control bar object */
+  get controlBar(): {} {
+    return this._controlBar;
+  }
+
+  /** Initialize player and akamai toolbar */
+  initialize(view?: HTMLElement, source?: string, autoPlay?: boolean): void {
+    this._player.initialize(view, source, autoPlay);
+    this._controlBar = new ControlBar(this._player);
+    this._controlBar.initialize();
+  }
+
+  /** Attach view to player and initialize akamai toolbar */
+  attachView(element: HTMLElement): void {
+    this._player.attachView(element);
+    this._controlBar = new ControlBar(this._player);
+    this._controlBar.initialize();
   }
 
   /** Stop player by unloading source */

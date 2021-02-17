@@ -16,7 +16,7 @@ export class PlayerComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     // When <video> element ref is available, initialize dashjs player via playerService
-    this.playerService.player.initialize(this.videoElement.nativeElement);
+    this.playerService.initialize(this.videoElement.nativeElement);
   }
 
 }

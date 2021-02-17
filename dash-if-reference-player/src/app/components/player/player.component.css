@@ -2,3 +2,9 @@ video {
   width: 100%;
   height: auto;
 }
+
+.video-controller {
+  position: relative;
+  top: -6px;
+  z-index: 999;
+}
