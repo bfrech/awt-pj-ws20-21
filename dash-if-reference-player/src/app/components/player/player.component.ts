@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import { PlayerService } from '../../services/player.service';
 
-
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
