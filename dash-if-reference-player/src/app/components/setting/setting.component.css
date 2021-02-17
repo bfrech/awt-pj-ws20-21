@@ -1,4 +1,4 @@
-.accordionPanel {
+.set-accordionPanel {
   margin-top: 5px;
   display: inline-block;
 }
@@ -7,16 +7,16 @@ h2 {
   margin: auto 0 !important;
 }
 
-.accordionPanel .mat-expansion-panel-header.mat-expanded {
+.set-accordionPanel .mat-expansion-panel-header.mat-expanded {
   height: 48px !important;
 }
 
-.accordionPanel mat-accordion {
+.set-accordionPanel mat-accordion {
   margin-top: 15px;
   margin-bottom: 5px;
 }
 
-.accordionPanel mat-accordion .mat-expansion-panel {
+.set-accordionPanel mat-accordion .mat-expansion-panel {
   border-radius: 0 !important;
 }
 
@@ -50,37 +50,24 @@ h2 {
   margin-bottom: 5px !important;
 }
 
-.content {
+.set-content {
   width: 100%;
   background-color: white;
   -webkit-box-shadow: 13px 13px 10px -10px rgba(130, 130, 130, 0.12);
   box-shadow: 13px 13px 10px -10px rgba(130, 130, 130, 0.12);
 }
 
-.radioButtonSettingGroup {
+.set-radioButtonSettingGroup {
   display: flex;
   flex-direction: column;
 }
 
-.initialText {
+.set-initialText {
   margin-bottom: 5px;
 }
 
-.info {
+.set-info{
   margin-left: 5px;
   height: 12px;
   width: auto;
-}
-
-.setting {
-  cursor: pointer;
-  margin-top: 5px;
-  height: 20px;
-  -webkit-transition: -webkit-transform 2.0s ease-in-out;
-  transition: transform 2.0s ease-in-out;
-}
-
-.setting:hover {
-  -webkit-transform: rotate(360deg);
-  transform: rotate(360deg);
 }

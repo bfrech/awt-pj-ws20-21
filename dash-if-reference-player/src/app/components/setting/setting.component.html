@@ -1,6 +1,6 @@
-<div class="accordionPanel">
+<div class="set-accordionPanel">
   <mat-accordion class="settingsFrame col-xl-3 col-lg-4 col-md-6 col-12" *ngFor="let group of groups">
-    <mat-expansion-panel class="content">
+    <mat-expansion-panel class="set-content">
       <mat-expansion-panel-header>
         <h2>{{group[0]}}</h2>
       </mat-expansion-panel-header>
@@ -12,7 +12,7 @@
                       [matTooltipPosition]="'after'"
                       (change)="updateTextDefaultEnabled(checked)">
           Enable Text At Loading
-          <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+          <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
         </mat-checkbox>
         <mat-checkbox [(ngModel)]="checked"
                       [labelPosition]="'after'"
@@ -20,26 +20,26 @@
                       [matTooltipPosition]="'after'"
                       (change)="updateEnableForcedTextStreaming(checked)">
           Force Text Streaming
-          <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+          <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
         </mat-checkbox>
 
         <div class="fields">
           <label>Text:</label>
-          <input class="initialText"
+          <input class="set-initialText"
                  [type]="'text'"
                  [placeholder]="'text initial lang, e.g. \'en\''"
                  (change)="updateMediaSettings('lang', $event)">
-          <input class="initialText"
+          <input class="set-initialText"
                  [type]="'text'"
                  [placeholder]="'text initial role, e.g. \'caption\''"
                  (change)="updateMediaSettings('role', $event)">
           <label>Audio:</label>
-          <input class="initialText"
+          <input class="set-initialText"
                  [type]="'text'"
                  [placeholder]="'audio initial lang, e.g. \'en\''"
                  (change)="updateMediaSettings('audio', $event)">
           <label>Video:</label>
-          <input class="initialText"
+          <input class="set-initialText"
                  [type]="'text'"
                  [placeholder]="'video initial role, e.g. \'alternate\''"
                  (change)="updateMediaSettings('video', $event)">
@@ -53,7 +53,7 @@
                               [matTooltipPosition]="'after'"
                               href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
                               target="_blank">
-            <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+            <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
           </a>
           </mat-checkbox>
         </div>
@@ -63,7 +63,7 @@
                                    [matTooltipPosition]="'after'"
                                    href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
                                    target="_blank">
-            <img class="info" alt="Info Icon with link to  setting description" src="assets/images/question.png">
+            <img class="set-info" alt="Info Icon with link to  setting description" src="assets/images/question.png">
           </a></label>
           <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" name="{{setting.key}}"
                  value="{{setting.value[0]}}"
@@ -75,7 +75,7 @@
                                 [matTooltipPosition]="'after'"
                                 href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
                                 target="_blank">
-            <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+            <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
           </a></h3>
           <hr>
           <div *ngFor="let sub of setting.value">
@@ -107,9 +107,9 @@
             [matTooltipPosition]="'after'"
             href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
             target="_blank">
-            <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+            <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
           </a></label>
-          <mat-radio-group aria-labelledby="Radio-Button-Settings" class="radioButtonSettingGroup">
+          <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup">
             <mat-radio-button *ngFor="let option of logLevels" [value]="option[0]" [checked]="option[1]"
                               (change)="updateLogLevel(option[0])">
               {{option[0]}}
@@ -123,7 +123,7 @@
             [matTooltipPosition]="'after'"
             href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
             target="_blank">
-            <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+            <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
           </a></label>
           <p>TODO</p>
         </div>
