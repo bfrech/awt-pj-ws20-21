@@ -1,7 +1,7 @@
 <div id="vc-comp" class="container">
   <form class="row form-inline">
     <div class="col-12 form-group p-0">
-      <div class="col-md-8 col-12 input-group vc-input-group flex-grow-1">
+      <div class="col-md-8 col-12 input-group flex-grow-1">
         <div class="input-group-prepend dropdown-container">
           <button (click)="streamsDropdownToggle()" class="defaultBtn btn btn-primary dropdown-toggle"
                   aria-haspopup="true" aria-expanded="false">
@@ -10,38 +10,38 @@
           <div [@streamsDropdownShowHide]="streamsDropdownIsVisible"
                           class="vc-dropdown-menu col-md-12">
             <div>
-            <mat-accordion displayMode=flat>
-            <mat-expansion-panel #expPanel *ngFor="let item of srcItems"
-                                 (opened)="setStreamsDropdownExpandedPanel(expPanel)">
+              <mat-accordion displayMode=flat>
+                <mat-expansion-panel #expPanel *ngFor="let item of srcItems"
+                                     (opened)="setStreamsDropdownExpandedPanel(expPanel)">
 
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  {{ item['name'] }}
-                </mat-panel-title>
-              </mat-expansion-panel-header>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{ item['name'] }}
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
 
-              <ul class="vc-collapse">
-                <li *ngFor="let subItem of item['submenu']">
-                  <a (click)="selectStream(subItem['url'])" class="dropdown-item vc-custom-dropdown-item text-truncate"
-                     [class.vc-custom-active]="inputVarStreamAddr === subItem['url']">
-                    <span class="badge badge-pill" [style.color]="'white'"
-                          [style.background-color]="setBadgeColor(srcProvider[subItem['provider']]['acronym'])"
-                          matTooltip="{{ srcProvider[subItem['provider']]['name'] }}"
-                          matTooltipPosition="above">
-                      {{ srcProvider[subItem['provider']]['acronym'] }}
-                    </span>
-                    <span matTooltip="{{ subItem['name'] }}" matTooltipPosition="above" matTooltipShowDelay="1000">
-                      {{ subItem['name'] }}
-                    </span>
-                  </a>
-                </li>
-              </ul>
-            </mat-expansion-panel>
-          </mat-accordion>
+                  <ul class="vc-collapse">
+                    <li *ngFor="let subItem of item['submenu']">
+                      <a (click)="selectStream(subItem['url'])" class="dropdown-item vc-custom-dropdown-item text-truncate"
+                         [class.vc-custom-active]="inputVarStreamAddr === subItem['url']">
+                        <span class="badge badge-pill" [style.color]="'white'"
+                              [style.background-color]="setBadgeColor(srcProvider[subItem['provider']]['acronym'])"
+                              matTooltip="{{ srcProvider[subItem['provider']]['name'] }}"
+                              matTooltipPosition="above">
+                          {{ srcProvider[subItem['provider']]['acronym'] }}
+                        </span>
+                        <span matTooltip="{{ subItem['name'] }}" matTooltipPosition="above" matTooltipShowDelay="1000">
+                          {{ subItem['name'] }}
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                </mat-expansion-panel>
+              </mat-accordion>
             </div>
           </div>
         </div>
-        <input [(ngModel)]="inputVarStreamAddr" name="inputNameStreamAddr" type="text" class="form-control vc-form-control"
+        <input [(ngModel)]="inputVarStreamAddr" name="inputNameStreamAddr" type="text" class="form-control"
                placeholder="Stream Address" aria-label="Stream Address">
       </div>
       <div class="col-md-2 col-12 btn-group">
