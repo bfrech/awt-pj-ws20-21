@@ -1,7 +1,7 @@
 /**
 * No view encapsulation
 */
-.vc-collapse {
+#vc-comp .vc-collapse {
   margin: 0;
   max-height: 30rem;
   overflow-y: auto;
@@ -9,43 +9,43 @@
   scrollbar-width: thin;
 }
 
-.vc-collapse::-webkit-scrollbar {
+#vc-comp .vc-collapse::-webkit-scrollbar {
   width: 6px;
 }
 
-.vc-collapse::-webkit-scrollbar-track {
+#vc-comp .vc-collapse::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.vc-collapse::-webkit-scrollbar-thumb {
+#vc-comp .vc-collapse::-webkit-scrollbar-thumb {
   background: #aaa;
   border: 2px solid transparent;
   border-radius: 3px;
 }
 
-.vc-collapse::-webkit-scrollbar-thumb:hover {
+#vc-comp .vc-collapse::-webkit-scrollbar-thumb:hover {
   background: #888;
 }
 
-.vc-collapse > li {
+#vc-comp .vc-collapse > li {
   list-style-type: none;
 }
 
-.vc-collapse .badge {
+#vc-comp .vc-collapse .badge {
   vertical-align: text-bottom;
 }
 
-.vc-custom-dropdown-item {
+#vc-comp .vc-custom-dropdown-item {
   cursor: pointer;
   padding: 0.25rem 3px;
   border: 1px solid transparent;
 }
 
-.vc-custom-active {
+#vc-comp .vc-custom-active {
   background-color: #e9ecef;
 }
 
-.vc-dropdown-menu {
+#vc-comp .vc-dropdown-menu {
   position: absolute;
   top: 100%;
   left: 0;
@@ -53,66 +53,58 @@
   width: 100%;
 }
 
-.vc-dropdown-menu>div {
+#vc-comp .vc-dropdown-menu>div {
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),0px 1px 1px 0px rgba(0, 0, 0, 0.14),0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 4px;
 }
 
-.vc-dropdown-menu .mat-expansion-panel {
+#vc-comp .vc-dropdown-menu .mat-expansion-panel {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 }
 
-.vc-dropdown-menu .mat-expansion-panel-body {
+#vc-comp .vc-dropdown-menu .mat-expansion-panel-body {
   padding-bottom: 6px;
 }
 
-.vc-dropdown-menu .mat-expansion-panel-header {
+#vc-comp .vc-dropdown-menu .mat-expansion-panel-header {
   height: 2rem;
   font-size: 0.9rem;
+}
+
+#vc-comp .defaultBtn {
+  width: 100%;
+  text-transform: uppercase !important;
+  font-size: 12px !important;
+}
+
+#vc-comp .form-control {
+  text-transform: uppercase;
+  font-size: 12px;
+  height: auto;
+}
+
+#vc-comp .btn-group {
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 #settingMenuContainer {
   overflow: hidden;
 }
 
-#searchbar {
-  text-transform: uppercase;
-  border: none;
-  font-size: 16px;
-}
-
-.defaultbtn {
-  width: 100%;
-  text-transform: uppercase !important;
-  font-size: 12px !important;
-  border-radius: 4px;
-}
-
 #settingsBtn {
   width: 100%;
 }
 
-.form-control {
-  text-transform: uppercase;
-  font-size: 12px;
-  height: auto;
-}
-
-.btn-group {
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
-
-
 @media (min-width: 768px) {
-  .btn-group {
+  #vc-comp .btn-group {
     margin: unset;
   }
 
-  .input-group, .vc-dropdown-menu {
+  #vc-comp .input-group, .vc-dropdown-menu {
     padding-right: unset !important;
   }
 }

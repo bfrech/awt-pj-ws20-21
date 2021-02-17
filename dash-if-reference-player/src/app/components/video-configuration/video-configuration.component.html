@@ -1,9 +1,9 @@
-<div class="container">
+<div id="vc-comp" class="container">
   <form class="row form-inline">
     <div class="col-12 form-group p-0">
       <div class="col-md-8 col-12 input-group flex-grow-1">
         <div class="input-group-prepend dropdown-container">
-          <button (click)="streamsDropdownToggle()" class="defaultbtn btn btn-primary dropdown-toggle"
+          <button (click)="streamsDropdownToggle()" class="defaultBtn btn btn-primary dropdown-toggle"
                   aria-haspopup="true" aria-expanded="false">
             Stream
           </button>
@@ -45,11 +45,11 @@
                placeholder="Stream Address" aria-label="Stream Address">
       </div>
       <div class="col-md-2 col-12 btn-group">
-        <button (click)="playerService.stop()" class="defaultbtn btn btn-secondary">Stop</button>
-        <button (click)="playerService.load(inputVarStreamAddr)" class="defaultbtn btn btn-primary">Load</button>
+        <button (click)="playerService.stop()" class="defaultBtn btn btn-secondary">Stop</button>
+        <button (click)="playerService.load(inputVarStreamAddr)" class="defaultBtn btn btn-primary">Load</button>
       </div>
       <div class="col-md-2 col-12">
-        <button (click)="settingsSectionToggle()" id="settingsBtn" class="defaultbtn btn btn-primary">Settings</button>
+        <button (click)="settingsSectionToggle()" id="settingsBtn" class="defaultBtn btn btn-primary">Settings</button>
       </div>
     </div>
   </form>
