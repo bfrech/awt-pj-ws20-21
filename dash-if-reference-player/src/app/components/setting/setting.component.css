@@ -1,75 +1,107 @@
 .accordionPanel {
-  margin-top: 5px;
+  margin: 10px;
   display: inline-block;
+
 }
 
-h2 {
+.accordionPanel h2 {
   margin: auto 0 !important;
 }
 
-.accordionPanel .mat-expansion-panel-header.mat-expanded {
-  height: 48px !important;
-}
-
-.accordionPanel mat-accordion {
-  margin-top: 15px;
-  margin-bottom: 5px;
+.accordionPanel h3 {
+  margin: -10px 0 -20px !important;
 }
 
 .accordionPanel mat-accordion .mat-expansion-panel {
   border-radius: 0 !important;
 }
 
-.SingleSubSetting{
+.accordionPanel .mat-expansion-panel-body {
+  margin-right: 2px;
+  margin-bottom: 2px;
+  max-height: 30rem;
+  overflow-y: auto;
+  scrollbar-color: #aaa transparent;
+  scrollbar-width: thin;
+}
+
+.accordionPanel .mat-expansion-panel-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.accordionPanel .mat-expansion-panel-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.accordionPanel .mat-expansion-panel-body::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border: 2px solid transparent;
+  border-radius: 3px;
+}
+
+.accordionPanel .mat-expansion-panel-body::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+.accordionPanel .mat-radio-container {
+  transform: scale(0.80);
+}
+
+.accordionPanel .mat-form-field {
+  width: 100%;
+  margin: 4px 0 -6px;
+  padding: 0;
+}
+
+.accordionPanel .singleSubSetting {
   margin: 5px 0px !important;
 }
-.SingleSubSetting hr{
+
+.accordionPanel .singleSubSetting hr {
   margin-bottom: unset !important
 }
-.SingleSubSetting label {
+
+.accordionPanel .singleSubSetting label {
   display: flex;
   color: #707070;
 }
-.groupSubsetting{
+
+.accordionPanel .groupSubSetting {
   padding-top: 4px;
 }
-.settingsFrame {
+
+.accordionPanel .settingsFrame {
   float: left;
+  padding: 5px;
 }
-.singleSetting{
-  margin: unset !important;
-  padding: 4px 0px !important
+
+.accordionPanel .singleSetting {
+  padding: 4px !important;
+  margin: 4px 0 !important;
+  font-size: 80%;
+  background-color: #f4f4f4;
+  border-radius: 4px;
 }
-.singleSetting label{
-margin-bottom: 5px !important;
+
+.accordionPanel .singleSetting label {
+  margin-bottom: 5px !important;
 }
-.content {
+.accordionPanel .content {
   width: 100%;
   background-color: white;
   -webkit-box-shadow: 13px 13px 10px -10px rgba(130, 130, 130, 0.12);
   box-shadow: 13px 13px 10px -10px rgba(130, 130, 130, 0.12);
 }
 
-.radioButtonSettingGroup {
+.accordionPanel .radioButtonSettingGroup {
   display: flex;
   flex-direction: column;
 }
 
-.info {
-  margin-left: 5px;
-  height: 12px;
+.accordionPanel .info {
+  margin-left: 4px;
+  height: 8px;
   width: auto;
+  vertical-align: text-top;
 }
 
-.setting {
-  cursor: pointer;
-  margin-top: 5px;
-  height: 20px;
-  -webkit-transition: -webkit-transform 2.0s ease-in-out;
-  transition: transform 2.0s ease-in-out;
-}
-
-.setting:hover {
-  -webkit-transform: rotate(360deg);
-  transform: rotate(360deg);
-}

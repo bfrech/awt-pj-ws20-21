@@ -1,10 +1,10 @@
 <div class="accordionPanel">
-  <mat-accordion class="settingsFrame col-xl-3 col-lg-4 col-md-6 col-12" *ngFor="let group of groups">
+  <mat-accordion class="settingsFrame col-lg-3 col-md-4 col-12" *ngFor="let group of groups">
     <mat-expansion-panel class="content">
       <mat-expansion-panel-header>
         <h2>{{group[0]}}</h2>
       </mat-expansion-panel-header>
-      <div class="singleSetting my-3" *ngFor="let setting of group[1] | keyvalue">
+      <div class="singleSetting" *ngFor="let setting of group[1] | keyvalue">
 
         <div *ngIf="isBoo(setting.value[0])">
           <mat-checkbox [(ngModel)]="checked"
@@ -18,33 +18,33 @@
           </mat-checkbox>
         </div>
 
+
         <div *ngIf="isInput(setting.value[0]) && !isLogLevel(setting.key)" class="fields">
-          <label>{{setting.key}}<a [matTooltip]="getApiDescription(group[0], setting.key)"
-                                   [matTooltipPosition]="'after'"
-                                   href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
-                                   target="_blank">
-            <img class="info" alt="Info Icon with link to  setting description" src="assets/images/question.png">
-          </a></label>
-          <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" name="{{setting.key}}"
-                 value="{{setting.value[0]}}"
-                 (change)="update(setting.value[1], inputField.value)">
+          <mat-form-field [matTooltip]="getApiDescription(group[0], setting.key)">
+            <mat-label>{{setting.key}}</mat-label>
+            <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" name="{{setting.key}}"
+                   matInput placeholder="placeholder" value="{{setting.value[0]}}"
+                   (change)="update(setting.value[1], inputField.value)">
+          </mat-form-field>
         </div>
 
-        <div *ngIf="isGroup(setting.value[1])" class="SingleSubSetting my-3">
+        <div *ngIf="isGroup(setting.value[1])" class="singleSubSetting my-3">
           <h3>{{setting.key}}<a [matTooltip]="getApiDescription(group[0], setting.key)"
-                                      [matTooltipPosition]="'after'"
-                                      href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
-                                      target="_blank">
-          <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
-        </a></h3>
+                                [matTooltipPosition]="'after'"
+                                href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
+                                target="_blank">
+            <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+          </a></h3>
           <hr>
           <div *ngFor="let sub of setting.value">
-            <div class="groupSubsetting" *ngFor="let subset of sub | keyvalue">
+            <div class="groupSubSetting" *ngFor="let subset of sub | keyvalue">
               <div *ngIf="isInput(subset.value[0])">
-                <label>{{subset.key}}</label>
-                <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" name="{{subset.key}}"
-                       value="{{subset.value[0]}}"
-                       (change)="update(subset.value[1], inputField.value)">
+                <mat-form-field>
+                  <mat-label>{{subset.key}}</mat-label>
+                  <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" name="{{subset.key}}"
+                         matInput placeholder="placeholder" value="{{subset.value[0]}}"
+                         (change)="update(subset.value[1], inputField.value)">
+                </mat-form-field>
               </div>
               <mat-checkbox *ngIf="isBoo(subset.value[0])"
                             [(ngModel)]="checked"
@@ -62,31 +62,31 @@
         </div>
 
         <div *ngIf="isLogLevel(setting.key)" class="radio">
-          <label class="Radio-Button-Settings">{{setting.key}}:<a
-            [matTooltip]="getApiDescription(group[0], setting.key)"
-            [matTooltipPosition]="'after'"
-            href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
-            target="_blank">
-            <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
-          </a></label>
-          <mat-radio-group aria-labelledby="Radio-Button-Settings" class="radioButtonSettingGroup">
-            <mat-radio-button *ngFor="let option of logLevels" [value]="option[0]" [checked]="option[1]"
-                              (change)="updateLogLevel(option[0])">
-              {{option[0]}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
+            <label class="Radio-Button-Settings">{{setting.key}}:<a
+              [matTooltip]="getApiDescription(group[0], setting.key)"
+              [matTooltipPosition]="'after'"
+              href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
+              target="_blank">
+              <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+            </a></label>
+            <mat-radio-group aria-labelledby="Radio-Button-Settings" class="radioButtonSettingGroup">
+              <mat-radio-button *ngFor="let option of logLevels" [value]="option[0]" [checked]="option[1]"
+                                (change)="updateLogLevel(option[0])">
+                {{option[0]}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
 
         <div *ngIf="isRadio(setting.value[0]) && !isLogLevel(setting.key)" class="radio">
-          <label class="Radio-Button-Settings">{{setting.key}}:<a
-            [matTooltip]="getApiDescription(group[0], setting.key)"
-            [matTooltipPosition]="'after'"
-            href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
-            target="_blank">
-            <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
-          </a></label>
-          <p>TODO</p>
-        </div>
+            <label class="Radio-Button-Settings">{{setting.key}}:<a
+              [matTooltip]="getApiDescription(group[0], setting.key)"
+              [matTooltipPosition]="'after'"
+              href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
+              target="_blank">
+              <img class="info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+            </a></label>
+            <p>TODO</p>
+          </div>
       </div>
     </mat-expansion-panel>
   </mat-accordion>

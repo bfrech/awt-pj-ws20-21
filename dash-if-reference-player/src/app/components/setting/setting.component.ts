@@ -1,7 +1,6 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {PlayerService} from '../../services/player.service';
 import * as dashjs from 'dashjs';
-import set = Reflect.set;
 
 @Component({
   selector: 'app-setting',
