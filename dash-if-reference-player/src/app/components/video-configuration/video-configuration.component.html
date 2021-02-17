@@ -1,14 +1,16 @@
-<div class="container">
+<div id="vc-comp" class="container">
   <form class="row form-inline">
     <div class="col-12 form-group p-0">
       <div class="col-md-8 col-12 input-group flex-grow-1">
         <div class="input-group-prepend dropdown-container">
-          <button (click)="streamsDropdownToggle()" class="defaultbtn btn btn-primary dropdown-toggle"
+          <button (click)="streamsDropdownToggle()" class="defaultBtn btn btn-primary dropdown-toggle"
                   aria-haspopup="true" aria-expanded="false">
             Stream
           </button>
-          <mat-accordion [@streamsDropdownShowHide]="streamsDropdownIsVisible"
-                         displayMode=flat class="vc-dropdown-menu col-md-12">
+          <div [@streamsDropdownShowHide]="streamsDropdownIsVisible"
+                          class="vc-dropdown-menu col-md-12">
+            <div>
+            <mat-accordion displayMode=flat>
             <mat-expansion-panel #expPanel *ngFor="let item of srcItems"
                                  (opened)="setStreamsDropdownExpandedPanel(expPanel)">
 
@@ -36,21 +38,23 @@
               </ul>
             </mat-expansion-panel>
           </mat-accordion>
+            </div>
+          </div>
         </div>
         <input [(ngModel)]="inputVarStreamAddr" name="inputNameStreamAddr" type="text" class="form-control"
                placeholder="Stream Address" aria-label="Stream Address">
       </div>
       <div class="col-md-2 col-12 btn-group">
-        <button (click)="playerService.stop()" class="defaultbtn btn btn-secondary">Stop</button>
-        <button (click)="playerService.load(inputVarStreamAddr)" class="defaultbtn btn btn-primary">Load</button>
+        <button (click)="playerService.stop()" class="defaultBtn btn btn-secondary">Stop</button>
+        <button (click)="playerService.load(inputVarStreamAddr)" class="defaultBtn btn btn-primary">Load</button>
       </div>
       <div class="col-md-2 col-12">
-        <button (click)="settingsSectionToggle()" id="settingsBtn" class="defaultbtn btn btn-primary">Settings</button>
+        <button (click)="settingsSectionToggle()" id="settingsBtn" class="defaultBtn btn btn-primary">Settings</button>
       </div>
     </div>
   </form>
 
-  <div [@settingsShowHide]="settingsSectionIsVisible ? true : false" class="row">
+  <div [@settingsShowHide]="settingsSectionIsVisible ? true : false" id="settingMenuContainer" class="row">
     <div id="settingMenu">
       <app-setting [groups]="groups" [settingGroup]="this.orderGroups"></app-setting>
     </div>
