@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as dashjs from 'dashjs';
 import '../types/dashjs-types';
 import { hasOwnProperty } from '../../assets/hasownproperty';
-import { Metrics, MetricsAVG } from '../../assets/metrics';
+import { Metrics, MetricsAVG } from '../types/metric-types';
 
 declare var ControlBar: any;
 
