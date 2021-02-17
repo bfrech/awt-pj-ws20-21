@@ -50,7 +50,7 @@
     </div>
   </form>
 
-  <div [@settingsShowHide]="settingsSectionIsVisible ? true : false" class="row">
+  <div [@settingsShowHide]="settingsSectionIsVisible ? true : false" id="settingMenuContainer" class="row">
     <div id="settingMenu">
       <app-setting [groups]="groups" [settingGroup]="this.orderGroups"></app-setting>
     </div>

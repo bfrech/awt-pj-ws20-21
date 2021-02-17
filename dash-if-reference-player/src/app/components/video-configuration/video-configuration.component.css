@@ -71,6 +71,10 @@
   font-size: 0.9rem;
 }
 
+#settingMenuContainer {
+  overflow: hidden;
+}
+
 #searchbar {
   text-transform: uppercase;
   border: none;
