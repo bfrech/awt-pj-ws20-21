@@ -1,7 +1,6 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {PlayerService} from '../../services/player.service';
 import * as dashjs from 'dashjs';
-import set = Reflect.set;
 
 @Component({
   selector: 'app-setting',
@@ -14,7 +13,6 @@ export class SettingComponent implements OnInit {
   @Input() groups: any;
   @Input() settingGroup: any;
   description: any;
-  descriptionLevelDown: any;
   tooltip: any;
   checked = false;
   closeResult = '';
@@ -47,7 +45,6 @@ export class SettingComponent implements OnInit {
       this.settings.push(group[0]);
     });
 
-    console.log(this.settingGroup);
   }
 
   /**
@@ -158,6 +155,37 @@ export class SettingComponent implements OnInit {
         liveCatchup: {}
       }
     });
+  }
+
+  updateTextDefaultEnabled(checked: boolean): void {
+    this.playerService.player.setTextDefaultEnabled(checked);
+  }
+
+  updateEnableForcedTextStreaming(checked: boolean): void {
+    this.playerService.player.enableForcedTextStreaming(checked);
+  }
+
+  updateMediaSettings(type: string, event: any): void {
+    if (type === 'audio') {
+      this.playerService.player.setInitialMediaSettingsFor('audio', {
+        lang: event.target.value
+      });
+    }
+    if (type === 'video') {
+      this.playerService.player.setInitialMediaSettingsFor('video', {
+        role: event.target.value
+      });
+    }
+    if (type === 'lang') {
+      this.playerService.player.setInitialMediaSettingsFor('fragmentedText', {
+        lang: event.target.value
+      });
+    }
+    if (type === 'role') {
+      this.playerService.player.setInitialMediaSettingsFor('fragmentedText', {
+        role: event.target.value
+      });
+    }
   }
 
   /**

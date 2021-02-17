@@ -77,24 +77,17 @@
   font-size: 16px;
 }
 
-.defaultbtn {
-  width: 100%;
-  text-transform: uppercase !important;
-  font-size: 12px !important;
-  border-radius: 4px;
-}
-
 #settingsBtn {
   width: 100%;
 }
 
-.form-control {
+.vc-form-control {
   text-transform: uppercase;
   font-size: 12px;
   height: auto;
 }
 
-.btn-group {
+.vc-btn-group {
   margin-bottom: 10px;
   margin-top: 10px;
 }
@@ -102,11 +95,11 @@
 
 @media (min-width: 768px ) {
 
-  .btn-group {
+  .vc-btn-group {
     margin: unset;
   }
 
-  .input-group {
+  .vc-input-group {
     padding-right: unset !important;
   }
 }
