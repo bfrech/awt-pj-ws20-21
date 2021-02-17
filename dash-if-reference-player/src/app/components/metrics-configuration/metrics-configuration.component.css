@@ -9,6 +9,7 @@ thead th>div {
   padding-bottom: 0.4rem;
   font-weight: 600;
   font-size: 95%;
+  color: #505050;
 }
 
 tbody tr:hover {

@@ -35,10 +35,11 @@
   vertical-align: text-bottom;
 }
 
-#vc-comp .vc-custom-dropdown-item {
+#vc-comp .vc-dropdown-item {
   cursor: pointer;
   padding: 0.25rem 3px;
   border: 1px solid transparent;
+  color: #707070;
 }
 
 #vc-comp .vc-custom-active {
@@ -74,10 +75,8 @@
   font-size: 0.9rem;
 }
 
-#vc-comp .defaultBtn {
-  width: 100%;
-  text-transform: uppercase !important;
-  font-size: 12px !important;
+#vc-comp .vc-dropdown-menu .mat-expansion-panel-header-title {
+  color: #505050;
 }
 
 #vc-comp .form-control {

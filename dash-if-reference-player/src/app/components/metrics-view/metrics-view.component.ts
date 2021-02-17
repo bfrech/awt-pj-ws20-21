@@ -102,7 +102,8 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       text: 'Stream Metrics',
       style: {
         fontWeight: '500',
-        fontSize: '16px'
+        fontSize: '16px',
+        color: '#505050'
       },
     },
     xaxis: {

@@ -22,7 +22,7 @@
 
                   <ul class="vc-collapse">
                     <li *ngFor="let subItem of item['submenu']">
-                      <a (click)="selectStream(subItem['url'])" class="dropdown-item vc-custom-dropdown-item text-truncate"
+                      <a (click)="selectStream(subItem['url'])" class="dropdown-item vc-dropdown-item text-truncate"
                          [class.vc-custom-active]="inputVarStreamAddr === subItem['url']">
                         <span class="badge badge-pill" [style.color]="'white'"
                               [style.background-color]="setBadgeColor(srcProvider[subItem['provider']]['acronym'])"
