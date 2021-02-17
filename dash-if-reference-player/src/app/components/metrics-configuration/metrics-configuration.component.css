@@ -2,7 +2,7 @@ table {
   width: 100%;
 }
 
-thead th {
+thead th>div {
   transform: rotate(-45deg);
   position: relative;
   left: 0.4rem;
