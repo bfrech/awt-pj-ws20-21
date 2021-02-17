@@ -50,12 +50,14 @@ export class PlayerService {
     return this._controlBar;
   }
 
+  /** Initialize player and akamai toolbar */
   initialize(view?: HTMLElement, source?: string, autoPlay?: boolean): void {
     this._player.initialize(view, source, autoPlay);
     this._controlBar = new ControlBar(this._player);
     this._controlBar.initialize();
   }
 
+  /** Attach view to player and initialize akamai toolbar */
   attachView(element: HTMLElement): void {
     this._player.attachView(element);
     this._controlBar = new ControlBar(this._player);
