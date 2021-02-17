@@ -76,6 +76,7 @@ const settingGroups = {
   DEBUG: {
     logLevel: 'Sets up the log level. The levels are cumulative. For example, if you set the log level to dashjs.Debug.LOG_LEVEL_WARNING all warnings, errors and fatals will be logged. Possible values.',
     dispatchEvent: 'Enable to trigger a Events.LOG event whenever log output is generated. Note this will be dispatched regardless of log level',
+    metricsMaxListDepth: 'Maximum list depth of metrics.',
   },
   CMCD: {
     enabled: 'Enable or disable the CMCD reporting.',
