@@ -5,7 +5,7 @@
   margin: 0;
   max-height: 30rem;
   overflow-y: auto;
-  scrollbar-color: #aaa transparent;
+  scrollbar-color: #999 transparent;
   scrollbar-width: thin;
 }
 
@@ -18,13 +18,13 @@
 }
 
 #vc-comp .vc-collapse::-webkit-scrollbar-thumb {
-  background: #aaa;
+  background: #999;
   border: 2px solid transparent;
   border-radius: 3px;
 }
 
 #vc-comp .vc-collapse::-webkit-scrollbar-thumb:hover {
-  background: #888;
+  background: #777;
 }
 
 #vc-comp .vc-collapse > li {

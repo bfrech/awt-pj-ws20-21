@@ -1,12 +1,13 @@
-.footer{
-  background-color: darkgrey;
-  font-size: 10px;
-  padding-top: 15px;
-  padding-bottom: 15px;
+
+.footer {
+  background-color: #888;
+  font-size: 11px;
+  padding-top: 13px;
+  padding-bottom: 13px;
   width: 100%;
   position: fixed;
   bottom: 0;
 }
-.text{
+.text {
   color: white;
 }

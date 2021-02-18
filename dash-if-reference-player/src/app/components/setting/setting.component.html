@@ -79,7 +79,7 @@
           </a></h3>
           <hr>
           <div *ngFor="let sub of setting.value">
-            <div class="groupSubsetting" *ngFor="let subset of sub | keyvalue">
+            <div class="groupSubSetting" *ngFor="let subset of sub | keyvalue">
               <div *ngIf="isInput(subset.value[0])">
                 <label>{{subset.key}}</label>
                 <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" name="{{subset.key}}"
