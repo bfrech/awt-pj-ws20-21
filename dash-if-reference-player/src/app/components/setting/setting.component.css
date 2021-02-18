@@ -1,73 +1,110 @@
-.set-accordionPanel {
-  margin-top: 5px;
+/**
+* No view encapsulation
+*/
+#set-accordionPanel {
+  margin: 10px;
   display: inline-block;
 }
 
-h2 {
+#set-accordionPanel h2 {
   margin: auto 0 !important;
 }
 
-.set-accordionPanel .mat-expansion-panel-header.mat-expanded {
-  height: 48px !important;
+#set-accordionPanel h3 {
+  margin: -10px 0 -20px !important;
 }
 
-.set-accordionPanel mat-accordion {
-  margin-top: 15px;
-  margin-bottom: 5px;
-}
-
-.set-accordionPanel mat-accordion .mat-expansion-panel {
+#set-accordionPanel mat-accordion .mat-expansion-panel {
   border-radius: 0 !important;
 }
 
-.SingleSubSetting {
+#set-accordionPanel .mat-expansion-panel-body {
+  margin-right: 2px;
+  margin-bottom: 2px;
+  max-height: 30rem;
+  overflow-y: auto;
+  scrollbar-color: #aaa transparent;
+  scrollbar-width: thin;
+}
+
+#set-accordionPanel .mat-expansion-panel-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+#set-accordionPanel .mat-expansion-panel-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#set-accordionPanel .mat-expansion-panel-body::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border: 2px solid transparent;
+  border-radius: 3px;
+}
+
+#set-accordionPanel .mat-expansion-panel-body::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+#set-accordionPanel .mat-radio-container {
+  transform: scale(0.80);
+}
+
+#set-accordionPanel .mat-form-field {
+  width: 100%;
+  margin: 4px 0 -6px;
+  padding: 0;
+}
+
+#set-accordionPanel .singleSubSetting {
   margin: 5px 0px !important;
 }
 
-.SingleSubSetting hr {
+#set-accordionPanel .singleSubSetting hr {
   margin-bottom: unset !important
 }
 
-.SingleSubSetting label {
+#set-accordionPanel .singleSubSetting  label {
   display: flex;
   color: #707070;
 }
 
-.groupSubSetting {
+#set-accordionPanel .groupSubSetting {
   padding-top: 4px;
 }
 
-.settingsFrame {
+#set-accordionPanel .settingsFrame {
   float: left;
+  padding: 5px;
 }
 
-.singleSetting {
-  margin: unset !important;
-  padding: 4px 0px !important
+#set-accordionPanel .singleSetting {
+  padding: 4px !important;
+  margin: 4px 0 !important;
+  font-size: 80%;
+  background-color: #f4f4f4;
+  border-radius: 4px;
 }
 
-.singleSetting label {
+#set-accordionPanel .singleSetting label {
   margin-bottom: 5px !important;
 }
 
-.set-content {
+#set-accordionPanel .set-content {
   width: 100%;
   background-color: white;
-  -webkit-box-shadow: 13px 13px 10px -10px rgba(130, 130, 130, 0.12);
-  box-shadow: 13px 13px 10px -10px rgba(130, 130, 130, 0.12);
+  -webkit-box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),0px 1px 1px 0px rgba(0, 0, 0, 0.14),0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),0px 1px 1px 0px rgba(0, 0, 0, 0.14),0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.set-radioButtonSettingGroup {
+#set-accordionPanel .set-radioButtonSettingGroup {
   display: flex;
   flex-direction: column;
 }
 
-.set-initialText {
-  margin-bottom: 5px;
-}
-
-.set-info{
-  margin-left: 5px;
-  height: 12px;
+#set-accordionPanel .set-info {
+  margin-left: 4px;
+  height: 8px;
   width: auto;
+  vertical-align: text-top;
 }
