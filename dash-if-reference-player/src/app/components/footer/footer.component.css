@@ -1,12 +1,14 @@
 
 .footer {
   background-color: #888;
+  opacity: 0.9;
   font-size: 11px;
-  padding-top: 13px;
-  padding-bottom: 13px;
+  padding-top: 12px;
+  padding-bottom: 12px;
   width: 100%;
   position: fixed;
   bottom: 0;
+  z-index: 99999;
 }
 .text {
   color: white;
