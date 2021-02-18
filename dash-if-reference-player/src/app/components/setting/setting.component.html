@@ -8,19 +8,19 @@
       <div class="singleSetting" *ngIf="group[0] === 'INITIAL'">
         <mat-checkbox [(ngModel)]="checked"
                       [labelPosition]="'after'"
-                      [matTooltip]="'Enable subtitle on loading text'"
-                      [matTooltipPosition]="'after'"
                       (change)="updateTextDefaultEnabled(checked)">
           Enable Text At Loading
-          <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+          <img [matTooltip]="'Enable subtitle on loading text'"
+               [matTooltipPosition]="'after'"
+               class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
         </mat-checkbox>
         <mat-checkbox [(ngModel)]="checked"
                       [labelPosition]="'after'"
-                      [matTooltip]="'Force Text Streaming'"
-                      [matTooltipPosition]="'after'"
                       (change)="updateEnableForcedTextStreaming(checked)">
           Force Text Streaming
-          <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+          <img [matTooltip]="'Force Text Streaming'"
+               [matTooltipPosition]="'after'"
+               class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
         </mat-checkbox>
 
         <div class="fields">
