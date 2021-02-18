@@ -15,7 +15,6 @@ body {
   background-color: #eff3f6;
   margin: 0;
   scrollbar-color: #999 transparent;
-  /* scrollbar-width: thin; */
 }
 
 body::-webkit-scrollbar {
