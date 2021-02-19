@@ -2,7 +2,9 @@
 * No view encapsulation
 */
 #set-accordionPanel {
-  margin: 10px;
+  margin: 0;
+  padding: 10px;
+  overflow: hidden;
 }
 
 #set-accordionPanel:after {
