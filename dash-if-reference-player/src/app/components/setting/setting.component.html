@@ -36,7 +36,7 @@
           <div *ngIf="group[0] === 'DRM SYSTEM'">
             <div class="singleSetting">
               <mat-checkbox [(ngModel)]="drmSelected"
-                            [labelPosition]="'after'" (change)="toggleDRM(drmSelected)">
+                            [labelPosition]="'after'" (change)="toggleDRM(drmSelected); updateMasonry()">
                 Add DRM Key System<a [matTooltip]="'Add a DRM Key System'"
                                      [matTooltipPosition]="'after'">
                 <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
@@ -44,12 +44,11 @@
               </mat-checkbox>
             </div>
 
-            <div>
+            <div *ngIf="drmSelected">
               <div class="singleSetting">
                 <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup">
                   <mat-radio-button *ngFor="let option of drmKeySystems | keyvalue" [value]="option.key"
-                                    [checked]="option.value" (change)="changeDRMKeySystem(option.key)"
-                                    [disabled]="!drmSelected">
+                                    [checked]="option.value" (change)="changeDRMKeySystem(option.key)">
                     {{option.key}}
                   </mat-radio-button>
                 </mat-radio-group>
@@ -57,9 +56,7 @@
               <div class="singleSetting">
                 <mat-form-field>
                   <mat-label>License URL</mat-label>
-                  <input #inputField name="License URL"
-                         matInput
-                         (change)="setLicenseURL(inputField.value)" [disabled]="!drmSelected">
+                  <input #inputField name="License URL" matInput (change)="setLicenseURL(inputField.value)">
                 </mat-form-field>
               </div>
             </div>
