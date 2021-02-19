@@ -16,21 +16,6 @@ declare var ControlBar: any;
   providedIn: 'root'
 })
 export class PlayerService {
-  get streamItem(): any {
-    return this._streamItem;
-  }
-
-  set streamItem(value: any) {
-    this._streamItem = value;
-  }
-  get streamAddress(): string {
-    return this._streamAddress;
-  }
-
-  set streamAddress(value: string) {
-    this._streamAddress = value;
-  }
-
 
   // tslint:disable-next-line:variable-name
   private readonly _player: dashjs.MediaPlayerClass;
@@ -72,6 +57,21 @@ export class PlayerService {
   /** Getter for control bar object */
   get controlBar(): {} {
     return this._controlBar;
+  }
+
+  get streamItem(): any {
+    return this._streamItem;
+  }
+
+  set streamItem(value: any) {
+    this._streamItem = value;
+  }
+  get streamAddress(): string {
+    return this._streamAddress;
+  }
+
+  set streamAddress(value: string) {
+    this._streamAddress = value;
   }
 
   /** Initialize player and akamai toolbar */
