@@ -210,6 +210,13 @@ export class VideoConfigurationComponent implements OnInit {
     }
   }
 
+  /**
+   * Get Selected Stream Item
+   */
+  selectStreamItem(item: object): void {
+    this.playerService.streamItem = item;
+  }
+
   /** When a stream is selected, apply URL and toggle dropdown menu */
   selectStream(url: string): void {
     this.inputVarStreamAddr = url;

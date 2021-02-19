@@ -3,6 +3,7 @@ import {PlayerService} from '../../services/player.service';
 import * as dashjs from 'dashjs';
 
 declare const constants: any;
+declare const drmKeySystems: any;
 
 @Component({
   selector: 'app-setting',
@@ -24,7 +25,10 @@ export class SettingComponent implements OnInit {
   autoPlaySelected = true;
 
   // DRM KEY SYSTEM
-
+  drmSelected = false;
+  drmKeySystems = drmKeySystems;
+  selectedDRMKeySystem = '';
+  drmLicenseUrl = '';
 
   // playerService must be public to access it in the template
   constructor(public playerService: PlayerService) {
@@ -56,6 +60,35 @@ export class SettingComponent implements OnInit {
    */
   toggleLoop( value: boolean ): void {
     this.loopSelected = value;
+  }
+
+  /**
+   * DRM Protection
+   */
+  toggleDRM( value: boolean ): void {
+    this.drmSelected = value;
+  }
+
+  changeDRMKeySystem( value: any ): void {
+    this.selectedDRMKeySystem = value;
+    this.setProtection();
+  }
+
+  setLicenseURL( value: string): void {
+    this.drmLicenseUrl = value;
+    this.setProtection();
+  }
+
+  setProtection(): void {
+    let protData: { [index: string]: any } = {};
+    if ( this.playerService.streamItem.hasOwnProperty('protData')){
+      protData = this.playerService.streamItem.protData;
+    } else if ( this.drmLicenseUrl !== '' && this.selectedDRMKeySystem !== ''){
+      protData[this.selectedDRMKeySystem] = {
+        serverURL: this.drmLicenseUrl
+      };
+    }
+    this.playerService.player.setProtectionData(protData);
   }
 
   /**

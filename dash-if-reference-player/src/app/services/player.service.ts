@@ -16,6 +16,13 @@ declare var ControlBar: any;
   providedIn: 'root'
 })
 export class PlayerService {
+  get streamItem(): any {
+    return this._streamItem;
+  }
+
+  set streamItem(value: any) {
+    this._streamItem = value;
+  }
   get streamAddress(): string {
     return this._streamAddress;
   }
@@ -40,6 +47,9 @@ export class PlayerService {
   // tslint:disable-next-line:variable-name
   private _streamAddress = this.srcItems[0].submenu[4].url;
 
+  // tslint:disable-next-line:variable-name
+  private _streamItem: any;
+
   constructor() {
 
     // Create player instance and setup listeners for player events
@@ -50,6 +60,8 @@ export class PlayerService {
     this._player.on(dashjs.MediaPlayer.events.QUALITY_CHANGE_REQUESTED, (e) => {
       this.pendingIndex[e.mediaType] = e.newQuality + 1;
     });
+
+    this._streamItem = this.srcItems[0].submenu[4];
   }
 
   /** Getter for dashjs player object */
@@ -83,6 +95,9 @@ export class PlayerService {
 
   /** Load source */
   load(streamAddr: string): void {
+    if ( this._streamItem.hasOwnProperty('protData')){
+      this._player.setProtectionData(this._streamItem.protData);
+    }
     this._player.attachSource(streamAddr);
   }
 
