@@ -1,136 +1,144 @@
 <div id="set-accordionPanel">
-  <mat-accordion displayMode=flat class="settingsFrame col-lg-3 col-md-4 col-12" *ngFor="let group of groups">
-    <mat-expansion-panel class="set-content">
-      <mat-expansion-panel-header>
-        <h2>{{group[0]}}</h2>
-      </mat-expansion-panel-header>
+  <div class="set-grid">
+  <ngx-masonry [options]="masonryOptions">
+    <div ngxMasonryItem class="set-masonry-item col-lg-3 col-md-4 col-12" *ngFor="let group of groups">
+      <mat-accordion>
+        <mat-expansion-panel class="set-content" (afterExpand)="updateMasonry()" (afterCollapse)="updateMasonry()" >
+          <mat-expansion-panel-header>
+            <h2>{{group[0]}}</h2>
+          </mat-expansion-panel-header>
 
-      <div class="singleSetting" *ngIf="group[0] === 'INITIAL'">
-        <mat-checkbox [(ngModel)]="checked"
-                      [labelPosition]="'after'"
-                      (change)="updateTextDefaultEnabled(checked)">
-          Enable Text At Loading
-          <img [matTooltip]="'Enable subtitle on loading text'"
-               [matTooltipPosition]="'after'"
-               class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
-        </mat-checkbox>
-        <mat-checkbox [(ngModel)]="checked"
-                      [labelPosition]="'after'"
-                      (change)="updateEnableForcedTextStreaming(checked)">
-          Force Text Streaming
-          <img [matTooltip]="'Force Text Streaming'"
-               [matTooltipPosition]="'after'"
-               class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
-        </mat-checkbox>
+          <div class="singleSetting" *ngIf="group[0] === 'INITIAL'">
+            <mat-checkbox [(ngModel)]="checked"
+                          [labelPosition]="'after'"
+                          (change)="updateTextDefaultEnabled(checked)">
+              Enable Text At Loading
+              <img [matTooltip]="'Enable subtitle on loading text'"
+                   [matTooltipPosition]="'after'"
+                   class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+            </mat-checkbox>
+            <mat-checkbox [(ngModel)]="checked"
+                          [labelPosition]="'after'"
+                          (change)="updateEnableForcedTextStreaming(checked)">
+              Force Text Streaming
+              <img [matTooltip]="'Force Text Streaming'"
+                   [matTooltipPosition]="'after'"
+                   class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+            </mat-checkbox>
 
-        <div class="fields">
-          <mat-form-field>
-            <mat-label>Text initial lang</mat-label>
-            <input [type]="'text'" matInput placeholder="Text initial lang, e.g. 'en'"
-                   (change)="updateMediaSettings('lang', $event)">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Text initial role</mat-label>
-            <input [type]="'text'" matInput placeholder="Text initial role, e.g. 'caption'"
-                   (change)="updateMediaSettings('role', $event)">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Audio initial lang</mat-label>
-            <input [type]="'text'" matInput placeholder="Audio initial lang, e.g. 'en'"
-                   (change)="updateMediaSettings('audio', $event)">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Video initial role</mat-label>
-            <input [type]="'text'" matInput placeholder="Video initial role, e.g. 'alternate'"
-                   (change)="updateMediaSettings('video', $event)">
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div class="singleSetting" *ngFor="let setting of group[1] | keyvalue">
-        <div *ngIf="isBoo(setting.value[0])">
-          <mat-checkbox [(ngModel)]="checked"
-                        [labelPosition]="'after'" (change)="update(setting.value[1], checked)">
-            {{setting.key}}<a [matTooltip]="getApiDescription(group[0], setting.key)"
-                              [matTooltipPosition]="'after'"
-                              href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
-                              target="_blank">
-            <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
-          </a>
-          </mat-checkbox>
-        </div>
-
-        <div *ngIf="isInput(setting.value[0]) && !isLogLevel(setting.key)" class="fields">
-          <mat-form-field [matTooltip]="getApiDescription(group[0], setting.key)">
-            <mat-label>{{setting.key}}</mat-label>
-            <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" name="{{setting.key}}"
-                   matInput placeholder="placeholder" value="{{setting.value[0]}}"
-                   (change)="update(setting.value[1], inputField.value)">
-          </mat-form-field>
-        </div>
-
-        <div *ngIf="isGroup(setting.value[1])" class="singleSubSetting my-3">
-          <h3>{{setting.key}}<a [matTooltip]="getApiDescription(group[0], setting.key)"
-                                [matTooltipPosition]="'after'"
-                                href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
-                                target="_blank">
-            <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
-          </a></h3>
-          <hr>
-          <div *ngFor="let sub of setting.value">
-            <div class="groupSubSetting" *ngFor="let subset of sub | keyvalue">
-              <div *ngIf="isInput(subset.value[0])">
-                <mat-form-field>
-                  <mat-label>{{subset.key}}</mat-label>
-                  <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" name="{{subset.key}}"
-                         matInput placeholder="placeholder" value="{{subset.value[0]}}"
-                         (change)="update(subset.value[1], inputField.value)">
-                </mat-form-field>
-              </div>
-              <mat-checkbox *ngIf="isBoo(subset.value[0])"
-                            [(ngModel)]="checked"
-                            [labelPosition]="'after'" (change)="update(subset.value[1], checked)">
-                {{subset.key}}
-              </mat-checkbox>
-
-              <div *ngIf="isRadio(subset.value[0]) && !isLogLevel(setting.key)" class="radio">
-                <label class="Radio-Button-Settings">{{setting.key}}:</label>
-                <p>TODO</p>
-              </div>
-
+            <div class="fields">
+              <mat-form-field>
+                <mat-label>Text initial lang</mat-label>
+                <input [type]="'text'" matInput placeholder="Text initial lang, e.g. 'en'"
+                       (change)="updateMediaSettings('lang', $event)">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Text initial role</mat-label>
+                <input [type]="'text'" matInput placeholder="Text initial role, e.g. 'caption'"
+                       (change)="updateMediaSettings('role', $event)">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Audio initial lang</mat-label>
+                <input [type]="'text'" matInput placeholder="Audio initial lang, e.g. 'en'"
+                       (change)="updateMediaSettings('audio', $event)">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Video initial role</mat-label>
+                <input [type]="'text'" matInput placeholder="Video initial role, e.g. 'alternate'"
+                       (change)="updateMediaSettings('video', $event)">
+              </mat-form-field>
             </div>
           </div>
-        </div>
 
-        <div *ngIf="isLogLevel(setting.key)" class="radio">
-          <label class="Radio-Button-Settings">{{setting.key}}:<a
-            [matTooltip]="getApiDescription(group[0], setting.key)"
-            [matTooltipPosition]="'after'"
-            href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
-            target="_blank">
-            <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
-          </a></label>
-          <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup">
-            <mat-radio-button *ngFor="let option of logLevels" [value]="option[0]" [checked]="option[1]"
-                              (change)="updateLogLevel(option[0])">
-              {{option[0]}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
+          <div class="singleSetting" *ngFor="let setting of group[1] | keyvalue">
+            <div *ngIf="isBoo(setting.value[0])">
+              <mat-checkbox [(ngModel)]="checked"
+                            [labelPosition]="'after'" (change)="update(setting.value[1], checked)">
+                {{setting.key}}<a [matTooltip]="getApiDescription(group[0], setting.key)"
+                                  [matTooltipPosition]="'after'"
+                                  href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
+                                  target="_blank">
+                <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+              </a>
+              </mat-checkbox>
+            </div>
 
-        <div *ngIf="isRadio(setting.value[0]) && !isLogLevel(setting.key)" class="radio">
-          <label class="Radio-Button-Settings">{{setting.key}}:<a
-            [matTooltip]="getApiDescription(group[0], setting.key)"
-            [matTooltipPosition]="'after'"
-            href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
-            target="_blank">
-            <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
-          </a></label>
-          <p>TODO</p>
-        </div>
-      </div>
-    </mat-expansion-panel>
-  </mat-accordion>
+            <div *ngIf="isInput(setting.value[0]) && !isLogLevel(setting.key)" class="fields">
+              <mat-form-field [matTooltip]="getApiDescription(group[0], setting.key)">
+                <mat-label>{{setting.key}}</mat-label>
+                <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" name="{{setting.key}}"
+                       matInput placeholder="placeholder" value="{{setting.value[0]}}"
+                       (change)="update(setting.value[1], inputField.value)">
+              </mat-form-field>
+            </div>
+
+            <div *ngIf="isGroup(setting.value[1])" class="singleSubSetting my-3">
+              <h3>{{setting.key}}<a [matTooltip]="getApiDescription(group[0], setting.key)"
+                                    [matTooltipPosition]="'after'"
+                                    href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
+                                    target="_blank">
+                <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+              </a></h3>
+              <hr>
+              <div *ngFor="let sub of setting.value">
+                <div class="groupSubSetting" *ngFor="let subset of sub | keyvalue">
+                  <div *ngIf="isInput(subset.value[0])">
+                    <mat-form-field>
+                      <mat-label>{{subset.key}}</mat-label>
+                      <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" name="{{subset.key}}"
+                             matInput placeholder="placeholder" value="{{subset.value[0]}}"
+                             (change)="update(subset.value[1], inputField.value)">
+                    </mat-form-field>
+                  </div>
+                  <mat-checkbox *ngIf="isBoo(subset.value[0])"
+                                [(ngModel)]="checked"
+                                [labelPosition]="'after'" (change)="update(subset.value[1], checked)">
+                    {{subset.key}}
+                  </mat-checkbox>
+
+                  <div *ngIf="isRadio(subset.value[0]) && !isLogLevel(setting.key)" class="radio">
+                    <label class="Radio-Button-Settings">{{setting.key}}:</label>
+                    <p>TODO</p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="isLogLevel(setting.key)" class="radio">
+              <label class="Radio-Button-Settings">{{setting.key}}:<a
+                [matTooltip]="getApiDescription(group[0], setting.key)"
+                [matTooltipPosition]="'after'"
+                href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
+                target="_blank">
+                <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+              </a></label>
+              <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup">
+                <mat-radio-button *ngFor="let option of logLevels" [value]="option[0]" [checked]="option[1]"
+                                  (change)="updateLogLevel(option[0])">
+                  {{option[0]}}
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <div *ngIf="isRadio(setting.value[0]) && !isLogLevel(setting.key)" class="radio">
+              <label class="Radio-Button-Settings">{{setting.key}}:<a
+                [matTooltip]="getApiDescription(group[0], setting.key)"
+                [matTooltipPosition]="'after'"
+                href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
+                target="_blank">
+                <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+              </a></label>
+              <p>TODO</p>
+            </div>
+          </div>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </ngx-masonry>
+  </div>
+
 </div>
 
 

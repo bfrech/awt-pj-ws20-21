@@ -95,7 +95,7 @@
   overflow: hidden;
 }
 
-#settingsBtn {
+#settingsBtn, #settingMenu {
   width: 100%;
 }
 

@@ -22,6 +22,7 @@ import {NgApexchartsModule} from 'ng-apexcharts';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import {NgxMasonryModule} from 'ngx-masonry';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,9 @@ import {MatButtonModule} from '@angular/material/button';
     MatSnackBarModule,
     BrowserAnimationsModule,
     MatCardModule,
-    NgApexchartsModule],
+    NgApexchartsModule,
+    NgxMasonryModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 

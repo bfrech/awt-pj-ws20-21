@@ -1,9 +1,37 @@
+
+.set-grid {
+  width: 100%;
+}
+.set-grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.set-masonry-item {
+  padding: 5px;
+}
+.set-masonry-item:hover {
+  z-index: 999!important;
+}
+/*
+.set-masonry-item .ng-animating {
+  position: relative!important;
+  z-index: 999999!important;
+  border: 3px solid red;
+}
+*/
+.set-masonry-item--collapsed {
+
+}
+.set-masonry-item--expanded {
+
+}
+
 /**
 * No view encapsulation
 */
 #set-accordionPanel {
   margin: 10px;
-  display: inline-block;
 }
 
 #set-accordionPanel h2 {
