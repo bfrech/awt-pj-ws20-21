@@ -124,6 +124,7 @@ export class VideoConfigurationComponent implements OnInit {
     // Map to custom groups
     const withGroups: any[] = [];
     Object.entries(res).forEach(setting => {
+      if ( this.findGroup(setting[0]) === 'NONE') { return; }
       withGroups.push([this.findGroup(setting[0]), setting[0], setting[1]]);
     });
 

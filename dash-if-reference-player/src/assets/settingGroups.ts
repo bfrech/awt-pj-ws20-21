@@ -105,24 +105,13 @@ const settingGroups = {
     retryAttempts: 'Total number of retry attempts that will occur on a file load before it fails. For low latency mode these values are multiplied by lowLatencyMultiplyFactor.',
     fragmentRequestTimeout: 'Time in milliseconds before timing out on loading a media fragment. Fragments that timeout are retried as if they failed',
   },
+  NONE: {
+    metricsMaxListDepth: 'Maximum list depth of metrics.',
+    wallclockTimeUpdateInterval: 'How frequently the wallclockTimeUpdated internal event is triggered (in milliseconds).',
+    keepProtectionMediaKeys: 'Set the value for the ProtectionController and MediaKeys life cycle. If true, the ProtectionController and then created MediaKeys and MediaKeySessions will be preserved during the MediaPlayer lifetime.',
+    useManifestDateHeaderTimeSource: 'Allows you to enable the use of the Date Header, if exposed with CORS, as a timing source for live edge detection. The use of the date header will happen only after the other timing source that take precedence fail or are omitted as described.',
+    useSuggestedPresentationDelay: 'Set to true if you would like to override the default live delay and honor the SuggestedPresentationDelay attribute in by the manifest.',
+    manifestUpdateRetryInterval: 'For live streams, set the interval-frequency in milliseconds at which dash.js will check if the current manifest is still processed before downloading the next manifest once the minimumUpdatePeriod time has',
+  }
 };
 
-/* Still needs to be assigned to Group */
-const order = {
-  metricsMaxListDepth: 'Maximum list depth of metrics.',
-  wallclockTimeUpdateInterval: 'How frequently the wallclockTimeUpdated internal event is triggered (in milliseconds).',
-  keepProtectionMediaKeys: 'Set the value for the ProtectionController and MediaKeys life cycle. If true, the ProtectionController and then created MediaKeys and MediaKeySessions will be preserved during the MediaPlayer lifetime.',
-  useManifestDateHeaderTimeSource: 'Allows you to enable the use of the Date Header, if exposed with CORS, as a timing source for live edge detection. The use of the date header will happen only after the other timing source that take precedence fail or are omitted as described.',
-  useSuggestedPresentationDelay: 'Set to true if you would like to override the default live delay and honor the SuggestedPresentationDelay attribute in by the manifest.',
-  manifestUpdateRetryInterval: 'For live streams, set the interval-frequency in milliseconds at which dash.js will check if the current manifest is still processed before downloading the next manifest once the minimumUpdatePeriod time has',
-  retryIntervals: {
-    MPD: 'Manifest type of requests',
-    XLinkExpansion: 'XLink expansion type of requests',
-    InitializationSegment: 'Request to retrieve an initialization segment',
-    IndexSegment: 'Request to retrieve an index segment (SegmentBase)',
-    MediaSegment: 'Request to retrieve a media segment (video/audio/image/text chunk)',
-    BitstreamSwitchingSegment: 'Bitrate stream switching type of request',
-    other: 'Other type of request',
-    lowLatencyReductionFactor: 'no description available yet,'
-  },
-};

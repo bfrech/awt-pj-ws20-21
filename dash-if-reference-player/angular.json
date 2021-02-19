@@ -36,7 +36,8 @@
               "src/assets/groups.js",
               "src/assets/settingGroups.ts",
               "node_modules/apexcharts/dist/apexcharts.min.js",
-              "src/assets/akamai/controlbar/ControlBar.js"
+              "src/assets/akamai/controlbar/ControlBar.js",
+              "src/assets/constants.ts"
             ]
           },
           "configurations": {

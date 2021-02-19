@@ -5,6 +5,13 @@
         <h2>{{group[0]}}</h2>
       </mat-expansion-panel-header>
 
+      <!-- LOOP -->
+
+
+      <!-- AutoPlay -->
+
+
+      <!-- Text Settings -->
       <div class="singleSetting" *ngIf="group[0] === 'INITIAL'">
         <mat-checkbox [(ngModel)]="checked"
                       [labelPosition]="'after'"
@@ -47,7 +54,9 @@
         </div>
       </div>
 
-      <div class="singleSetting" *ngFor="let setting of group[1] | keyvalue">
+      <div class="singleSetting" *ngFor="let setting of group[1] | keyvalue:keepOrder">
+
+        <!-- Checkboxes -->
         <div *ngIf="isBoo(setting.value[0])">
           <mat-checkbox [(ngModel)]="checked"
                         [labelPosition]="'after'" (change)="update(setting.value[1], checked)">
@@ -60,6 +69,7 @@
           </mat-checkbox>
         </div>
 
+        <!-- Input Fields -->
         <div *ngIf="isInput(setting.value[0]) && !isLogLevel(setting.key)" class="fields">
           <mat-form-field [matTooltip]="getApiDescription(group[0], setting.key)">
             <mat-label>{{setting.key}}</mat-label>
@@ -69,6 +79,7 @@
           </mat-form-field>
         </div>
 
+        <!-- Grouped Settings -->
         <div *ngIf="isGroup(setting.value[1])" class="singleSubSetting my-3">
           <h3>{{setting.key}}<a [matTooltip]="getApiDescription(group[0], setting.key)"
                                 [matTooltipPosition]="'after'"
@@ -102,6 +113,7 @@
           </div>
         </div>
 
+        <!-- Radio Buttons: Log Level -->
         <div *ngIf="isLogLevel(setting.key)" class="radio">
           <label class="Radio-Button-Settings">{{setting.key}}:<a
             [matTooltip]="getApiDescription(group[0], setting.key)"
@@ -111,13 +123,14 @@
             <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
           </a></label>
           <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup">
-            <mat-radio-button *ngFor="let option of logLevels" [value]="option[0]" [checked]="option[1]"
-                              (change)="updateLogLevel(option[0])">
-              {{option[0]}}
+            <mat-radio-button *ngFor="let option of constants.logLevel | keyvalue" [value]="option.key" [checked]="option.value"
+                              (change)="updateLogLevel(option.key)">
+              {{option.key}}
             </mat-radio-button>
           </mat-radio-group>
         </div>
 
+        <!-- Radio Buttons -->
         <div *ngIf="isRadio(setting.value[0]) && !isLogLevel(setting.key)" class="radio">
           <label class="Radio-Button-Settings">{{setting.key}}:<a
             [matTooltip]="getApiDescription(group[0], setting.key)"
@@ -126,7 +139,16 @@
             target="_blank">
             <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
           </a></label>
-          <p>TODO</p>
+          <div *ngFor="let const of constants | keyvalue">
+            <div *ngIf="compare(const.key, setting.key)">
+              <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup">
+                <mat-radio-button *ngFor="let option of const.value | keyvalue" [value]="option.key" [checked]="option.value"
+                                    (change)="update(setting.value[1] ,option.key)">
+                    {{option.key}}
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
         </div>
       </div>
     </mat-expansion-panel>

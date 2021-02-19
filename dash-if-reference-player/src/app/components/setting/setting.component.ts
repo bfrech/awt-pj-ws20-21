@@ -2,6 +2,8 @@ import {Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges, ViewEn
 import {PlayerService} from '../../services/player.service';
 import * as dashjs from 'dashjs';
 
+declare const constants: any;
+
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.component.html',
@@ -17,24 +19,10 @@ export class SettingComponent implements OnInit {
   checked = false;
   closeResult = '';
   settings: string[] = [];
-  logLevels = [
-    ['NONE', false],
-    ['FATAL', false],
-    ['ERROR', false],
-    ['WARNING', true],
-    ['INFO', false],
-    ['DEBUG', false]
-  ];
+  constants = constants;
 
-  movingAverageMethods = [
-    ['Sliding Window', true],
-    ['EWMA', false]
-  ];
+  // DRM KEY SYSTEM
 
-  abrStrategy = [
-    ['Dynamic', true],
-    ['BOLA', false]
-  ];
 
   // playerService must be public to access it in the template
   constructor(public playerService: PlayerService) {
@@ -44,6 +32,20 @@ export class SettingComponent implements OnInit {
     this.groups.forEach((group: any) => {
       this.settings.push(group[0]);
     });
+
+  }
+
+  /**
+   *  Auto-Play
+   */
+  toggleAutoPlay(): void {
+
+  }
+
+  /**
+   * Loop
+   */
+  toggleLoop(): void {
 
   }
 
@@ -84,6 +86,11 @@ export class SettingComponent implements OnInit {
     return value === 'Log Level';
   }
 
+  compare(constant: any, setting: any): boolean {
+    const formatted = setting[0].toLowerCase() + setting.replace(/\s/g, '').slice(1);
+    return formatted === constant;
+  }
+
   /**
    * Update Settings: call dash.js updateSettings function with the path of the setting
    */
@@ -91,11 +98,8 @@ export class SettingComponent implements OnInit {
     // Build Object from path to pass to updateSettings function
     const parts = path.split('.');
 
-    // TODO:
-    // const name = parts.pop()?.toString();
-
-    // @ts-ignore
-    const name = parts.pop().toString();
+    const name = parts.pop()?.toString();
+    if ( name === undefined) { return; }
     const root: { [index: string]: any } = {};
     root[name] = value;
     const settingObject = parts.reduceRight((obj: any, next: any) => ({
@@ -133,29 +137,6 @@ export class SettingComponent implements OnInit {
     });
   }
 
-  updateABRStrategy(value: any): void {
-    const strategy = (value === 'BOLA') ? 'abrBola' : 'abrDynamic';
-    this.playerService.player.updateSettings({
-      streaming: {
-        abr: {
-          ABRStrategy: strategy
-        },
-        liveCatchup: {}
-      }
-    });
-  }
-
-  updateMovingAverageMethod(value: any): void {
-    const strategy = (value === 'EWMA') ? 'ewma' : 'slidingWindow';
-    this.playerService.player.updateSettings({
-      streaming: {
-        abr: {
-          movingAverageMethod: strategy
-        },
-        liveCatchup: {}
-      }
-    });
-  }
 
   updateTextDefaultEnabled(checked: boolean): void {
     this.playerService.player.setTextDefaultEnabled(checked);
@@ -204,6 +185,10 @@ export class SettingComponent implements OnInit {
       }
     });
     return this.tooltip;
+  }
+
+  keepOrder = ( a: any , b: any) => {
+    return a;
   }
 
 }
