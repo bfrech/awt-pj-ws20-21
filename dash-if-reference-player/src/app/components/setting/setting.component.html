@@ -105,8 +105,21 @@
               </mat-checkbox>
 
               <div *ngIf="isRadio(subset.value[0]) && !isLogLevel(setting.key)" class="radio">
-                <label class="Radio-Button-Settings">{{setting.key}}:</label>
-                <p>TODO</p>
+                <label class="Radio-Button-Settings">{{subset.key}}:</label>
+                <div *ngFor="let const of constants | keyvalue">
+                  <div *ngIf="compare(const.key, setting.key)">
+                    <div *ngFor="let subConst of const.value | keyvalue">
+                      <div *ngIf="compare(subConst.key, subset.key)">
+                        <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup">
+                          <mat-radio-button *ngFor="let option of subConst.value | keyvalue" [value]="option.key" [checked]="option.value"
+                                            (change)="update(subset.value[1] ,option.key)">
+                            {{option.key}}
+                          </mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
             </div>

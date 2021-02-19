@@ -26,9 +26,11 @@ const  constants  = {
     abrFetchThroughputCalculationMoofParsing: false
   },
 
-  livecatchupMode : {
-    liveCatchupModeDefault: true,
-    liveCatchupModeLoLP: false
+  liveCatchup: {
+    mode : {
+      liveCatchupModeDefault: true,
+      liveCatchupModeLoLP: false
+    },
   },
 
   trackSwitchMode : {
