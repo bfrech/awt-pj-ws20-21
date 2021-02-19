@@ -239,7 +239,7 @@ export class SettingComponent implements OnInit {
     const length = value.split(/(?=[A-Z])/).length;
     // Only format long values that do not fit
     if ( length > 4){
-      return value.split(/(?=[A-Z])/)[ length - 2 ] + value.split(/(?=[A-Z])/)[ length -1 ];
+      return value.split(/(?=[A-Z])/)[ length - 2 ] + value.split(/(?=[A-Z])/)[ length - 1 ];
     } else {
       return value;
     }
