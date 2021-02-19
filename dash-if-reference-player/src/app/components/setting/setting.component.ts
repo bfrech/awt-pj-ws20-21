@@ -8,10 +8,10 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import {PlayerService} from '../../services/player.service';
+import { NgxMasonryComponent } from 'ngx-masonry';
+import { PlayerService } from '../../services/player.service';
 import * as dashjs from 'dashjs';
-import {NgxMasonryComponent, NgxMasonryOptions} from 'ngx-masonry';
-import {animate, style} from '@angular/animations';
+
 
 @Component({
   selector: 'app-setting',
@@ -22,21 +22,6 @@ import {animate, style} from '@angular/animations';
 
 export class SettingComponent implements OnInit {
   @ViewChild(NgxMasonryComponent) masonry!: NgxMasonryComponent;
-  public masonryOptions: NgxMasonryOptions = {
-    /*
-    animations: {
-      show: [
-        style({opacity: 0}),
-        animate('400ms ease-in', style({opacity: 1})),
-      ],
-      hide: [
-        style({opacity: '*'}),
-        animate('400ms ease-in', style({opacity: 0})),
-      ]
-    }
-    */
-  };
-
   @Input() groups: any;
   @Input() settingGroup: any;
   description: any;
@@ -233,8 +218,7 @@ export class SettingComponent implements OnInit {
     return this.tooltip;
   }
 
-
-
+  /** Trigger re-arrangement of masonry items */
   updateMasonry(): void {
     this.masonry.layout();
   }

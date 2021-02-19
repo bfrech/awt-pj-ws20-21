@@ -1,5 +1,5 @@
 <div id="set-accordionPanel">
-  <ngx-masonry [options]="masonryOptions">
+  <ngx-masonry>
     <div ngxMasonryItem class="set-masonry-item col-lg-3 col-md-4 col-12" *ngFor="let group of groups">
       <mat-accordion>
         <mat-expansion-panel class="set-content" (afterExpand)="updateMasonry()" (afterCollapse)="updateMasonry()" >
