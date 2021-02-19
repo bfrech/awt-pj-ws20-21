@@ -176,7 +176,7 @@
               <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup">
                 <mat-radio-button *ngFor="let option of cons.value | keyvalue" [value]="option.key" [checked]="option.value"
                                     (change)="update(setting.value[1] ,option.key)">
-                    {{option.key}}
+                    {{format(option.key)}}
                 </mat-radio-button>
               </mat-radio-group>
             </div>

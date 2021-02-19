@@ -63,7 +63,7 @@ export class SettingComponent implements OnInit {
   }
 
   /**
-   * DRM Protection
+   * DRM Protection Settings
    */
   toggleDRM( value: boolean ): void {
     this.drmSelected = value;
@@ -139,7 +139,6 @@ export class SettingComponent implements OnInit {
   update(path: string, value: any): void {
     // Build Object from path to pass to updateSettings function
     const parts = path.split('.');
-
     const name = parts.pop()?.toString();
     if ( name === undefined) { return; }
     const root: { [index: string]: any } = {};
@@ -229,8 +228,21 @@ export class SettingComponent implements OnInit {
     return this.tooltip;
   }
 
+  /**
+   * Keep original order
+   */
   keepOrder = ( a: any , b: any) => {
     return a;
+  }
+
+  format(value: any): string{
+    const length = value.split(/(?=[A-Z])/).length;
+    // Only format long values that do not fit
+    if ( length > 4){
+      return value.split(/(?=[A-Z])/)[ length - 2 ] + value.split(/(?=[A-Z])/)[ length -1 ];
+    } else {
+      return value;
+    }
   }
 
 }

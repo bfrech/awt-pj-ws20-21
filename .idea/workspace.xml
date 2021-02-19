@@ -35,6 +35,8 @@
   <component name="ChangeListManager">
     <list default="true" id="769f4b77-bdac-45f1-96ab-bc2798154698" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/setting/setting.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/setting/setting.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/setting/setting.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/setting/setting.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/assets/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/assets/constants.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -210,7 +212,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613759719273</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="change default trackSwitchMode Video">
+      <created>1613760775515</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1613760775515</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,6 +259,7 @@
     <MESSAGE value="Radio Button fix" />
     <MESSAGE value="Auto-Play and Loop" />
     <MESSAGE value="add DRM Key System" />
-    <option name="LAST_COMMIT_MESSAGE" value="add DRM Key System" />
+    <MESSAGE value="change default trackSwitchMode Video" />
+    <option name="LAST_COMMIT_MESSAGE" value="change default trackSwitchMode Video" />
   </component>
 </project>

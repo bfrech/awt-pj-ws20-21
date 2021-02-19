@@ -50,7 +50,6 @@ const  constants  = {
   }
 };
 
-
 const drmKeySystems = {
   'com.widevine.alpha': false,
   'com.microsoft.playready': false,
