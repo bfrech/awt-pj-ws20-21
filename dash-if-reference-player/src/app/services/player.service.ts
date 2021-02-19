@@ -3,6 +3,7 @@ import * as dashjs from 'dashjs';
 import '../types/dashjs-types';
 import { hasOwnProperty } from '../../assets/hasownproperty';
 import { Metrics, MetricsAVG } from '../types/metric-types';
+import * as sources from '../../assets/sources.json';
 
 declare var ControlBar: any;
 
@@ -15,6 +16,13 @@ declare var ControlBar: any;
   providedIn: 'root'
 })
 export class PlayerService {
+  get streamAddress(): string {
+    return this._streamAddress;
+  }
+
+  set streamAddress(value: string) {
+    this._streamAddress = value;
+  }
 
 
   // tslint:disable-next-line:variable-name
@@ -27,6 +35,10 @@ export class PlayerService {
     video: NaN
   };
   private metrics: Metrics = {};
+
+  srcItems = sources.items;
+  // tslint:disable-next-line:variable-name
+  private _streamAddress = this.srcItems[0].submenu[4].url;
 
   constructor() {
 

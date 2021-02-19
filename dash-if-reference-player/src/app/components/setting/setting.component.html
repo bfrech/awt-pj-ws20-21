@@ -6,9 +6,28 @@
       </mat-expansion-panel-header>
 
       <!-- LOOP -->
+      <div *ngIf="group[0] === 'PLAYBACK'">
+        <div class="singleSetting">
+          <mat-checkbox [(ngModel)]="loopSelected"
+                        [labelPosition]="'after'" (change)="toggleLoop(loopSelected)">
+            Loop<a [matTooltip]="'Loop media once playback has completed'"
+                   [matTooltipPosition]="'after'">
+            <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+          </a>
+          </mat-checkbox>
+        </div>
 
-
-      <!-- AutoPlay -->
+        <!-- AutoPlay -->
+        <div class="singleSetting">
+          <mat-checkbox [(ngModel)]="autoPlaySelected"
+                        [labelPosition]="'after'" (change)="toggleAutoPlay(autoPlaySelected)">
+            Auto-Play<a [matTooltip]="'Automatic starup of the media once it is loaded'"
+                        [matTooltipPosition]="'after'">
+            <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+          </a>
+          </mat-checkbox>
+        </div>
+      </div>
 
 
       <!-- Text Settings -->

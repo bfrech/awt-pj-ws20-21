@@ -20,6 +20,8 @@ export class SettingComponent implements OnInit {
   closeResult = '';
   settings: string[] = [];
   constants = constants;
+  loopSelected = true;
+  autoPlaySelected = true;
 
   // DRM KEY SYSTEM
 
@@ -33,20 +35,27 @@ export class SettingComponent implements OnInit {
       this.settings.push(group[0]);
     });
 
+    // LOOP
+    this.playerService.player.on(dashjs.MediaPlayer.events.PLAYBACK_ENDED, e => {
+      if ( this.loopSelected ){
+        this.playerService.load(this.playerService.streamAddress);
+      }
+    });
   }
 
   /**
    *  Auto-Play
    */
-  toggleAutoPlay(): void {
-
+  toggleAutoPlay( value: boolean): void {
+    this.playerService.player.setAutoPlay(value);
+    this.autoPlaySelected = value;
   }
 
   /**
    * Loop
    */
-  toggleLoop(): void {
-
+  toggleLoop( value: boolean ): void {
+    this.loopSelected = value;
   }
 
   /**
