@@ -106,7 +106,6 @@ const settingGroups = {
     fragmentRequestTimeout: 'Time in milliseconds before timing out on loading a media fragment. Fragments that timeout are retried as if they failed',
   },
   NONE: {
-    metricsMaxListDepth: 'Maximum list depth of metrics.',
     wallclockTimeUpdateInterval: 'How frequently the wallclockTimeUpdated internal event is triggered (in milliseconds).',
     keepProtectionMediaKeys: 'Set the value for the ProtectionController and MediaKeys life cycle. If true, the ProtectionController and then created MediaKeys and MediaKeySessions will be preserved during the MediaPlayer lifetime.',
     useManifestDateHeaderTimeSource: 'Allows you to enable the use of the Date Header, if exposed with CORS, as a timing source for live edge detection. The use of the date header will happen only after the other timing source that take precedence fail or are omitted as described.',
