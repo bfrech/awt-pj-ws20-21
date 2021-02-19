@@ -1,6 +1,17 @@
-import {Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {PlayerService} from '../../services/player.service';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChange,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
+import { NgxMasonryComponent } from 'ngx-masonry';
+import { PlayerService } from '../../services/player.service';
 import * as dashjs from 'dashjs';
+
 
 declare const constants: any;
 declare const drmKeySystems: any;
@@ -13,6 +24,7 @@ declare const drmKeySystems: any;
 })
 
 export class SettingComponent implements OnInit {
+  @ViewChild(NgxMasonryComponent) masonry!: NgxMasonryComponent;
   @Input() groups: any;
   @Input() settingGroup: any;
   description: any;
@@ -38,6 +50,7 @@ export class SettingComponent implements OnInit {
     this.groups.forEach((group: any) => {
       this.settings.push(group[0]);
     });
+    this.groups.push(['DRM SYSTEM', {}]);
 
     // LOOP
     this.playerService.player.on(dashjs.MediaPlayer.events.PLAYBACK_ENDED, e => {
@@ -45,6 +58,8 @@ export class SettingComponent implements OnInit {
         this.playerService.load(this.playerService.streamAddress);
       }
     });
+
+    console.log(this.groups);
   }
 
   /**
@@ -231,7 +246,7 @@ export class SettingComponent implements OnInit {
   /**
    * Keep original order
    */
-  keepOrder = ( a: any , b: any) => {
+  keepOrder = (a: any , b: any) => {
     return a;
   }
 
@@ -245,5 +260,9 @@ export class SettingComponent implements OnInit {
     }
   }
 
+  /** Trigger re-arrangement of masonry items */
+  updateMasonry(): void {
+    this.masonry.layout();
+  }
 }
 
