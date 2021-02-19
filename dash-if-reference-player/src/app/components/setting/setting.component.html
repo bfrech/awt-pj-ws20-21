@@ -1,5 +1,4 @@
 <div id="set-accordionPanel">
-  <div class="set-grid">
   <ngx-masonry [options]="masonryOptions">
     <div ngxMasonryItem class="set-masonry-item col-lg-3 col-md-4 col-12" *ngFor="let group of groups">
       <mat-accordion>
@@ -7,7 +6,6 @@
           <mat-expansion-panel-header>
             <h2>{{group[0]}}</h2>
           </mat-expansion-panel-header>
-
           <div class="singleSetting" *ngIf="group[0] === 'INITIAL'">
             <mat-checkbox [(ngModel)]="checked"
                           [labelPosition]="'after'"
@@ -137,8 +135,6 @@
       </mat-accordion>
     </div>
   </ngx-masonry>
-  </div>
-
 </div>
 
 
