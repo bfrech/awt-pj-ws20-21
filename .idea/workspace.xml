@@ -35,7 +35,7 @@
   <component name="ChangeListManager">
     <list default="true" id="769f4b77-bdac-45f1-96ab-bc2798154698" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/assets/settingGroups.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/assets/settingGroups.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/assets/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/assets/constants.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +69,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="develop" />
+        <entry key="$PROJECT_DIR$" value="feature/constants" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -227,7 +227,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="feature/implement_setting_component" />
+                        <option value="origin/develop" />
                       </list>
                     </value>
                   </entry>

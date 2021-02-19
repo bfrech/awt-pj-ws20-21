@@ -39,8 +39,8 @@ const  constants  = {
       neverReplace: false
     },
     video: {
-      alwaysReplace: true,
-      neverReplace: false
+      alwaysReplace: false,
+      neverReplace: true
     }
   },
 
