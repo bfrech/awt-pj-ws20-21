@@ -14,6 +14,7 @@ app-root {
 body {
   background-color: #eff3f6;
   margin: 0;
+  overflow-y: scroll;
   scrollbar-color: #999 transparent;
 }
 

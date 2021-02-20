@@ -56,10 +56,10 @@ declare const settingGroups: any;
       transition('false => true', [
         /**  Set scaleY(1) initially, then start animation */
         style({transform: 'scaleY(1)', height: '0px'}),
-        animate(500, style({height: '*'}))
+        animate('300ms ease-in-out', style({height: '*'}))
       ]),
       transition('true => false',
-        animate(500, style({height: '0px'}))
+        animate('300ms ease-in-out', style({height: '0px'}))
         /** After the animation, scaleY(0) is set automatically by state declaration */
       )
     ]),
