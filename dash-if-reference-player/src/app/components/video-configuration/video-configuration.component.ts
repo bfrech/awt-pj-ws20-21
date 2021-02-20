@@ -71,12 +71,12 @@ export class VideoConfigurationComponent implements OnInit {
   defaultSettings: any;
   paths: any;
   orderGroups = settingGroups;
-  srcProvider: { [index: string]: object } = sources.provider;
+  srcProvider = sources.provider;
   srcItems = sources.items;
   inputVarStreamAddr = this.srcItems[0].submenu[4].url;
   streamsDropdownIsVisible = false;
   streamsDropdownExpandedPanel: MatExpansionPanel | null = null;
-
+  streamsGroupBy: 'type' | 'provider' = 'type';
   settingsSectionIsVisible = false;
 
   // playerService must be public to access it in the template
@@ -85,6 +85,8 @@ export class VideoConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     this.groups = Object.entries(this.processSettings());
+    console.log(this.srcItems);
+    console.log(this.srcProvider);
   }
 
   ////////////////////////////////////////
@@ -210,9 +212,7 @@ export class VideoConfigurationComponent implements OnInit {
     }
   }
 
-  /**
-   * Get Selected Stream Item
-   */
+  /** Get Selected Stream Item */
   selectStreamItem(item: object): void {
     this.playerService.streamItem = item;
   }

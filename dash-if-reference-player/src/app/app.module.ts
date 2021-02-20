@@ -23,6 +23,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon';
 import {NgxMasonryModule} from 'ngx-masonry';
 
 
@@ -36,25 +38,27 @@ import {NgxMasonryModule} from 'ngx-masonry';
     SettingComponent,
     MetricsViewComponent,
     MetricsConfigurationComponent],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        MatCheckboxModule,
-        MatRadioModule,
-        MatExpansionModule,
-        MatTooltipModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSnackBarModule,
-        BrowserAnimationsModule,
-        MatCardModule,
-        NgApexchartsModule,
-        NgxMasonryModule,
-        MatDividerModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    MatExpansionModule,
+    MatTooltipModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSnackBarModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    NgApexchartsModule,
+    NgxMasonryModule,
+    MatDividerModule,
+    MatMenuModule,
+    MatIconModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 
