@@ -40,6 +40,7 @@ export type ChartOptions = {
 })
 export class MetricsViewComponent implements OnInit, OnDestroy {
 
+  chartActive = false;
   mouseOnChart = false;
 
   // What metric options are selected and what available
@@ -183,9 +184,13 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
       this.updateChartData();
 
-      // If user has selected some metric to display, update chart
+      // If user has selected some metric to display, set active and update chart
       if (Array.isArray(this.selectedOptionKeys) && this.selectedOptionKeys.length) {
+        this.chartActive = true;
         this.updateChart();
+      }
+      else {
+        this.chartActive = false;
       }
 
       /*
@@ -333,6 +338,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   /** Reset: Clear chart and data. */
   reset(): void {
 
+    this.chartActive = false;
     this.sessionStart = NaN;
     this.chartData = {};
     this.chartYAxesJson = '';
