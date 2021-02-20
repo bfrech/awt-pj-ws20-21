@@ -65,14 +65,27 @@
   background: #888;
 }
 
-#set-accordionPanel .mat-radio-container {
-  transform: scale(0.80);
+#set-accordionPanel .mat-checkbox-inner-container {
+  width: 13px !important;
+  height: 13px !important;
+}
+
+#set-accordionPanel .mat-radio-container, #set-accordionPanel .mat-radio-outer-circle, #set-accordionPanel .mat-radio-inner-circle {
+  width: 14px !important;
+  height: 14px !important;
+}
+#set-accordionPanel .mat-radio-ripple .mat-ripple-element, .mat-checkbox-ripple .mat-ripple-element {
+  transform: scale(0.80) !important;
 }
 
 #set-accordionPanel .mat-form-field {
   width: 100%;
   margin: 4px 0 -6px;
   padding: 0;
+}
+
+.mat-checkbox-layout .mat-checkbox-label {
+  line-height: 1.3rem !important;
 }
 
 #set-accordionPanel .singleSubSetting {
@@ -83,13 +96,9 @@
   margin-bottom: unset !important
 }
 
-#set-accordionPanel .singleSubSetting  label {
+#set-accordionPanel .singleSubSetting label {
   display: flex;
   color: #707070;
-}
-
-#set-accordionPanel .groupSubSetting {
-  padding-top: 4px;
 }
 
 #set-accordionPanel .singleSetting {
@@ -101,7 +110,7 @@
 }
 
 #set-accordionPanel .singleSetting label {
-  margin-bottom: 5px !important;
+  margin-bottom: 2px !important;
 }
 
 #set-accordionPanel .set-content {
