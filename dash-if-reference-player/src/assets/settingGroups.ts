@@ -96,7 +96,7 @@ const settingGroups = {
     stallThreshold: 'Stall threshold used in BufferController.js to determine whether a track should still be changed and which buffer range to prune.',
   },
   'TRACK SWITCH': {
-    trackSwitchMode: 'no description available yet',
+    trackSwitchMode: 'Whether to clear the portion of the buffer that contains the old track or not',
   },
   RETRY: {
     manifestUpdateRetryInterval: 'For live streams, set the interval-frequency in milliseconds at which dash.js will check if the current manifest is still processed before downloading the next manifest once the minimumUpdatePeriod time has',
