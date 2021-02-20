@@ -85,8 +85,6 @@ export class VideoConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     this.groups = Object.entries(this.processSettings());
-    console.log(this.srcItems);
-    console.log(this.srcProvider);
   }
 
   ////////////////////////////////////////
