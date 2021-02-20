@@ -86,6 +86,8 @@
 
 .mat-checkbox-layout .mat-checkbox-label {
   line-height: 1.3rem !important;
+  position: relative;
+  top: 1px;
 }
 
 #set-accordionPanel .singleSubSetting {
