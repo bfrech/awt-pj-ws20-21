@@ -10,7 +10,22 @@
           <div [@streamsDropdownShowHide]="streamsDropdownIsVisible"
                           class="vc-dropdown-menu col-md-12">
             <div>
-              <mat-accordion displayMode=flat>
+
+              <button id="streamGroupMenuBtn" mat-icon-button [matMenuTriggerFor]="menu"
+                      aria-label="Toggle Group of Streams">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button class="vc-streamGroupMenuItem" mat-menu-item (click)="streamsGroupBy = 'type'">
+                  <span>Group by Stream Type</span>
+                </button>
+                <button class="vc-streamGroupMenuItem" mat-menu-item (click)="streamsGroupBy = 'provider'">
+                  <span>Group by Provider</span>
+                </button>
+              </mat-menu>
+
+              <!-- Streams by type -->
+              <mat-accordion displayMode=flat *ngIf="streamsGroupBy === 'type'">
                 <mat-expansion-panel #expPanel *ngFor="let item of srcItems"
                                      (opened)="setStreamsDropdownExpandedPanel(expPanel)">
 
@@ -22,9 +37,10 @@
 
                   <ul class="vc-collapse">
                     <li *ngFor="let subItem of item['submenu']">
-                      <a (click)="selectStreamItem(subItem); selectStream(subItem['url'])" class="dropdown-item vc-dropdown-item text-truncate"
+                      <a (click)="selectStreamItem(subItem); selectStream(subItem['url'])"
+                         class="dropdown-item vc-dropdown-item text-truncate"
                          [class.vc-custom-active]="inputVarStreamAddr === subItem['url']">
-                        <span class="badge badge-pill" [style.color]="'white'"
+                        <span class="badge badge-pill"
                               [style.background-color]="setBadgeColor(srcProvider[subItem['provider']]['acronym'])"
                               matTooltip="{{ srcProvider[subItem['provider']]['name'] }}"
                               matTooltipPosition="above">
@@ -38,6 +54,40 @@
                   </ul>
                 </mat-expansion-panel>
               </mat-accordion>
+
+              <!-- Streams by provider -->
+              <mat-accordion displayMode=flat *ngIf="streamsGroupBy === 'provider'">
+                <mat-expansion-panel #expPanel *ngFor="let item of srcProvider | keyvalue"
+                                     (opened)="setStreamsDropdownExpandedPanel(expPanel)">
+
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{ item.value['name'] }}
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+
+                  <ul class="vc-collapse">
+                    <ng-template ngFor let-streamTypes [ngForOf]="srcItems">
+                      <ng-template ngFor let-subItem [ngForOf]="streamTypes['submenu']">
+
+                        <li *ngIf="subItem['provider'] === item.key">
+                          <a (click)="selectStreamItem(subItem); selectStream(subItem['url'])"
+                             class="dropdown-item vc-dropdown-item text-truncate"
+                             [class.vc-custom-active]="inputVarStreamAddr === subItem['url']">
+                            <span matTooltip="{{ streamTypes['name'] }} --- {{ subItem['name'] }}"
+                                  matTooltipPosition="above">
+                              {{ subItem['name'] }}
+                            </span>
+                          </a>
+
+                        </li>
+                      </ng-template>
+                    </ng-template>
+                  </ul>
+                </mat-expansion-panel>
+              </mat-accordion>
+              <!-- End streams -->
+
             </div>
           </div>
         </div>
