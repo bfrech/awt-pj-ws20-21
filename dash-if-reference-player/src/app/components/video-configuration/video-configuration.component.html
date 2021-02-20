@@ -16,10 +16,12 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button class="vc-streamGroupMenuItem" mat-menu-item (click)="streamsGroupBy = 'type'">
+                <button class="vc-streamGroupMenuItem" mat-menu-item
+                        [disabled]="streamsGroupBy === 'type'" (click)="streamsGroupBy = 'type'">
                   <span>Group by Stream Type</span>
                 </button>
-                <button class="vc-streamGroupMenuItem" mat-menu-item (click)="streamsGroupBy = 'provider'">
+                <button class="vc-streamGroupMenuItem" mat-menu-item
+                        [disabled]="streamsGroupBy === 'provider'" (click)="streamsGroupBy = 'provider'">
                   <span>Group by Provider</span>
                 </button>
               </mat-menu>
