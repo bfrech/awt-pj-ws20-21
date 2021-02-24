@@ -19,11 +19,11 @@
 
 #set-accordionPanel .set-masonry-item {
   padding: 5px;
-  transition: top 0.4s ease-in-out,  left 0.4s ease-in-out;
+  transition: top 0.4s ease-in-out, left 0.4s ease-in-out;
 }
 
 #set-accordionPanel .set-masonry-item:hover {
-  z-index: 999!important;
+  z-index: 999 !important;
 }
 
 #set-accordionPanel h2 {
@@ -63,6 +63,12 @@
 
 #set-accordionPanel .mat-expansion-panel-body::-webkit-scrollbar-thumb:hover {
   background: #888;
+}
+
+#set-accordionPanel .mat-checkbox {
+  width: 100%;
+  word-break: break-word !important;
+  word-wrap: break-word !important;
 }
 
 #set-accordionPanel .mat-checkbox-inner-container {
