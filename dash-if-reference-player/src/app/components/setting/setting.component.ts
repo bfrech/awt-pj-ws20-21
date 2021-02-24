@@ -11,10 +11,8 @@ import {
 import { NgxMasonryComponent } from 'ngx-masonry';
 import { PlayerService } from '../../services/player.service';
 import * as dashjs from 'dashjs';
+import { constants, drmKeySystems } from 'src/assets/constants';
 
-
-declare const constants: any;
-declare const drmKeySystems: any;
 
 @Component({
   selector: 'app-setting',
@@ -58,8 +56,6 @@ export class SettingComponent implements OnInit {
         this.playerService.load(this.playerService.streamAddress);
       }
     });
-
-    console.log(this.groups);
   }
 
   /**

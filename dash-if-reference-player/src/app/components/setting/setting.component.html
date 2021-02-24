@@ -145,8 +145,8 @@
                   <div *ngIf="isInput(subset.value[0])">
                     <mat-form-field>
                       <mat-label>{{subset.key}}</mat-label>
-                      <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" name="{{subset.key}}"
-                             matInput placeholder="placeholder" value="{{subset.value[0]}}"
+                      <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'"
+                             name="{{subset.key}}" matInput placeholder="placeholder" value="{{subset.value[0]}}"
                              (change)="update(subset.value[1], inputField.value)">
                     </mat-form-field>
                   </div>
@@ -162,9 +162,10 @@
                       <div *ngIf="compare(cons.key, setting.key)">
                         <div *ngFor="let subConst of cons.value | keyvalue">
                           <div *ngIf="compare(subConst.key, subset.key)">
-                            <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup">
-                              <mat-radio-button *ngFor="let option of subConst.value | keyvalue" [value]="option.key" [checked]="option.value"
-                                                (change)="update(subset.value[1] ,option.key)">
+                            <mat-radio-group aria-labelledby="Radio-Button-Settings"
+                                             class="set-radioButtonSettingGroup">
+                              <mat-radio-button *ngFor="let option of subConst.value | keyvalue" [value]="option.key"
+                                                [checked]="option.value" (change)="update(subset.value[1] ,option.key)">
                                 {{option.key}}
                               </mat-radio-button>
                             </mat-radio-group>
@@ -188,8 +189,8 @@
                 <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
               </a></label>
               <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup">
-                <mat-radio-button *ngFor="let option of constants.logLevel | keyvalue" [value]="option.key" [checked]="option.value"
-                                  (change)="updateLogLevel(option.key)">
+                <mat-radio-button *ngFor="let option of constants.logLevel | keyvalue" [value]="option.key"
+                                  [checked]="option.value" (change)="updateLogLevel(option.key)">
                   {{option.key}}
                 </mat-radio-button>
               </mat-radio-group>
@@ -207,8 +208,8 @@
               <div *ngFor="let cons of constants | keyvalue">
                 <div *ngIf="compare(cons.key, setting.key)">
                   <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup">
-                    <mat-radio-button *ngFor="let option of cons.value | keyvalue" [value]="option.key" [checked]="option.value"
-                                      (change)="update(setting.value[1] ,option.key)">
+                    <mat-radio-button *ngFor="let option of cons.value | keyvalue" [value]="option.key"
+                                      [checked]="option.value" (change)="update(setting.value[1] ,option.key)">
                       {{format(option.key)}}
                     </mat-radio-button>
                   </mat-radio-group>

@@ -1,4 +1,5 @@
-const  constants  = {
+
+export const constants = {
   logLevel : {
     NONE: false,
     FATAL: false,
@@ -50,11 +51,8 @@ const  constants  = {
   }
 };
 
-const drmKeySystems = {
+
+export const drmKeySystems = {
   'com.widevine.alpha': false,
   'com.microsoft.playready': false,
 };
-
-
-
-
