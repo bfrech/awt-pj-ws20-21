@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import * as packageInfo from 'package.json';
+
 
 @Component({
   selector: 'app-header',
@@ -6,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
+  clientVersion = packageInfo.version;
 
   constructor() { }
 

@@ -1,11 +1,25 @@
-.header{
-  padding-top: 10px;
-  padding-bottom: 10px;
+
+.col {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  align-items: self-start;
 }
 
-#logo{
-  margin-top:10px;
-  margin-bottom: 10px;
+.versionString {
+  font-size: 20px;
+  line-height: 20px;
+  height: 20px;
+  vertical-align: top;
+  color: #3a3d42;
+}
+
+.mat-divider {
+  height: 40px;
+  border-color: #3a3d42;
+}
+
+#logo {
   height: 40px;
   width: auto;
 }
