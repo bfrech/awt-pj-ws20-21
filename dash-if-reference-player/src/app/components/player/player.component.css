@@ -1,10 +1,15 @@
+
+.playerContainer {
+  background-color: #000;
+  padding: 10px 10px 0;
+}
+
 video {
   width: 100%;
   height: auto;
 }
 
 .video-controller {
-  position: relative;
-  top: -6px;
+  margin-top: -7px;
   z-index: 800;
 }
