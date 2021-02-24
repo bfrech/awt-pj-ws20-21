@@ -66,3 +66,14 @@ td {
   padding: 0.16em 0.4em !important;
 }
 
+@media (min-width: 1440px) {
+  .tMetrics {
+    font-size: 0.8rem;
+  }
+  .mContainer {
+    height: 1.1rem;
+  }
+  .mValue, .badge {
+    top: -0.25em;
+  }
+}
