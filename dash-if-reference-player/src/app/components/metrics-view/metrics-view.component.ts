@@ -102,6 +102,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
     title: {
       text: 'Stream Metrics',
       style: {
+        // Note that the following should match global h1 styling
         fontWeight: '500',
         fontSize: '16px',
         color: '#505050'
