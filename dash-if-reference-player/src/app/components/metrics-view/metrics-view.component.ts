@@ -100,7 +100,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
     },
     series: this.emptySeries,
     title: {
-      text: 'Stream Metrics',
+      text: 'Stream Metrics Live Chart',
       style: {
         // Note that the following should match global h1 styling
         fontWeight: '500',

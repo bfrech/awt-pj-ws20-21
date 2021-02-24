@@ -1,7 +1,5 @@
 
 .contributors {
-  margin: 30px 15px 15px;
-  padding: 6px 16px 16px;
   overflow: hidden;
 }
 
@@ -21,23 +19,28 @@
   margin: 15px 30px;
 }
 
-.contributorName {
+.contributorItem a {
   font-size: 30px;
+  color: #3a3d42;
+}
+
+.contributorItem a:hover {
+  text-decoration: none;
 }
 
 footer {
   width: 100%;
+  min-width: 480px;
   position: fixed;
   bottom: 0;
   z-index: 900;
 }
 
-.footerContainer {
+footer .col > div {
   background-color: #888;
   opacity: 0.9;
   padding-top: 12px;
   padding-bottom: 12px;
-  margin: 0 15px;
   border-radius: 4px 4px 0 0;
   display: flex;
   justify-content: space-evenly;
@@ -47,6 +50,12 @@ footer {
   font-size: 12px;
 }
 
-.footerSpacer {
+.spacer {
   height: 45px;
+}
+
+@media (max-width: 768px) {
+  footer .col > div {
+    flex-direction: column;
+  }
 }

@@ -7,13 +7,17 @@
   "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-app-root {
-  min-height: 100%;
+@media (min-width: 1440px) {
+  .container, .container-sm, .container-md, .container-lg, .container-xl {
+    max-width: 1400px;
+  }
 }
 
 body {
   background-color: #eff3f6;
   margin: 0;
+  min-width: 480px;
+  overflow-x: auto;
   overflow-y: scroll;
   scrollbar-color: #999 transparent;
 }
@@ -79,6 +83,10 @@ mat-divider {
 
 .mat-checkbox-label, .mat-label, .mat-card {
   color: #707070 !important;
+}
+
+.mat-card > h1 {
+  margin-top: -10px !important;
 }
 
 .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {

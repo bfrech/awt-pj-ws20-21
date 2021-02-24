@@ -2,14 +2,22 @@ table {
   width: 100%;
 }
 
-thead th>div {
-  transform: rotate(-45deg);
-  position: relative;
-  left: 0.4rem;
-  padding-bottom: 0.4rem;
+thead th>h2 {
+  font-size: 14px !important;
+  line-height: 14px !important;
   font-weight: 600;
-  font-size: 95%;
   color: #505050;
+  padding-bottom: 0.4rem !important;
+  margin-bottom: 0 !important;
+}
+
+@media (min-width: 992px) and (max-width: 1440px) {
+  thead th>h2 {
+    transform: rotate(-45deg);
+    position: relative;
+    left: 0.5rem;
+    padding-bottom: 0.6rem !important;
+  }
 }
 
 tbody tr:hover {

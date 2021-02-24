@@ -140,3 +140,9 @@
   width: auto;
   vertical-align: text-top;
 }
+
+@media (min-width: 1440px) {
+  #set-accordionPanel .singleSetting {
+    font-size: 90%;
+  }
+}

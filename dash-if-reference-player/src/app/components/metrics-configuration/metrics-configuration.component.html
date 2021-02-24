@@ -1,7 +1,8 @@
 <mat-card>
+  <h1>Stream Metrics</h1>
   <table>
     <thead>
-    <tr><th><div>Video</div></th><th><div>Audio</div></th><th></th><th></th></tr>
+    <tr><th><h2>Video</h2></th><th><h2>Audio</h2></th><th></th><th></th></tr>
     </thead>
     <tbody>
       <tr *ngFor="let option of options">
@@ -26,7 +27,7 @@
           </td>
         </ng-template>
         <!-- Name //-->
-        <td class="d-sm-flex justify-content-between align-items-center">
+        <td class="d-flex justify-content-between align-items-center">
           <div class="tName" matTooltip="{{ option.description }}" matTooltipPosition="above">
             {{ option.name }}
           </div>
