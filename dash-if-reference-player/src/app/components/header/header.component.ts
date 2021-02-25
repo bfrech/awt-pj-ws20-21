@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as packageInfo from 'package.json';
+import * as dashjsPackageInfo from 'dashjs/package.json';
 
 
 @Component({
@@ -9,7 +9,7 @@ import * as packageInfo from 'package.json';
 })
 export class HeaderComponent implements OnInit {
 
-  clientVersion = packageInfo.version;
+  clientVersion = dashjsPackageInfo.version;
 
   constructor() { }
 
