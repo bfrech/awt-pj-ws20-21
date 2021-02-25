@@ -1,7 +1,7 @@
 /**
  * Hardcoded order of the Setting Group we want to display
  */
-const settingGroups = {
+export const settingGroups = {
   PLAYBACK: {
     flushBufferAtTrackSwitch: 'When enabled, after a track switch and in case buffer is being replaced (see MEdiaPlayer.setTrackSwitchModeFor(Constants.TRACK_SWITCH_MODE_ALWAYS_REPLACE)), the video element is flushed (seek at current playback time) once a segment of the new track is appended in buffer in order to force video decoder to play new track. This can be required on some devices like GoogleCast devices to make track switching functional. Otherwise track switching will be effective only once after previous buffered track is fully consumed.',
     jumpGaps: 'Sets whether player should jump small gaps (discontinuities) in the buffer',

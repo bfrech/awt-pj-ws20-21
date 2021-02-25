@@ -9,9 +9,9 @@ import {
 } from '@angular/animations';
 import {MatExpansionPanel} from '@angular/material/expansion';
 import {PlayerService} from '../../services/player.service';
+import { settingGroups } from '../../../assets/settingGroups';
 import * as sources from '../../../assets/sources.json';
 
-declare const settingGroups: any;
 
 @Component({
   selector: 'app-video-configuration',
@@ -188,9 +188,9 @@ export class VideoConfigurationComponent implements OnInit {
    * defined in settingGroups.js
    */
   findGroup(name: string): any {
-    for (const key of Object.keys(settingGroups)) {
-      if (settingGroups[key].hasOwnProperty(name)) {
-        return key;
+    for (const [groupKey, groupVal] of Object.entries(settingGroups)) {
+      if (groupVal.hasOwnProperty(name)) {
+        return groupKey;
       }
     }
   }
