@@ -86,9 +86,9 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
       },
       animations: {
         enabled: true,
-        easing: 'linear',
+        easing: 'easeinout',
         dynamicAnimation: {
-          speed: this.refreshInterval
+          speed: this.refreshInterval * 0.8
         }
       },
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol"',
