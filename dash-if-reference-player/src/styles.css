@@ -50,18 +50,21 @@ body::-webkit-scrollbar-thumb:hover {
 
 h1 {
   font-size: 16px !important;
+  line-height: 20px !important;
   font-weight: 500 !important;
   color: var(--color-font-dark);
 }
 
 h2 {
   font-size: 12px !important;
+  line-height: 16px !important;
   font-weight: 500 !important;
   color: var(--color-blue-primary);
 }
 
 h3 {
   font-size: 12px !important;
+  line-height: 16px !important;
   font-weight: 400 !important;
   text-transform: uppercase;
   color: var(--color-font-main);

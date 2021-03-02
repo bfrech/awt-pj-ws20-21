@@ -31,7 +31,9 @@
 }
 
 #set-accordionPanel h3 {
-  margin: -10px 0 -20px !important;
+  margin: -5px 0 0 !important;
+  padding: 0 !important;
+  border-bottom: 1px solid gray;
 }
 
 #set-accordionPanel mat-accordion .mat-expansion-panel {
@@ -108,10 +110,6 @@
 
 #set-accordionPanel .singleSubSetting {
   margin: 5px 0 !important;
-}
-
-#set-accordionPanel .singleSubSetting hr {
-  margin-bottom: unset !important
 }
 
 #set-accordionPanel .singleSubSetting label {
