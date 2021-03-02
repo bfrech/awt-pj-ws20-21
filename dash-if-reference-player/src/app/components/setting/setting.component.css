@@ -74,6 +74,7 @@
   word-break: break-word !important;
   word-wrap: break-word !important;
   line-height: 1rem !important;
+  position: relative;
 }
 
 #set-accordionPanel .mat-slide-toggle-thumb-container {
@@ -103,12 +104,6 @@
   width: 100%;
   margin: 4px 0 -6px;
   padding: 0;
-}
-
-#set-accordionPanel .mat-checkbox-layout .mat-checkbox-label {
-  line-height: 1.3rem !important;
-  position: relative;
-  top: 1px;
 }
 
 #set-accordionPanel .singleSubSetting {
@@ -157,6 +152,9 @@
 }
 
 @media (min-width: 1440px) {
+  #set-accordionPanel .mat-slide-toggle-content {
+    top: 1px;
+  }
   #set-accordionPanel .singleSetting {
     font-size: 90%;
   }
