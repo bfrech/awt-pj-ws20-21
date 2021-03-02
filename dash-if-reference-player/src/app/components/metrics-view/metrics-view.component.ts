@@ -92,7 +92,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
         }
       },
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol"',
-      foreColor: '#707070'
+      foreColor: 'var(--color-font-main)'
     },
     theme: {
       mode: 'light',
@@ -105,7 +105,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
         // Note that the following should match global h1 styling
         fontWeight: '500',
         fontSize: '16px',
-        color: '#505050'
+        color: 'var(--color-font-dark)'
       },
     },
     xaxis: {

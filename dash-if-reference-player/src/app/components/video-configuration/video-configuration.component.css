@@ -5,7 +5,7 @@
   margin: 0;
   max-height: 30rem;
   overflow-y: auto;
-  scrollbar-color: #999 transparent;
+  scrollbar-color: var(--color-scrollbars) transparent;
   scrollbar-width: thin;
 }
 
@@ -18,13 +18,13 @@
 }
 
 #vc-comp .vc-collapse::-webkit-scrollbar-thumb {
-  background: #999;
+  background: var(--color-scrollbars);
   border: 2px solid transparent;
   border-radius: 3px;
 }
 
 #vc-comp .vc-collapse::-webkit-scrollbar-thumb:hover {
-  background: #777;
+  background: var(--color-scrollbars-hover);
 }
 
 #vc-comp .vc-collapse > li {
@@ -40,7 +40,7 @@
   cursor: pointer;
   padding: 0.25rem 3px;
   border: 1px solid transparent;
-  color: #707070;
+  color: var(--color-font-main);
 }
 
 #vc-comp .vc-custom-active {
@@ -79,7 +79,7 @@
 }
 
 #vc-comp .vc-dropdown-menu .mat-expansion-panel-header-title {
-  color: #505050;
+  color: var(--color-font-dark);
 }
 
 #vc-comp .form-control {
