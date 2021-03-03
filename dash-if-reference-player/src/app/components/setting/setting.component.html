@@ -8,8 +8,34 @@
             <h2>{{group[0]}}</h2>
           </mat-expansion-panel-header>
 
-          <!-- LOOP -->
+          <!-- PLAYBACK -->
           <div *ngIf="group[0] === 'PLAYBACK'">
+            <!-- Video Quality -->
+            <div class="singleSetting sliderContainer">
+              <span [matTooltip]="'Select a video quality index'" [matTooltipPosition]="'after'">
+                Set Video Quality
+              </span>
+              <div *ngIf="playerService.videoQualities; else inactiveQualitySlider">
+                <mat-slider #slider min="1" max="{{ playerService.videoQualities.length }}" step="1" tickInterval="1"
+                            thumbLabel (change)="selectVideoQuality(slider)"></mat-slider>
+                <div class="sliderLabels">
+                  <span>1</span>
+                  <span>{{ playerService.videoQualities.length }}</span>
+                </div>
+              </div>
+              <ng-template #inactiveQualitySlider>
+                <div>
+                  <mat-slider disabled [matTooltip]="'Please load a video first'" [matTooltipPosition]="'after'">
+                  </mat-slider>
+                  <div class="sliderLabels">
+                    <span>1</span>
+                    <span>n</span>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+
+            <!-- Loop -->
             <div class="singleSetting">
               <mat-slide-toggle [(ngModel)]="loopSelected"
                             [labelPosition]="'after'" (change)="toggleLoop(loopSelected)">
@@ -31,6 +57,7 @@
               </mat-slide-toggle>
             </div>
           </div>
+          <!-- PLAYBACK END -->
 
           <!-- DRM -->
           <div *ngIf="group[0] === 'DRM SYSTEM'">

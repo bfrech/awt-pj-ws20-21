@@ -13,6 +13,7 @@ import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSliderModule} from '@angular/material/slider';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -39,28 +40,29 @@ import {NgxMasonryModule} from 'ngx-masonry';
     SettingComponent,
     MetricsViewComponent,
     MetricsConfigurationComponent],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        MatCheckboxModule,
-        MatSlideToggleModule,
-        MatRadioModule,
-        MatExpansionModule,
-        MatTooltipModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSnackBarModule,
-        BrowserAnimationsModule,
-        MatCardModule,
-        NgApexchartsModule,
-        NgxMasonryModule,
-        MatDividerModule,
-        MatMenuModule,
-        MatIconModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    MatCheckboxModule,
+    MatSlideToggleModule,
+    MatSliderModule,
+    MatRadioModule,
+    MatExpansionModule,
+    MatTooltipModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSnackBarModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    NgApexchartsModule,
+    NgxMasonryModule,
+    MatDividerModule,
+    MatMenuModule,
+    MatIconModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 
