@@ -1,18 +1,15 @@
 import {
   Component,
   Input,
-  OnChanges,
   OnInit,
-  SimpleChange,
-  SimpleChanges,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { MatSlider } from '@angular/material/slider';
-import { NgxMasonryComponent } from 'ngx-masonry';
-import { PlayerService } from '../../services/player.service';
+import {MatSlider} from '@angular/material/slider';
+import {NgxMasonryComponent} from 'ngx-masonry';
+import {PlayerService} from '../../services/player.service';
 import * as dashjs from 'dashjs';
-import { constants, drmKeySystems } from 'src/assets/constants';
+import {constants, drmKeySystems} from 'src/assets/constants';
 
 
 @Component({
@@ -41,6 +38,11 @@ export class SettingComponent implements OnInit {
   selectedDRMKeySystem = '';
   drmLicenseUrl = '';
 
+ // INITIAL TEXT SETTINGS
+  textEnabled = this.playerService.player.getTextDefaultEnabled();
+  forcedTextStreaming = this.playerService.player.isTextEnabled();
+
+
   // playerService must be public to access it in the template
   constructor(public playerService: PlayerService) {
   }
@@ -53,7 +55,7 @@ export class SettingComponent implements OnInit {
 
     // LOOP
     this.playerService.player.on(dashjs.MediaPlayer.events.PLAYBACK_ENDED, e => {
-      if ( this.loopSelected ) {
+      if (this.loopSelected) {
         this.playerService.load(this.playerService.streamAddress);
       }
     });
@@ -62,7 +64,7 @@ export class SettingComponent implements OnInit {
   /**
    *  Auto-Play
    */
-  toggleAutoPlay( value: boolean): void {
+  toggleAutoPlay(value: boolean): void {
     this.playerService.player.setAutoPlay(value);
     this.autoPlaySelected = value;
   }
@@ -70,32 +72,32 @@ export class SettingComponent implements OnInit {
   /**
    * Loop
    */
-  toggleLoop( value: boolean ): void {
+  toggleLoop(value: boolean): void {
     this.loopSelected = value;
   }
 
   /**
    * DRM Protection Settings
    */
-  toggleDRM( value: boolean ): void {
+  toggleDRM(value: boolean): void {
     this.drmSelected = value;
   }
 
-  changeDRMKeySystem( value: any ): void {
+  changeDRMKeySystem(value: any): void {
     this.selectedDRMKeySystem = value;
     this.setProtection();
   }
 
-  setLicenseURL( value: string): void {
+  setLicenseURL(value: string): void {
     this.drmLicenseUrl = value;
     this.setProtection();
   }
 
   setProtection(): void {
     let protData: { [index: string]: any } = {};
-    if ( this.playerService.streamItem.hasOwnProperty('protData')){
+    if (this.playerService.streamItem.hasOwnProperty('protData')) {
       protData = this.playerService.streamItem.protData;
-    } else if ( this.drmLicenseUrl !== '' && this.selectedDRMKeySystem !== ''){
+    } else if (this.drmLicenseUrl !== '' && this.selectedDRMKeySystem !== '') {
       protData[this.selectedDRMKeySystem] = {
         serverURL: this.drmLicenseUrl
       };
@@ -152,7 +154,9 @@ export class SettingComponent implements OnInit {
     // Build Object from path to pass to updateSettings function
     const parts = path.split('.');
     const name = parts.pop()?.toString();
-    if ( name === undefined) { return; }
+    if (name === undefined) {
+      return;
+    }
     const root: { [index: string]: any } = {};
     root[name] = value;
     const settingObject = parts.reduceRight((obj: any, next: any) => ({
@@ -190,13 +194,15 @@ export class SettingComponent implements OnInit {
     });
   }
 
-
   updateTextDefaultEnabled(checked: boolean): void {
     this.playerService.player.setTextDefaultEnabled(checked);
+    this.textEnabled = checked;
   }
+
 
   updateEnableForcedTextStreaming(checked: boolean): void {
     this.playerService.player.enableForcedTextStreaming(checked);
+    this.forcedTextStreaming = checked;
   }
 
   updateMediaSettings(type: string, event: any): void {
@@ -250,15 +256,15 @@ export class SettingComponent implements OnInit {
   /**
    * Keep original order
    */
-  keepOrder = (a: any , b: any) => {
+  keepOrder = (a: any, b: any) => {
     return a;
   }
 
-  format(value: any): string{
+  format(value: any): string {
     const length = value.split(/(?=[A-Z])/).length;
     // Only format long values that do not fit
-    if ( length > 4){
-      return value.split(/(?=[A-Z])/)[ length - 2 ] + value.split(/(?=[A-Z])/)[ length - 1 ];
+    if (length > 4) {
+      return value.split(/(?=[A-Z])/)[length - 2] + value.split(/(?=[A-Z])/)[length - 1];
     } else {
       return value;
     }

@@ -38,7 +38,7 @@
             <!-- Loop -->
             <div class="singleSetting">
               <mat-slide-toggle [(ngModel)]="loopSelected"
-                            [labelPosition]="'after'" (change)="toggleLoop(loopSelected)">
+                                [labelPosition]="'after'" (change)="toggleLoop(loopSelected)">
                 Loop<a [matTooltip]="'Loop media once playback has completed'"
                        [matTooltipPosition]="'after'">
                 <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
@@ -49,7 +49,7 @@
             <!-- AutoPlay -->
             <div class="singleSetting">
               <mat-slide-toggle [(ngModel)]="autoPlaySelected"
-                            [labelPosition]="'after'" (change)="toggleAutoPlay(autoPlaySelected)">
+                                [labelPosition]="'after'" (change)="toggleAutoPlay(autoPlaySelected)">
                 Auto-Play<a [matTooltip]="'Automatic starup of the media once it is loaded'"
                             [matTooltipPosition]="'after'">
                 <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
@@ -63,7 +63,7 @@
           <div *ngIf="group[0] === 'DRM SYSTEM'">
             <div class="singleSetting">
               <mat-slide-toggle [(ngModel)]="drmSelected"
-                            [labelPosition]="'after'" (change)="toggleDRM(drmSelected); updateMasonry()">
+                                [labelPosition]="'after'" (change)="toggleDRM(drmSelected); updateMasonry()">
                 Add DRM Key System<a [matTooltip]="'Add a DRM Key System'"
                                      [matTooltipPosition]="'after'">
                 <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
@@ -92,17 +92,17 @@
 
           <!-- Text Settings -->
           <div class="singleSetting" *ngIf="group[0] === 'INITIAL'">
-            <mat-slide-toggle [(ngModel)]="checked"
-                          [labelPosition]="'after'"
-                          (change)="updateTextDefaultEnabled(checked)">
+            <mat-slide-toggle [(ngModel)]="textEnabled"
+                              [labelPosition]="'after'"
+                              (change)="updateTextDefaultEnabled(textEnabled)">
               Enable Text At Loading
               <img [matTooltip]="'Enable subtitle on loading text'"
                    [matTooltipPosition]="'after'"
                    class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
             </mat-slide-toggle>
-            <mat-slide-toggle [(ngModel)]="checked"
-                          [labelPosition]="'after'"
-                          (change)="updateEnableForcedTextStreaming(checked)">
+            <mat-slide-toggle [(ngModel)]="forcedTextStreaming"
+                              [labelPosition]="'after'"
+                              (change)="updateEnableForcedTextStreaming(forcedTextStreaming)">
               Force Text Streaming
               <img [matTooltip]="'Force Text Streaming'"
                    [matTooltipPosition]="'after'"
@@ -138,7 +138,7 @@
             <!-- Checkboxes -->
             <div *ngIf="isBoo(setting.value[0])">
               <mat-slide-toggle [(ngModel)]="checked"
-                            [labelPosition]="'after'" (change)="update(setting.value[1], checked)">
+                                [labelPosition]="'after'" (change)="update(setting.value[1], checked)">
                 {{setting.key}}<a [matTooltip]="getApiDescription(group[0], setting.key)"
                                   [matTooltipPosition]="'after'"
                                   href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
@@ -177,8 +177,8 @@
                     </mat-form-field>
                   </div>
                   <mat-slide-toggle *ngIf="isBoo(subset.value[0])"
-                                [(ngModel)]="checked"
-                                [labelPosition]="'after'" (change)="update(subset.value[1], checked)">
+                                    [(ngModel)]="checked"
+                                    [labelPosition]="'after'" (change)="update(subset.value[1], checked)">
                     {{subset.key}}
                   </mat-slide-toggle>
 
