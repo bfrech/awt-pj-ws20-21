@@ -34,8 +34,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="769f4b77-bdac-45f1-96ab-bc2798154698" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/assets/settingGroups.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/assets/settingGroups.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -276,5 +276,23 @@
     <MESSAGE value="change default trackSwitchMode Video" />
     <MESSAGE value="format Long constants" />
     <option name="LAST_COMMIT_MESSAGE" value="format Long constants" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="2291" height="303" key="GridCell.Tab.0.bottom" timestamp="1614761657379">
+      <screen x="0" y="23" width="2560" height="1337" />
+    </state>
+    <state width="2291" height="303" key="GridCell.Tab.0.bottom/0.23.2560.1337@0.23.2560.1337" timestamp="1614761657379" />
+    <state width="2291" height="303" key="GridCell.Tab.0.center" timestamp="1614761657378">
+      <screen x="0" y="23" width="2560" height="1337" />
+    </state>
+    <state width="2291" height="303" key="GridCell.Tab.0.center/0.23.2560.1337@0.23.2560.1337" timestamp="1614761657378" />
+    <state width="2291" height="303" key="GridCell.Tab.0.left" timestamp="1614761657377">
+      <screen x="0" y="23" width="2560" height="1337" />
+    </state>
+    <state width="2291" height="303" key="GridCell.Tab.0.left/0.23.2560.1337@0.23.2560.1337" timestamp="1614761657377" />
+    <state width="2291" height="303" key="GridCell.Tab.0.right" timestamp="1614761657379">
+      <screen x="0" y="23" width="2560" height="1337" />
+    </state>
+    <state width="2291" height="303" key="GridCell.Tab.0.right/0.23.2560.1337@0.23.2560.1337" timestamp="1614761657379" />
   </component>
 </project>
