@@ -21,7 +21,7 @@
 
 .contributorItem a {
   font-size: 30px;
-  color: #3a3d42;
+  color: var(--color-font-dark);
 }
 
 .contributorItem a:hover {

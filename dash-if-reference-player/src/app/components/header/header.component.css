@@ -11,12 +11,12 @@
   line-height: 20px;
   height: 20px;
   vertical-align: top;
-  color: #3a3d42;
+  color: var(--color-font-dark);
 }
 
 .mat-divider {
   height: 40px;
-  border-color: #3a3d42;
+  border-color: var(--color-font-dark);
 }
 
 #logo {

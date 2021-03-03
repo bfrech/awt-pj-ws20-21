@@ -12,6 +12,8 @@ import {MetricsConfigurationComponent} from './components/metrics-configuration/
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSliderModule} from '@angular/material/slider';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -43,6 +45,8 @@ import {NgxMasonryModule} from 'ngx-masonry';
     AppRoutingModule,
     FormsModule,
     MatCheckboxModule,
+    MatSlideToggleModule,
+    MatSliderModule,
     MatRadioModule,
     MatExpansionModule,
     MatTooltipModule,

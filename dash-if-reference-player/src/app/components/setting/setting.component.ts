@@ -8,6 +8,7 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
+import { MatSlider } from '@angular/material/slider';
 import { NgxMasonryComponent } from 'ngx-masonry';
 import { PlayerService } from '../../services/player.service';
 import * as dashjs from 'dashjs';
@@ -52,7 +53,7 @@ export class SettingComponent implements OnInit {
 
     // LOOP
     this.playerService.player.on(dashjs.MediaPlayer.events.PLAYBACK_ENDED, e => {
-      if ( this.loopSelected ){
+      if ( this.loopSelected ) {
         this.playerService.load(this.playerService.streamAddress);
       }
     });
@@ -218,6 +219,13 @@ export class SettingComponent implements OnInit {
       this.playerService.player.setInitialMediaSettingsFor('fragmentedText', {
         role: event.target.value
       });
+    }
+  }
+
+  /** Set Video Quality */
+  selectVideoQuality(slider: MatSlider): void {
+    if (slider.value) {
+      this.playerService.player.setQualityFor('video', slider.value);
     }
   }
 

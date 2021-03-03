@@ -26,6 +26,8 @@ export class PlayerService {
     audio: NaN,
     video: NaN
   };
+  // tslint:disable-next-line:variable-name
+  private _videoQualities: dashjs.BitrateInfo[] | undefined;
   private metrics: Metrics = {};
 
   srcItems = sources.items;
@@ -44,6 +46,9 @@ export class PlayerService {
     });
     this._player.on(dashjs.MediaPlayer.events.QUALITY_CHANGE_REQUESTED, (e) => {
       this.pendingIndex[e.mediaType] = e.newQuality + 1;
+    });
+    this._player.on(dashjs.MediaPlayer.events.STREAM_INITIALIZED, () => {
+      this._videoQualities = this._player.getBitrateInfoListFor('video');
     });
 
     this._streamItem = this.srcItems[0].submenu[4];
@@ -66,12 +71,17 @@ export class PlayerService {
   set streamItem(value: any) {
     this._streamItem = value;
   }
+
   get streamAddress(): string {
     return this._streamAddress;
   }
 
   set streamAddress(value: string) {
     this._streamAddress = value;
+  }
+
+  get videoQualities(): dashjs.BitrateInfo[] | undefined {
+    return this._videoQualities;
   }
 
   /** Initialize player and akamai toolbar */
@@ -91,6 +101,7 @@ export class PlayerService {
   /** Stop player by unloading source */
   stop(): void {
     this._player.attachSource('');
+    this._videoQualities = undefined;
   }
 
   /** Load source */
