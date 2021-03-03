@@ -69,12 +69,40 @@ export const settingGroups = {
     liveCatchUpMaxDrift: 'no description available yet',
     liveCatchUpPlaybackRate: 'no description available yet',
     liveCatchupLatencyThreshold: 'no description available yet',
-    lowLatencyMultiplyFactor: 'no description available yet',
-    liveDelayFragmentCount: 'no description available yet',
-    liveCatchup: 'Settings related to live catchup.',
+    lowLatencyMultiplyFactor: 'For low latency mode, values of type of request are multiplied by lowLatencyMultiplyFactor.\n' +
+      '\n' +
+      'Note: It\'s not type of request.',
+    liveDelayFragmentCount: 'Changing this value will lower or increase live stream latency.\n' +
+      '\n' +
+      'The detected segment duration will be multiplied by this value to define a time in seconds to delay a live stream from the live edge.\n' +
+      '\n' +
+      'Lowering this value will lower latency but may decrease the player\'s ability to build a stable buffer.',
+    liveCatchup: 'minDrift: Use this method to set the minimum latency deviation allowed before activating catch-up mechanism.\n' +
+      '\n' + ' maxDrift: Use this method to set the maximum latency deviation allowed before dash.js to do a seeking to live position.\n' +
+      '\n' + 'PlaybackRate: Use this parameter to set the maximum catch up rate, as a percentage, for low latency live streams.\n' +
+      '\n' + 'LatencyThreshold: Use this parameter to set the maximum threshold for which live catch up is applied.',
   },
   DEBUG: {
-    logLevel: 'Sets up the log level. The levels are cumulative. For example, if you set the log level to dashjs.Debug.LOG_LEVEL_WARNING all warnings, errors and fatals will be logged. Possible values.',
+    logLevel: 'Sets up the log level. The levels are cumulative. For example, if you set the log level to dashjs.Debug.LOG_LEVEL_WARNING all warnings, errors and fatals will be logged. Possible values. Possible values.\n' +
+      '\n' +
+      'dashjs.Debug.LOG_LEVEL_NONE\n' +
+      'No message is written in the browser console.\n' +
+      '\n' +
+      'dashjs.Debug.LOG_LEVEL_FATAL\n' +
+      'Log fatal errors.\n' +
+      'An error is considered fatal when it causes playback to fail completely.\n' +
+      '\n' +
+      'dashjs.Debug.LOG_LEVEL_ERROR\n' +
+      'Log error messages.\n' +
+      '\n' +
+      'dashjs.Debug.LOG_LEVEL_WARNING\n' +
+      'Log warning messages.\n' +
+      '\n' +
+      'dashjs.Debug.LOG_LEVEL_INFO\n' +
+      'Log info messages.\n' +
+      '\n' +
+      'dashjs.Debug.LOG_LEVEL_DEBUG\n' +
+      'Log debug messages.',
     dispatchEvent: 'Enable to trigger a Events.LOG event whenever log output is generated. Note this will be dispatched regardless of log level',
     metricsMaxListDepth: 'Maximum list depth of metrics.',
   },
