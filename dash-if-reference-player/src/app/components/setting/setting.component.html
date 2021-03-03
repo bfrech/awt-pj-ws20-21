@@ -191,7 +191,7 @@
                             <mat-radio-group aria-labelledby="Radio-Button-Settings"
                                              class="set-radioButtonSettingGroup">
                               <mat-radio-button *ngFor="let option of subConst.value | keyvalue" [value]="option.key"
-                                                [checked]="option.value" (change)="update(subset.value[1] ,option.key)">
+                                                [checked]="option.value" (change)="update(subset.value[1],option.key)">
                                 {{option.key}}
                               </mat-radio-button>
                             </mat-radio-group>

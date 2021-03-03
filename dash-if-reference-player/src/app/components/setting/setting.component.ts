@@ -32,13 +32,19 @@ export class SettingComponent implements OnInit {
   loopSelected = true;
   autoPlaySelected = true;
 
+  // ABR SETTINGS
+  root: { [index: string]: any } = {};
+  parts: any[] = [];
+  name = '';
+  abrLolP: any;
+
   // DRM KEY SYSTEM
   drmSelected = false;
   drmKeySystems = drmKeySystems;
   selectedDRMKeySystem = '';
   drmLicenseUrl = '';
 
- // INITIAL TEXT SETTINGS
+  // INITIAL TEXT SETTINGS
   textEnabled = this.playerService.player.getTextDefaultEnabled();
   forcedTextStreaming = this.playerService.player.isTextEnabled();
 
@@ -150,19 +156,24 @@ export class SettingComponent implements OnInit {
   /**
    * Update Settings: call dash.js updateSettings function with the path of the setting
    */
+
   update(path: string, value: any): void {
     // Build Object from path to pass to updateSettings function
-    const parts = path.split('.');
-    const name = parts.pop()?.toString();
-    if (name === undefined) {
+    if (value === 'abrLoLP') {
+      this.update('streaming.abr.fetchThroughputCalculationMode', 'abrFetchThroughputCalculationMoofParsing');
+      this.update('streaming.liveCatchup.mode', 'liveCatchupModeLoLP');
+    }
+    this.parts = path.split('.');
+    this.name = this.parts.pop()?.toString();
+    if (this.name === undefined) {
       return;
     }
-    const root: { [index: string]: any } = {};
-    root[name] = value;
-    const settingObject = parts.reduceRight((obj: any, next: any) => ({
+    this.root[this.name] = value;
+    const settingObject = this.parts.reduceRight((obj: any, next: any) => ({
       [next]: obj
-    }), root);
+    }), this.root);
     this.playerService.player.updateSettings(settingObject);
+    console.log(this.playerService.player.getSettings());
   }
 
   updateLogLevel(value: any): void {
