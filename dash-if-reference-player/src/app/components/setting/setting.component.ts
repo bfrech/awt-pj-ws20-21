@@ -55,7 +55,7 @@ export class SettingComponent implements OnInit {
   autoPlaySelected = true;
   drmSelected = false;
 
-  ngRadioBoxes: { [index: string]: any } = {};
+  ngRadioBoxes: { [index: string]: string } = {};
 
   // INITIAL TEXT SETTINGS
   textEnabled = this.playerService.player.getTextDefaultEnabled();
