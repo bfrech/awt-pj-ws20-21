@@ -95,22 +95,26 @@
             <div class="fields">
               <mat-form-field>
                 <mat-label>Text initial lang</mat-label>
-                <input #input [type]="'text'" matInput placeholder="Text initial lang, e.g. 'en'"
+                <input #input [type]="'text'" matInput
+                       placeholder="Text initial lang, e.g. 'en'" aria-label="Text initial lang"
                        (change)="updateMediaSettings('lang', input)">
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Text initial role</mat-label>
-                <input #input [type]="'text'" matInput placeholder="Text initial role, e.g. 'caption'"
+                <input #input [type]="'text'" matInput
+                       placeholder="Text initial role, e.g. 'caption'" aria-label="Text initial role"
                        (change)="updateMediaSettings('role', input)">
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Audio initial lang</mat-label>
-                <input #input [type]="'text'" matInput placeholder="Audio initial lang, e.g. 'en'"
+                <input #input [type]="'text'" matInput
+                       placeholder="Audio initial lang, e.g. 'en'" aria-label="Audio initial lang"
                        (change)="updateMediaSettings('audio', input)">
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Video initial role</mat-label>
-                <input #input [type]="'text'" matInput placeholder="Video initial role, e.g. 'alternate'"
+                <input #input [type]="'text'" matInput
+                       placeholder="Video initial role, e.g. 'alternate'" aria-label="Video initial role"
                        (change)="updateMediaSettings('video', input)">
               </mat-form-field>
             </div>
@@ -136,7 +140,7 @@
               <mat-form-field [matTooltip]="getApiDescription(group[0], setting.key)">
                 <mat-label>{{setting.key}}</mat-label>
                 <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" [name]="setting.key"
-                       [value]="setting.value[0]" matInput placeholder="placeholder"
+                       [value]="setting.value[0]" matInput placeholder="placeholder" aria-label="{{setting.key}}"
                        (change)="update(setting.value[1], inputField.value)">
               </mat-form-field>
             </div>
@@ -154,8 +158,8 @@
                   <div *ngIf="isInput(subset.value[0])">
                     <mat-form-field>
                       <mat-label>{{subset.key}}</mat-label>
-                      <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'"
-                             [name]="subset.key" matInput placeholder="placeholder" [value]="subset.value[0]"
+                      <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" [name]="subset.key"
+                             [value]="subset.value[0]" matInput placeholder="placeholder" aria-label="{{subset.key}}"
                              (change)="update(subset.value[1], inputField.value)">
                     </mat-form-field>
                   </div>
