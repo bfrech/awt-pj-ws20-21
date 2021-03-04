@@ -33,11 +33,13 @@ textarea {
 }
 
 .jsonInvalid {
+  margin-right: 10px;
   font-weight: 500;
   color: darkred;
 }
 
 .jsonValid {
+  margin-right: 10px;
   font-weight: 500;
   color: darkgreen;
 }

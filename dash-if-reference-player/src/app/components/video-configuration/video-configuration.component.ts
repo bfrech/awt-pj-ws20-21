@@ -235,11 +235,15 @@ export class VideoConfigurationComponent implements OnInit {
 
   /** Load stream url and additional settings if available */
   load(): void {
-    if (this.srcItemSelected) {
-      if (typeof this.srcItemSelected === 'object' && hasOwnProperty(this.srcItemSelected, 'protData')
-          && typeof this.srcItemSelected.protData === 'object' && this.srcItemSelected.protData !== null) {
+    if (this.srcItemSelected && typeof this.srcItemSelected === 'object') {
+      if (hasOwnProperty(this.srcItemSelected, 'protData') && typeof this.srcItemSelected.protData === 'object'
+        && this.srcItemSelected.protData !== null) {
         this.playerService.setProtectionData(this.srcItemSelected.protData);
       }
+      else {
+        this.playerService.setProtectionData({});
+      }
+      // TODO: Handle pre-defined bufferConfig
     }
 
     this.playerService.load(this.inputVarStreamAddr);

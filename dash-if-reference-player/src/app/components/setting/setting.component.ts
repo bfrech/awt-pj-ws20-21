@@ -62,7 +62,7 @@ export class SettingComponent implements OnInit {
   constructor(public playerService: PlayerService, public dialog: MatDialog) {
     this.playerService.updateProtectionDataCalled$.subscribe(
       protectionData => {
-        this.drmSelected = (JSON.stringify(protectionData).length > 0);
+        this.drmSelected = (Object.entries(protectionData).length > 0);
       });
   }
 
@@ -103,6 +103,7 @@ export class SettingComponent implements OnInit {
     }
   }
 
+  /** Open Dialog for DRM JSON input and fetch input data */
   openDrmDialog(): void {
     const protectionDataJSON = JSON.stringify(this.playerService.protectionData, undefined, 4);
 
@@ -116,6 +117,7 @@ export class SettingComponent implements OnInit {
     });
   }
 
+  /** Apply DRM JSON input */
   applyCustomProtection(data: string): void {
     if (data.length > 0) {
       let parsedData: object | null = null;
