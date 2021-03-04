@@ -69,9 +69,6 @@ export class SettingComponent implements OnInit {
       });
   }
 
-  print(): void {
-    console.log(this.ngRadioBoxes);
-  }
   ngOnInit(): void {
     // Build array with radio button data (To be able to manipulate them later)
     for (const [radioGroupKey, radioGroupValue] of Object.entries(constants)) {
