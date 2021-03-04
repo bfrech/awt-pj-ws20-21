@@ -27,16 +27,11 @@ export class SettingComponent implements OnInit {
   tooltip: any;
   checked = false;
   closeResult = '';
-  settings: string[] = [];
-  constants = constants;
+  radioValues = constants;
   loopSelected = true;
   autoPlaySelected = true;
 
-  // ABR SETTINGS
-  root: { [index: string]: any } = {};
-  parts: any[] = [];
-  name = '';
-  abrLolP: any;
+  ngRadioBoxes: { [index: string]: any } = {};
 
   // DRM KEY SYSTEM
   drmSelected = false;
@@ -53,10 +48,30 @@ export class SettingComponent implements OnInit {
   constructor(public playerService: PlayerService) {
   }
 
+  print(): void {
+    console.log(this.ngRadioBoxes);
+  }
   ngOnInit(): void {
-    this.groups.forEach((group: any) => {
-      this.settings.push(group[0]);
-    });
+    // Build array with radio button data (To be able to manipulate them later)
+    for (const [radioGroupKey, radioGroupValue] of Object.entries(constants)) {
+      for (const [radioOptionKey, radioOptionValue] of Object.entries(radioGroupValue)) {
+        if (this.isGroup(radioOptionValue)) {
+          // If entry is a group itself, loop over entries and apply if an entries value is true
+          for (const [radioSubKey, radioSubValue] of Object.entries(radioOptionValue)) {
+            if (radioSubValue === true) {
+              const key = `${radioGroupKey}.${radioOptionKey}`;
+              this.ngRadioBoxes[key] = radioSubKey;
+            }
+          }
+        }
+        else if (radioOptionValue === true) {
+          // If entry is no group and true, apply it as selected
+          this.ngRadioBoxes[radioGroupKey] = radioOptionKey;
+        }
+      }
+    }
+
+    // Add hard-coded group DRM SYSTEM
     this.groups.push(['DRM SYSTEM', {}]);
 
     // LOOP
@@ -158,22 +173,27 @@ export class SettingComponent implements OnInit {
    */
 
   update(path: string, value: any): void {
-    // Build Object from path to pass to updateSettings function
+    // If abrLoLP was selected, change additional options and also apply them to the template
     if (value === 'abrLoLP') {
       this.update('streaming.abr.fetchThroughputCalculationMode', 'abrFetchThroughputCalculationMoofParsing');
       this.update('streaming.liveCatchup.mode', 'liveCatchupModeLoLP');
+      this.ngRadioBoxes['fetchThroughputCalculationMode' as const] = 'abrFetchThroughputCalculationMoofParsing';
+      this.ngRadioBoxes['liveCatchup.mode' as const] = 'liveCatchupModeLoLP';
     }
-    this.parts = path.split('.');
-    this.name = this.parts.pop()?.toString();
-    if (this.name === undefined) {
+
+    // Build Object from path to pass to updateSettings function
+    const parts = path.split('.');
+    const name = parts.pop()?.toString() ?? undefined;
+
+    if (name === undefined) {
       return;
     }
-    this.root[this.name] = value;
-    const settingObject = this.parts.reduceRight((obj: any, next: any) => ({
+    const root: { [index: string]: any } = {};
+    root[name] = value;
+    const settingObject = parts.reduceRight((obj: any, next: any) => ({
       [next]: obj
-    }), this.root);
+    }), root);
     this.playerService.player.updateSettings(settingObject);
-    console.log(this.playerService.player.getSettings());
   }
 
   updateLogLevel(value: any): void {
