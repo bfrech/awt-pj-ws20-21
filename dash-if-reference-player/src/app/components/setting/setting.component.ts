@@ -50,13 +50,14 @@ export class SettingComponent implements OnInit {
   tooltip: any;
   checked = false;
   closeResult = '';
-  settings: string[] = [];
-  constants = constants;
+  radioValues = constants;
   loopSelected = true;
   autoPlaySelected = true;
   drmSelected = false;
 
- // INITIAL TEXT SETTINGS
+  ngRadioBoxes: { [index: string]: any } = {};
+
+  // INITIAL TEXT SETTINGS
   textEnabled = this.playerService.player.getTextDefaultEnabled();
   forcedTextStreaming = this.playerService.player.isTextEnabled();
 
@@ -68,10 +69,30 @@ export class SettingComponent implements OnInit {
       });
   }
 
+  print(): void {
+    console.log(this.ngRadioBoxes);
+  }
   ngOnInit(): void {
-    this.groups.forEach((group: any) => {
-      this.settings.push(group[0]);
-    });
+    // Build array with radio button data (To be able to manipulate them later)
+    for (const [radioGroupKey, radioGroupValue] of Object.entries(constants)) {
+      for (const [radioOptionKey, radioOptionValue] of Object.entries(radioGroupValue)) {
+        if (this.isGroup(radioOptionValue)) {
+          // If entry is a group itself, loop over entries and apply if an entries value is true
+          for (const [radioSubKey, radioSubValue] of Object.entries(radioOptionValue)) {
+            if (radioSubValue === true) {
+              const key = `${radioGroupKey}.${radioOptionKey}`;
+              this.ngRadioBoxes[key] = radioSubKey;
+            }
+          }
+        }
+        else if (radioOptionValue === true) {
+          // If entry is no group and true, apply it as selected
+          this.ngRadioBoxes[radioGroupKey] = radioOptionKey;
+        }
+      }
+    }
+
+    // Add hard-coded group DRM SYSTEM
     this.groups.push(['DRM SYSTEM', {}]);
 
     // LOOP
@@ -180,10 +201,20 @@ export class SettingComponent implements OnInit {
   /**
    * Update Settings: call dash.js updateSettings function with the path of the setting
    */
+
   update(path: string, value: any): void {
+    // If abrLoLP was selected, change additional options and also apply them to the template
+    if (value === 'abrLoLP') {
+      this.update('streaming.abr.fetchThroughputCalculationMode', 'abrFetchThroughputCalculationMoofParsing');
+      this.update('streaming.liveCatchup.mode', 'liveCatchupModeLoLP');
+      this.ngRadioBoxes['fetchThroughputCalculationMode' as const] = 'abrFetchThroughputCalculationMoofParsing';
+      this.ngRadioBoxes['liveCatchup.mode' as const] = 'liveCatchupModeLoLP';
+    }
+
     // Build Object from path to pass to updateSettings function
     const parts = path.split('.');
-    const name = parts.pop()?.toString();
+    const name = parts.pop()?.toString() ?? undefined;
+
     if (name === undefined) {
       return;
     }
