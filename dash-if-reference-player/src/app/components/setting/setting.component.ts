@@ -101,18 +101,48 @@ export class SettingComponent implements OnInit {
   }
 
   /**
-   *  Auto-Play
+   * Check for grouped Settings
    */
-  toggleAutoPlay(value: boolean): void {
-    this.playerService.player.setAutoPlay(value);
-    this.autoPlaySelected = value;
+  isGroup(val: any): boolean {
+    if (val == null || typeof val === 'string') {
+      return false;
+    } else {
+      return (Object.values(val).length > 0);
+    }
   }
 
   /**
-   * Loop
+   * Check if setting value is a boolean
    */
-  toggleLoop(value: boolean): void {
-    this.loopSelected = value;
+  isBoo(value: any): boolean {
+    this.checked = value;
+    return (typeof value === 'boolean');
+  }
+
+  /**
+   * Check if setting value is a number or a string
+   */
+  isInput(value: any): boolean {
+    return (!this.isBoo(value) && !this.isGroup(value) && !this.isRadio(value));
+  }
+
+  /**
+   * Check if value has constants as value
+   */
+  isRadio(value: any): boolean {
+    return (typeof value === 'string' && value !== 'null');
+  }
+
+  /**
+   * Check if value is log level
+   */
+  isLogLevel(value: any): boolean {
+    return value === 'Log Level';
+  }
+
+  compare(constant: any, setting: any): boolean {
+    const formatted = setting[0].toLowerCase() + setting.replace(/\s/g, '').slice(1);
+    return formatted === constant;
   }
 
   /** If drm has been turned off, remove protection data and do a reload. */
@@ -153,53 +183,24 @@ export class SettingComponent implements OnInit {
     }
   }
 
-  /**
-   * Check for grouped Settings
-   */
-  isGroup(val: any): boolean {
-    if (val == null || typeof val === 'string') {
-      return false;
-    } else {
-      return (Object.values(val).length > 0);
-    }
+  /** Apply changed auto-play */
+  applyAutoPlay(): void {
+    this.playerService.player.setAutoPlay(this.autoPlaySelected);
   }
 
-  /**
-   * Check if setting value is a boolean
-   */
-  isBoo(value: any): boolean {
-    this.checked = value;
-    return (typeof value === 'boolean');
+  applyTextDefaultEnabled(): void {
+    this.textEnabled = (this.textEnabled === undefined) ? false : this.textEnabled;
+    this.playerService.player.setTextDefaultEnabled(this.textEnabled);
   }
 
-  /**
-   * Check if setting value is a number or a string
-   */
-  isInput(value: any): boolean {
-    return (!this.isBoo(value) && !this.isGroup(value) && !this.isRadio(value));
-  }
-
-  /**
-   * Check if value has constants as value
-   */
-  isRadio(value: any): boolean {
-    return (typeof value === 'string' && value !== 'null');
-  }
-
-  isLogLevel(value: any): boolean {
-    return value === 'Log Level';
-  }
-
-  compare(constant: any, setting: any): boolean {
-    const formatted = setting[0].toLowerCase() + setting.replace(/\s/g, '').slice(1);
-    return formatted === constant;
+  applyEnableForcedTextStreaming(): void {
+    this.playerService.player.enableForcedTextStreaming(this.forcedTextStreaming);
   }
 
   /**
    * Update Settings: call dash.js updateSettings function with the path of the setting
    */
-
-  update(path: string, value: any): void {
+  update(path: string, value: boolean | string): void {
     // If abrLoLP was selected, change additional options and also apply them to the template
     if (value === 'abrLoLP') {
       this.update('streaming.abr.fetchThroughputCalculationMode', 'abrFetchThroughputCalculationMoofParsing');
@@ -215,7 +216,7 @@ export class SettingComponent implements OnInit {
     if (name === undefined) {
       return;
     }
-    const root: { [index: string]: any } = {};
+    const root: { [index: string]: boolean | string } = {};
     root[name] = value;
     const settingObject = parts.reduceRight((obj: any, next: any) => ({
       [next]: obj
@@ -223,8 +224,8 @@ export class SettingComponent implements OnInit {
     this.playerService.player.updateSettings(settingObject);
   }
 
-  updateLogLevel(value: any): void {
-    let level: any;
+  updateLogLevel(value: string): void {
+    let level;
     switch (value) {
       case 'NONE':
         level = dashjs.LogLevel.LOG_LEVEL_NONE;
@@ -252,36 +253,26 @@ export class SettingComponent implements OnInit {
     });
   }
 
-  updateTextDefaultEnabled(checked: boolean): void {
-    this.playerService.player.setTextDefaultEnabled(checked);
-    this.textEnabled = checked;
-  }
-
-
-  updateEnableForcedTextStreaming(checked: boolean): void {
-    this.playerService.player.enableForcedTextStreaming(checked);
-    this.forcedTextStreaming = checked;
-  }
-
-  updateMediaSettings(type: string, event: any): void {
+  /** Update initial media settings */
+  updateMediaSettings(type: string, input: HTMLInputElement): void {
     if (type === 'audio') {
       this.playerService.player.setInitialMediaSettingsFor('audio', {
-        lang: event.target.value
+        lang: input.value
       });
     }
     if (type === 'video') {
       this.playerService.player.setInitialMediaSettingsFor('video', {
-        role: event.target.value
+        role: input.value
       });
     }
     if (type === 'lang') {
       this.playerService.player.setInitialMediaSettingsFor('fragmentedText', {
-        lang: event.target.value
+        lang: input.value
       });
     }
     if (type === 'role') {
       this.playerService.player.setInitialMediaSettingsFor('fragmentedText', {
-        role: event.target.value
+        role: input.value
       });
     }
   }

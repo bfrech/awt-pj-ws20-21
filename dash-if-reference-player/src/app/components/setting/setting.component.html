@@ -38,8 +38,7 @@
 
             <!-- Loop -->
             <div class="singleSetting">
-              <mat-slide-toggle [(ngModel)]="loopSelected"
-                                [labelPosition]="'after'" (change)="toggleLoop(loopSelected)">
+              <mat-slide-toggle [(ngModel)]="loopSelected" [labelPosition]="'after'">
                 Loop<a [matTooltip]="'Loop media once playback has completed'"
                        [matTooltipPosition]="'after'">
                 <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
@@ -49,8 +48,7 @@
 
             <!-- AutoPlay -->
             <div class="singleSetting">
-              <mat-slide-toggle [(ngModel)]="autoPlaySelected"
-                                [labelPosition]="'after'" (change)="toggleAutoPlay(autoPlaySelected)">
+              <mat-slide-toggle [(ngModel)]="autoPlaySelected" [labelPosition]="'after'" (change)="applyAutoPlay()">
                 Auto-Play<a [matTooltip]="'Automatic starup of the media once it is loaded'"
                             [matTooltipPosition]="'after'">
                 <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
@@ -80,17 +78,14 @@
 
           <!-- Text Settings -->
           <div class="singleSetting" *ngIf="group[0] === 'INITIAL'">
-            <mat-slide-toggle [(ngModel)]="textEnabled"
-                              [labelPosition]="'after'"
-                              (change)="updateTextDefaultEnabled(textEnabled)">
+            <mat-slide-toggle [(ngModel)]="textEnabled" [labelPosition]="'after'" (change)="applyTextDefaultEnabled()">
               Enable Text At Loading
               <img [matTooltip]="'Enable subtitle on loading text'"
                    [matTooltipPosition]="'after'"
                    class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
             </mat-slide-toggle>
-            <mat-slide-toggle [(ngModel)]="forcedTextStreaming"
-                              [labelPosition]="'after'"
-                              (change)="updateEnableForcedTextStreaming(forcedTextStreaming)">
+            <mat-slide-toggle [(ngModel)]="forcedTextStreaming" [labelPosition]="'after'"
+                              (change)="applyEnableForcedTextStreaming()">
               Force Text Streaming
               <img [matTooltip]="'Force Text Streaming'"
                    [matTooltipPosition]="'after'"
@@ -100,23 +95,27 @@
             <div class="fields">
               <mat-form-field>
                 <mat-label>Text initial lang</mat-label>
-                <input [type]="'text'" matInput placeholder="Text initial lang, e.g. 'en'"
-                       (change)="updateMediaSettings('lang', $event)">
+                <input #input [type]="'text'" matInput
+                       placeholder="Text initial lang, e.g. 'en'" aria-label="Text initial lang"
+                       (change)="updateMediaSettings('lang', input)">
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Text initial role</mat-label>
-                <input [type]="'text'" matInput placeholder="Text initial role, e.g. 'caption'"
-                       (change)="updateMediaSettings('role', $event)">
+                <input #input [type]="'text'" matInput
+                       placeholder="Text initial role, e.g. 'caption'" aria-label="Text initial role"
+                       (change)="updateMediaSettings('role', input)">
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Audio initial lang</mat-label>
-                <input [type]="'text'" matInput placeholder="Audio initial lang, e.g. 'en'"
-                       (change)="updateMediaSettings('audio', $event)">
+                <input #input [type]="'text'" matInput
+                       placeholder="Audio initial lang, e.g. 'en'" aria-label="Audio initial lang"
+                       (change)="updateMediaSettings('audio', input)">
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Video initial role</mat-label>
-                <input [type]="'text'" matInput placeholder="Video initial role, e.g. 'alternate'"
-                       (change)="updateMediaSettings('video', $event)">
+                <input #input [type]="'text'" matInput
+                       placeholder="Video initial role, e.g. 'alternate'" aria-label="Video initial role"
+                       (change)="updateMediaSettings('video', input)">
               </mat-form-field>
             </div>
           </div>
@@ -125,8 +124,8 @@
 
             <!-- Checkboxes -->
             <div *ngIf="isBoo(setting.value[0])">
-              <mat-slide-toggle [(ngModel)]="checked" [labelPosition]="'after'"
-                                (change)="update(setting.value[1], checked)">
+              <mat-slide-toggle #slideToggle [checked]="setting.value[0]" [labelPosition]="'after'"
+                                (change)="update(setting.value[1], slideToggle.checked)">
                 {{setting.key}}<a [matTooltip]="getApiDescription(group[0], setting.key)"
                                   [matTooltipPosition]="'after'"
                                   href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
@@ -140,8 +139,8 @@
             <div *ngIf="isInput(setting.value[0]) && !isLogLevel(setting.key)" class="fields">
               <mat-form-field [matTooltip]="getApiDescription(group[0], setting.key)">
                 <mat-label>{{setting.key}}</mat-label>
-                <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" name="{{setting.key}}"
-                       matInput placeholder="placeholder" value="{{setting.value[0]}}"
+                <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" [name]="setting.key"
+                       [value]="setting.value[0]" matInput placeholder="placeholder" aria-label="{{setting.key}}"
                        (change)="update(setting.value[1], inputField.value)">
               </mat-form-field>
             </div>
@@ -159,14 +158,14 @@
                   <div *ngIf="isInput(subset.value[0])">
                     <mat-form-field>
                       <mat-label>{{subset.key}}</mat-label>
-                      <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'"
-                             name="{{subset.key}}" matInput placeholder="placeholder" value="{{subset.value[0]}}"
+                      <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" [name]="subset.key"
+                             [value]="subset.value[0]" matInput placeholder="placeholder" aria-label="{{subset.key}}"
                              (change)="update(subset.value[1], inputField.value)">
                     </mat-form-field>
                   </div>
-                  <mat-slide-toggle *ngIf="isBoo(subset.value[0])"
-                                    [(ngModel)]="checked" [labelPosition]="'after'"
-                                    (change)="update(subset.value[1], checked)">
+                  <mat-slide-toggle #slideToggle *ngIf="isBoo(subset.value[0])"
+                                    [checked]="subset.value[0]" [labelPosition]="'after'"
+                                    (change)="update(subset.value[1], slideToggle.checked)">
                     {{subset.key}}
                   </mat-slide-toggle>
 
@@ -178,8 +177,9 @@
                           <div *ngIf="compare(subConst.key, subset.key)">
                             <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup"
                                              [(ngModel)]="ngRadioBoxes[cons.key + '.' + subConst.key]">
-                              <mat-radio-button *ngFor="let option of subConst.value | keyvalue" [value]="option.key"
-                                                [checked]="option.value" (change)="update(subset.value[1], option.key)">
+                              <mat-radio-button *ngFor="let option of $any(subConst.value) | keyvalue"
+                                                [value]="option.key" [checked]="option.value"
+                                                (change)="update(subset.value[1], $any(option.key))">
                                 {{option.key}}
                               </mat-radio-button>
                             </mat-radio-group>
@@ -195,13 +195,14 @@
 
             <!-- Radio Buttons: Log Level -->
             <div *ngIf="isLogLevel(setting.key)" class="radio">
-              <label class="Radio-Button-Settings">{{setting.key}}:<a
-                [matTooltip]="getApiDescription(group[0], setting.key)"
-                [matTooltipPosition]="'after'"
-                href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
-                target="_blank">
-                <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
-              </a></label>
+              <label class="Radio-Button-Settings">{{setting.key}}:
+                <a [matTooltip]="getApiDescription(group[0], setting.key)" [matTooltipPosition]="'after'"
+                   href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html" target="_blank"
+                >
+                  <img class="set-info" alt="Info Icon with link to setting description"
+                       src="assets/images/question.png">
+                </a>
+              </label>
               <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup"
                                [(ngModel)]="ngRadioBoxes['logLevel']">
                 <mat-radio-button *ngFor="let option of radioValues.logLevel | keyvalue" [value]="option.key"
@@ -225,7 +226,7 @@
                   <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup"
                                    [(ngModel)]="ngRadioBoxes[cons.key]">
                     <mat-radio-button *ngFor="let option of cons.value | keyvalue" [value]="option.key"
-                                      (change)="update(setting.value[1], option.key)">
+                                      (change)="update(setting.value[1], $any(option.key))">
                       {{format(option.key)}}
                     </mat-radio-button>
                   </mat-radio-group>
