@@ -129,7 +129,7 @@ export class VideoConfigurationComponent implements OnInit {
     // Map to custom groups
     const withGroups: any[] = [];
     Object.entries(res).forEach(setting => {
-      if ( this.findGroup(setting[0]) === 'UNASSIGNED') { return; }
+      if ( this.findGroup(setting[0]) === 'NONE') { return; }
       withGroups.push([this.findGroup(setting[0]), setting[0], setting[1]]);
     });
 
@@ -137,7 +137,7 @@ export class VideoConfigurationComponent implements OnInit {
     const formatSet = Object.values(withGroups).map(setting => {
       setting[1] = setting[1].charAt(0).toUpperCase() + setting[1].replace(/([a-z0-9])([A-Z])/g, '$1 $2').slice(1);
       if (setting[0] === undefined) {
-        setting[0] = 'OTHER';
+        setting[0] = 'UNASSIGNED';
       }
       const formatted: { [index: string]: any } = {};
       formatted[setting[1]] = setting[2];
