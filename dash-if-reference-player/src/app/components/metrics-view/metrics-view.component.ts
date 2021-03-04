@@ -233,17 +233,19 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
         // Handle objects with current vs. max value (We show current on chart and max on overlay)
         else if (typeObjVal && typeof typeObjVal === 'object'
           && hasOwnProperty(typeObjVal, 'current')
-          && hasOwnProperty(typeObjVal, 'max')) {
+          && hasOwnProperty(typeObjVal, 'max')
+          && typeof typeObjVal.current === 'number') {
 
-          metricValue = typeObjVal.current as number;                                 // Type is safe number
+          metricValue = typeObjVal.current;
         }
         // Handle objects with min / avg / max values (We show avg on chart, min and max on overlay)
         else if (typeObjVal && typeof typeObjVal === 'object'
           && hasOwnProperty(typeObjVal, 'min')
           && hasOwnProperty(typeObjVal, 'avg')
-          && hasOwnProperty(typeObjVal, 'max')) {
+          && hasOwnProperty(typeObjVal, 'max')
+          && typeof typeObjVal.avg === 'number') {
 
-          metricValue = typeObjVal.avg as number;                                     // Type is safe number
+          metricValue = typeObjVal.avg;
         }
 
         // Apexcharts actually supports null values but is buggy. Use -1 instead

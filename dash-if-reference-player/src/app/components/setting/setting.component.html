@@ -62,30 +62,17 @@
           <!-- DRM -->
           <div *ngIf="group[0] === 'DRM SYSTEM'">
             <div class="singleSetting">
-              <mat-slide-toggle [(ngModel)]="drmSelected"
-                                [labelPosition]="'after'" (change)="toggleDRM(drmSelected); updateMasonry()">
-                Add DRM Key System<a [matTooltip]="'Add a DRM Key System'"
+              <mat-slide-toggle #drmToggleElement [checked]="drmSelected"
+                                [labelPosition]="'after'" (change)="drmToggle(drmToggleElement)">
+                Add DRM Key System<a [matTooltip]="'Add a DRM Key System. Use this option to add or change protection' +
+                  ' data. Applying a new dataset will trigger a player reload. Turning off will trigger a reload' +
+                  ' without any protection data applied.'"
                                      [matTooltipPosition]="'after'">
                 <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
               </a>
               </mat-slide-toggle>
-            </div>
-
-            <div *ngIf="drmSelected">
-              <div class="singleSetting">
-                <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup">
-                  <mat-radio-button *ngFor="let option of drmKeySystems | keyvalue" [value]="option.key"
-                                    [checked]="option.value" (change)="changeDRMKeySystem(option.key)">
-                    {{option.key}}
-                  </mat-radio-button>
-                </mat-radio-group>
-              </div>
-              <div class="singleSetting">
-                <mat-form-field>
-                  <mat-label>License URL</mat-label>
-                  <input #inputField name="License URL" matInput (change)="setLicenseURL(inputField.value)">
-                </mat-form-field>
-              </div>
+              <button class="defaultBtn btn btn-primary"
+                      [disabled]="!drmToggleElement.checked" (click)="openDrmDialog()">Edit Protection Data</button>
             </div>
           </div>
           <!-- DRM END -->

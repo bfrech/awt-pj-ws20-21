@@ -1,16 +1,39 @@
 import {
   Component,
+  Inject,
   Input,
   OnInit,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import {MatSlider} from '@angular/material/slider';
-import {NgxMasonryComponent} from 'ngx-masonry';
-import {PlayerService} from '../../services/player.service';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatSlider } from '@angular/material/slider';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { NgxMasonryComponent } from 'ngx-masonry';
+import { PlayerService } from '../../services/player.service';
 import * as dashjs from 'dashjs';
-import {constants, drmKeySystems} from 'src/assets/constants';
+import { constants } from 'src/assets/constants';
 
+
+@Component({
+  selector: 'app-drm-dialog',
+  templateUrl: './drm-dialog.html',
+  styleUrls: ['./drm-dialog.css'],
+})
+export class DrmDialogComponent {
+  isValidJSON = true;
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: string) {}
+
+  checkSyntax(): void {
+    this.isValidJSON = true;
+    try {
+      JSON.parse(this.data);
+    } catch (e) {
+      this.isValidJSON = false;
+    }
+  }
+}
 
 @Component({
   selector: 'app-setting',
@@ -31,20 +54,18 @@ export class SettingComponent implements OnInit {
   constants = constants;
   loopSelected = true;
   autoPlaySelected = true;
-
-  // DRM KEY SYSTEM
   drmSelected = false;
-  drmKeySystems = drmKeySystems;
-  selectedDRMKeySystem = '';
-  drmLicenseUrl = '';
 
  // INITIAL TEXT SETTINGS
   textEnabled = this.playerService.player.getTextDefaultEnabled();
   forcedTextStreaming = this.playerService.player.isTextEnabled();
 
 
-  // playerService must be public to access it in the template
-  constructor(public playerService: PlayerService) {
+  constructor(public playerService: PlayerService, public dialog: MatDialog) {
+    this.playerService.updateProtectionDataCalled$.subscribe(
+      protectionData => {
+        this.drmSelected = (Object.entries(protectionData).length > 0);
+      });
   }
 
   ngOnInit(): void {
@@ -56,7 +77,7 @@ export class SettingComponent implements OnInit {
     // LOOP
     this.playerService.player.on(dashjs.MediaPlayer.events.PLAYBACK_ENDED, e => {
       if (this.loopSelected) {
-        this.playerService.load(this.playerService.streamAddress);
+        this.playerService.load();
       }
     });
   }
@@ -76,33 +97,42 @@ export class SettingComponent implements OnInit {
     this.loopSelected = value;
   }
 
-  /**
-   * DRM Protection Settings
-   */
-  toggleDRM(value: boolean): void {
-    this.drmSelected = value;
-  }
-
-  changeDRMKeySystem(value: any): void {
-    this.selectedDRMKeySystem = value;
-    this.setProtection();
-  }
-
-  setLicenseURL(value: string): void {
-    this.drmLicenseUrl = value;
-    this.setProtection();
-  }
-
-  setProtection(): void {
-    let protData: { [index: string]: any } = {};
-    if (this.playerService.streamItem.hasOwnProperty('protData')) {
-      protData = this.playerService.streamItem.protData;
-    } else if (this.drmLicenseUrl !== '' && this.selectedDRMKeySystem !== '') {
-      protData[this.selectedDRMKeySystem] = {
-        serverURL: this.drmLicenseUrl
-      };
+  /** If drm has been turned off, remove protection data and do a reload. */
+  drmToggle(element: MatSlideToggle): void {
+    if (!element.checked) {
+      this.playerService.setProtectionData({});
+      this.playerService.load();
     }
-    this.playerService.player.setProtectionData(protData);
+  }
+
+  /** Open Dialog for DRM JSON input and fetch input data */
+  openDrmDialog(): void {
+    const protectionDataJSON = JSON.stringify(this.playerService.protectionData, undefined, 4);
+
+    const dialogRef = this.dialog.open(DrmDialogComponent, {
+      data: protectionDataJSON,
+      panelClass: 'overlayLarge'
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      this.applyCustomProtection(data);
+    });
+  }
+
+  /** Apply DRM JSON input */
+  applyCustomProtection(data: string): void {
+    if (data.length > 0) {
+      let parsedData: object | null = null;
+      try {
+        parsedData = JSON.parse(data);
+      } catch (e) {
+        console.log(e);
+      }
+      if (parsedData) {
+        this.playerService.setProtectionData(parsedData);
+        this.playerService.load();
+      }
+    }
   }
 
   /**

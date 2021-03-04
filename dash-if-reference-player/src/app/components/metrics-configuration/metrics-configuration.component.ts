@@ -55,12 +55,12 @@ export class MetricsConfigurationComponent implements OnInit, OnDestroy {
   }
 
   /** Handle checkbox checked change */
-  optionChange(checkbox: MatCheckbox, event: MatCheckboxChange, key: string,
+  optionChange(checkbox: MatCheckbox, key: string,
                typeKey: 'audio' | 'video' | 'stream'): void {
 
     const fullKey = `${key}.${typeKey}`;
 
-    if (event.checked) {
+    if (checkbox.checked) {
       // Option was selected. If more is allowed, push its key into the selectedOptions array and send to service
       if (this.selectedOptionKeys.length < this.maxNumOfSelectedOptions ) {
         this.selectedOptionKeys.push(fullKey);

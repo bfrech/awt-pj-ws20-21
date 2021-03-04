@@ -36,6 +36,12 @@
   border-bottom: 1px solid gray;
 }
 
+#set-accordionPanel .btn {
+  line-height: 1.1;
+  margin-top: 8px;
+  font-size: 95% !important;
+}
+
 #set-accordionPanel mat-accordion .mat-expansion-panel {
   border-radius: 0 !important;
 }
