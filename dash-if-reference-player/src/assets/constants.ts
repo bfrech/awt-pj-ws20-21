@@ -50,9 +50,3 @@ export const constants = {
     widestRange: false
   }
 };
-
-
-export const drmKeySystems = {
-  'com.widevine.alpha': false,
-  'com.microsoft.playready': false,
-};

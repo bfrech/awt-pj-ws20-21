@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import * as dashjs from 'dashjs';
 import '../types/dashjs-types';
 import { hasOwnProperty } from '../../assets/hasownproperty';
 import { Metrics, MetricsAVG } from '../types/metric-types';
-import * as sources from '../../assets/sources.json';
 
 declare var ControlBar: any;
 
@@ -27,15 +27,18 @@ export class PlayerService {
     video: NaN
   };
   // tslint:disable-next-line:variable-name
+  private _protectionData = {};
+  private lastStreamAddr = '';
+  // tslint:disable-next-line:variable-name
   private _videoQualities: dashjs.BitrateInfo[] | undefined;
   private metrics: Metrics = {};
 
-  srcItems = sources.items;
-  // tslint:disable-next-line:variable-name
-  private _streamAddress = this.srcItems[0].submenu[4].url;
+  // Observable sources
+  private updateProtectionDataCallSource = new Subject<any>();
 
-  // tslint:disable-next-line:variable-name
-  private _streamItem: any;
+  // Observable streams
+  updateProtectionDataCalled$ = this.updateProtectionDataCallSource.asObservable();
+
 
   constructor() {
 
@@ -50,8 +53,6 @@ export class PlayerService {
     this._player.on(dashjs.MediaPlayer.events.STREAM_INITIALIZED, () => {
       this._videoQualities = this._player.getBitrateInfoListFor('video');
     });
-
-    this._streamItem = this.srcItems[0].submenu[4];
   }
 
   /** Getter for dashjs player object */
@@ -64,24 +65,14 @@ export class PlayerService {
     return this._controlBar;
   }
 
-  get streamItem(): any {
-    return this._streamItem;
-  }
-
-  set streamItem(value: any) {
-    this._streamItem = value;
-  }
-
-  get streamAddress(): string {
-    return this._streamAddress;
-  }
-
-  set streamAddress(value: string) {
-    this._streamAddress = value;
-  }
-
+  /** Get video qualities array */
   get videoQualities(): dashjs.BitrateInfo[] | undefined {
     return this._videoQualities;
+  }
+
+  /** Get protection data */
+  get protectionData(): object {
+    return this._protectionData;
   }
 
   /** Initialize player and akamai toolbar */
@@ -101,15 +92,27 @@ export class PlayerService {
   /** Stop player by unloading source */
   stop(): void {
     this._player.attachSource('');
+    this._controlBar.reset();
     this._videoQualities = undefined;
   }
 
   /** Load source */
-  load(streamAddr: string): void {
-    if ( this._streamItem.hasOwnProperty('protData')){
-      this._player.setProtectionData(this._streamItem.protData);
+  load(streamAddr?: string): void {
+    if (!streamAddr) {
+      streamAddr = this.lastStreamAddr;
     }
+    else {
+      this.lastStreamAddr = streamAddr;
+    }
+
     this._player.attachSource(streamAddr);
+  }
+
+  /** Set Protection Data */
+  setProtectionData(data: object): void {
+    this._player.setProtectionData(data as dashjs.ProtectionDataSet);
+    this._protectionData = data;
+    this.updateProtectionDataCallSource.next(this._protectionData);
   }
 
   /** Provide metrics to be displayed in live chart */

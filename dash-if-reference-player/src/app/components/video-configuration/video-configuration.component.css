@@ -108,14 +108,6 @@
   z-index: 1001;
 }
 
-/**
- * .vc-streamGroupMenuItem cannot be selected within #vc-comp since it's position in DOM is set dynamically by angular
- */
-.vc-streamGroupMenuItem {
-  line-height: 32px !important;
-  height: 32px !important;
-}
-
 @media (min-width: 768px) {
   #vc-comp .btn-group {
     margin: unset;

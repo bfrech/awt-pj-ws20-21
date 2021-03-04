@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {HeaderComponent} from './components/header/header.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {VideoConfigurationComponent} from './components/video-configuration/video-configuration.component';
+import {SettingComponent, DrmDialogComponent} from './components/setting/setting.component';
 import {PlayerComponent} from './components/player/player.component';
 import {MetricsViewComponent} from './components/metrics-view/metrics-view.component';
 import {MetricsConfigurationComponent} from './components/metrics-configuration/metrics-configuration.component';
@@ -17,7 +18,6 @@ import {MatSliderModule} from '@angular/material/slider';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {SettingComponent} from './components/setting/setting.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {NgApexchartsModule} from 'ng-apexcharts';
@@ -27,6 +27,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
 import {NgxMasonryModule} from 'ngx-masonry';
 
 
@@ -38,6 +39,7 @@ import {NgxMasonryModule} from 'ngx-masonry';
     VideoConfigurationComponent,
     PlayerComponent,
     SettingComponent,
+    DrmDialogComponent,
     MetricsViewComponent,
     MetricsConfigurationComponent],
   imports: [
@@ -61,11 +63,12 @@ import {NgxMasonryModule} from 'ngx-masonry';
     NgxMasonryModule,
     MatDividerModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
-
+  bootstrap: [AppComponent],
+  entryComponents: [DrmDialogComponent],
 })
 export class AppModule {
 }

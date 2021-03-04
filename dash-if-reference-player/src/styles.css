@@ -19,6 +19,9 @@
   .container, .container-sm, .container-md, .container-lg, .container-xl {
     max-width: 1400px;
   }
+  .overlayLarge {
+    width: 75vw;
+  }
 }
 
 body {
@@ -91,6 +94,15 @@ input {
  */
 mat-divider {
   margin: 0 15px !important;
+}
+
+.overlayLarge {
+  width: 85vw;
+}
+
+.matMenuItemSmall {
+  line-height: 32px !important;
+  height: 32px !important;
 }
 
 .mat-checkbox-label, .mat-label, .mat-card {

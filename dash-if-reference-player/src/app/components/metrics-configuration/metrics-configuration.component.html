@@ -9,20 +9,20 @@
         <!-- Checkboxes //-->
         <td class="cBox" *ngIf="option.type === 'stream'; else tNotStream" colspan="2">
           <mat-checkbox #checkbox
-                        (change)="optionChange(checkbox, $event, option.key, 'stream')"
+                        (change)="optionChange(checkbox, option.key, 'stream')"
                         ></mat-checkbox>
         </td>
         <ng-template #tNotStream>
           <td class="cBox">
             <mat-checkbox #checkbox
                           *ngIf="option.type === 'v' || option.type === 'av'"
-                          (change)="optionChange(checkbox, $event, option.key, 'video')"
+                          (change)="optionChange(checkbox, option.key, 'video')"
                           ></mat-checkbox>
           </td>
           <td class="cBox">
             <mat-checkbox #checkbox
                           *ngIf="option.type === 'a' || option.type === 'av'"
-                          (change)="optionChange(checkbox, $event, option.key, 'audio')"
+                          (change)="optionChange(checkbox, option.key, 'audio')"
                           ></mat-checkbox>
           </td>
         </ng-template>

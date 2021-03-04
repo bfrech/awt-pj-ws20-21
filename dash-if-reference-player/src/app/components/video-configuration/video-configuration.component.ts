@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   trigger,
   state,
@@ -7,9 +7,10 @@ import {
   transition
   // ...
 } from '@angular/animations';
-import {MatExpansionPanel} from '@angular/material/expansion';
-import {PlayerService} from '../../services/player.service';
+import { MatExpansionPanel } from '@angular/material/expansion';
+import { PlayerService } from '../../services/player.service';
 import { settingGroups } from '../../../assets/settingGroups';
+import { hasOwnProperty } from '../../../assets/hasownproperty';
 import * as sources from '../../../assets/sources.json';
 
 
@@ -70,9 +71,13 @@ export class VideoConfigurationComponent implements OnInit {
   groups: any;
   defaultSettings: any;
   paths: any;
+  JSON = JSON;
   orderGroups = settingGroups;
   srcProvider = sources.provider;
   srcItems = sources.items;
+  // ItemSelected is needed to apply additional data from sources.json, eg. protData
+  srcItemSelected: object | null = this.srcItems[0].submenu[4];
+  srcItemSelectedJSON = JSON.stringify(this.srcItemSelected);
   inputVarStreamAddr = this.srcItems[0].submenu[4].url;
   streamsDropdownIsVisible = false;
   streamsDropdownExpandedPanel: MatExpansionPanel | null = null;
@@ -195,7 +200,6 @@ export class VideoConfigurationComponent implements OnInit {
     }
   }
 
-
   /** Assign object of the dropdown accordion to make it accessible for manipulation */
   setStreamsDropdownExpandedPanel(panel: MatExpansionPanel): void {
     this.streamsDropdownExpandedPanel = panel;
@@ -210,16 +214,35 @@ export class VideoConfigurationComponent implements OnInit {
     }
   }
 
-  /** Get Selected Stream Item */
-  selectStreamItem(item: object): void {
-    this.playerService.streamItem = item;
+  /** When a stream is selected, get item, apply URL and toggle dropdown menu */
+  selectStream(item: object): void {
+    this.srcItemSelected = item;
+    this.srcItemSelectedJSON = JSON.stringify(item);
+    if (item && typeof item === 'object' && hasOwnProperty(item, 'url') && typeof item.url === 'string') {
+      this.inputVarStreamAddr = item.url;
+    }
+    else {
+      this.inputVarStreamAddr = '';
+    }
+    this.streamsDropdownToggle();
   }
 
-  /** When a stream is selected, apply URL and toggle dropdown menu */
-  selectStream(url: string): void {
-    this.inputVarStreamAddr = url;
-    this.playerService.streamAddress = url;
-    this.streamsDropdownToggle();
+  /** When a custom stream url is entered, set selected item to null (To prevent that e.g. wrong protData is set) */
+  changeStreamUrl(): void {
+    this.srcItemSelected = null;
+    this.srcItemSelectedJSON = '';
+  }
+
+  /** Load stream url and additional settings if available */
+  load(): void {
+    if (this.srcItemSelected) {
+      if (typeof this.srcItemSelected === 'object' && hasOwnProperty(this.srcItemSelected, 'protData')
+          && typeof this.srcItemSelected.protData === 'object' && this.srcItemSelected.protData !== null) {
+        this.playerService.setProtectionData(this.srcItemSelected.protData);
+      }
+    }
+
+    this.playerService.load(this.inputVarStreamAddr);
   }
 
   /** Toggle visibility of settings section. */
