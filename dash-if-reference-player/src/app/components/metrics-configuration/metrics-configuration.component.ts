@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { interval, Subscription } from 'rxjs';
-import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PlayerService } from '../../services/player.service';
 import { MetricsService } from '../../services/metrics.service';
@@ -14,7 +14,6 @@ import { MetricOption, Metrics } from '../../types/metric-types';
   styleUrls: ['./metrics-configuration.component.css']
 })
 export class MetricsConfigurationComponent implements OnInit, OnDestroy {
-
   // What metrics can be selected to be displayed
   options: MetricOption[] = METRICOPTIONS;
   metrics: Metrics = {};
@@ -30,10 +29,9 @@ export class MetricsConfigurationComponent implements OnInit, OnDestroy {
 
   constructor( private snackBar: MatSnackBar,
                private playerService: PlayerService,
-               private metricsService: MetricsService ) { }
+               private metricsService: MetricsService ) {}
 
   ngOnInit(): void {
-
     // Setup an rxjs interval and subscribe update method
     const source = interval(this.refreshInterval);
     this.subscription = source.subscribe(() => this.updateMetrics());
@@ -45,7 +43,6 @@ export class MetricsConfigurationComponent implements OnInit, OnDestroy {
 
   /** If player is ready, fetch current metrics from player service */
   updateMetrics(): void {
-
     if (this.playerService.player.isReady()) {
       this.metrics = this.playerService.getMetrics();
     }
@@ -57,7 +54,6 @@ export class MetricsConfigurationComponent implements OnInit, OnDestroy {
   /** Handle checkbox checked change */
   optionChange(checkbox: MatCheckbox, key: string,
                typeKey: 'audio' | 'video' | 'stream'): void {
-
     const fullKey = `${key}.${typeKey}`;
 
     if (checkbox.checked) {
@@ -81,7 +77,6 @@ export class MetricsConfigurationComponent implements OnInit, OnDestroy {
         this.metricsService.updateMetricsSelection(this.selectedOptionKeys);
       }
     }
-
   }
 
   ////////////////////////////////////////

@@ -20,6 +20,7 @@ import { constants } from 'src/assets/constants';
   templateUrl: './drm-dialog.html',
   styleUrls: ['./drm-dialog.css'],
 })
+
 export class DrmDialogComponent {
   isValidJSON = true;
 
@@ -34,6 +35,7 @@ export class DrmDialogComponent {
     }
   }
 }
+
 
 @Component({
   selector: 'app-setting',

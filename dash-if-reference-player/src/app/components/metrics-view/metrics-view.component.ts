@@ -39,7 +39,6 @@ export type ChartOptions = {
   styleUrls: ['./metrics-view.component.css']
 })
 export class MetricsViewComponent implements OnInit, OnDestroy {
-
   chartActive = false;
   mouseOnChart = false;
 
@@ -147,7 +146,6 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
   constructor(private playerService: PlayerService,
               private metricsService: MetricsService) {
-
     // Subscribe to the service observable to receive metrics selection
     this.metricsService.updateMetricsSelectionCalled$.subscribe(
       selectedOptionKeys => {
@@ -158,7 +156,6 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
     // Setup an rxjs interval and subscribe updater method
     const source = interval(this.refreshInterval);
     this.subscription = source.subscribe(() => this.intervalMain());
@@ -175,7 +172,6 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
   /** Main interval method, called every x seconds and handles data and chart refresh, deletion, etc. */
   intervalMain(): void {
-
     // If player is initialized and source is applied, update all available metric data
     if (this.playerService.player.isReady()) {
 
@@ -216,7 +212,6 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
   /** Get fresh metrics dataset and push it into chartData */
   updateChartData(): void {
-
     const metrics: Metrics = this.playerService.getMetrics(true);
 
     // Iterate through all available metrics and push their data into this.chartData
@@ -257,14 +252,12 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
         }
 
         this.chartData[fullKey].push([this.getDataTime(), metricValue]);
-
       }
     }
   }
 
   /** Append selected series data to chart */
   updateChart(): void {
-
     // We want the chart to stop if mouse is on it, otherwise user interactions would not work.
     if (this.mouseOnChart) {
       return;
@@ -323,12 +316,10 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
         yaxis: chartYAxesNew
       });
     }
-
   }
 
   /** Called on changed metrics selection. Perhaps the chart has to be cleaned */
   metricsSelectionChanged(): void {
-
     if (Array.isArray(this.selectedOptionKeys) && !this.selectedOptionKeys.length) {
 
       this.chart.updateOptions({
@@ -340,7 +331,6 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
   /** Reset: Clear chart and data. */
   reset(): void {
-
     this.chartActive = false;
     this.sessionStart = NaN;
     this.chartData = {};
@@ -353,9 +343,7 @@ export class MetricsViewComponent implements OnInit, OnDestroy {
 
   /** Return time in seconds since session start */
   getDataTime(): number {
-
     const now = new Date().getTime() / 1000;
     return Math.max(now - this.sessionStart, 0);
   }
-
 }
