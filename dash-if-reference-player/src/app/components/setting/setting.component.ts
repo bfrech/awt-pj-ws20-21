@@ -44,8 +44,12 @@ export class DrmDialogComponent {
 
 export class SettingComponent implements OnInit {
   @ViewChild(NgxMasonryComponent) masonry!: NgxMasonryComponent;
-  @Input() groups: any;
+  // Intercept input property change
+  @Input() set groups(groups: any) { this.setGroups(groups); }
+  // tslint:disable-next-line:variable-name
+  _groups: any;
   @Input() settingGroup: any;
+
   description: any;
   tooltip: any;
   checked = false;
@@ -70,7 +74,7 @@ export class SettingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Build array with radio button data (To be able to manipulate them later)
+    // Restructure radio button data to use [(ngModel)] in template
     for (const [radioGroupKey, radioGroupValue] of Object.entries(constants)) {
       for (const [radioOptionKey, radioOptionValue] of Object.entries(radioGroupValue)) {
         if (this.isGroup(radioOptionValue)) {
@@ -89,15 +93,36 @@ export class SettingComponent implements OnInit {
       }
     }
 
-    // Add hard-coded group DRM SYSTEM
-    this.groups.push(['DRM SYSTEM', {}]);
-
     // LOOP
     this.playerService.player.on(dashjs.MediaPlayer.events.PLAYBACK_ENDED, e => {
       if (this.loopSelected) {
         this.playerService.load();
       }
     });
+  }
+
+  /** Handle incoming groups/settings */
+  setGroups(groups: any): void {
+    // Add hard-coded group DRM SYSTEM
+    groups.push(['DRM SYSTEM', {}]);
+
+    if (!this._groups) {
+      this._groups = groups;
+    }
+    else {
+      const sizeOfGroups = Object.entries(groups).length;
+
+      // Loop over new settings and apply changed entries (To avoid ugly re-rendering of the component)
+      for (let i = 0; i < sizeOfGroups; i++) {
+        if (JSON.stringify(this._groups[i]) !== JSON.stringify(groups[i])) {
+          for (const groupKey of Object.keys(groups[i][1])) {
+            if (JSON.stringify(this._groups[i][1][groupKey]) !== JSON.stringify(groups[i][1][groupKey])) {
+              this._groups[i][1][groupKey] = groups[i][1][groupKey];
+            }
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -221,6 +246,7 @@ export class SettingComponent implements OnInit {
     const settingObject = parts.reduceRight((obj: any, next: any) => ({
       [next]: obj
     }), root);
+    console.log(settingObject);
     this.playerService.player.updateSettings(settingObject);
   }
 

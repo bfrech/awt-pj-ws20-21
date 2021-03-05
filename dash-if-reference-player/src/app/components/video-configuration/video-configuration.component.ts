@@ -5,10 +5,10 @@ import {
   style,
   animate,
   transition
-  // ...
 } from '@angular/animations';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { PlayerService } from '../../services/player.service';
+import { MediaPlayerSettingClass } from 'dashjs';
 import { settingGroups } from '../../../assets/settingGroups';
 import { hasOwnProperty } from '../../../assets/hasownproperty';
 import * as sources from '../../../assets/sources.json';
@@ -235,15 +235,53 @@ export class VideoConfigurationComponent implements OnInit {
 
   /** Load stream url and additional settings if available */
   load(): void {
+    this.playerService.setProtectionData({});
+
+    // If a stream item is selected (Not the case if a custom URL was entered)
     if (this.srcItemSelected && typeof this.srcItemSelected === 'object') {
+
+      // If there is pre-defined protection data
       if (hasOwnProperty(this.srcItemSelected, 'protData') && typeof this.srcItemSelected.protData === 'object'
         && this.srcItemSelected.protData !== null) {
         this.playerService.setProtectionData(this.srcItemSelected.protData);
       }
-      else {
-        this.playerService.setProtectionData({});
+
+      // If there is pre-defined buffer config
+      if (hasOwnProperty(this.srcItemSelected, 'bufferConfig')
+        && typeof this.srcItemSelected.bufferConfig === 'object' && this.srcItemSelected.bufferConfig !== null) {
+        const bufferConfig = this.srcItemSelected.bufferConfig;
+        const dashjsConfig: MediaPlayerSettingClass = {};
+        dashjsConfig.streaming = {};
+
+        if (hasOwnProperty(bufferConfig, 'liveDelay') && typeof bufferConfig.liveDelay === 'number') {
+          dashjsConfig.streaming.liveDelay = bufferConfig.liveDelay;
+        }
+
+        if (hasOwnProperty(bufferConfig, 'lowLatencyMode') && typeof bufferConfig.lowLatencyMode === 'boolean') {
+          dashjsConfig.streaming.lowLatencyEnabled = bufferConfig.lowLatencyMode;
+        }
+
+        if (hasOwnProperty(bufferConfig, 'stableBufferTime')
+            && typeof bufferConfig.stableBufferTime === 'number') {
+          dashjsConfig.streaming.stableBufferTime = bufferConfig.stableBufferTime;
+        }
+
+        if (hasOwnProperty(bufferConfig, 'bufferTimeAtTopQuality')
+            && typeof bufferConfig.bufferTimeAtTopQuality === 'number') {
+          dashjsConfig.streaming.bufferTimeAtTopQuality = bufferConfig.bufferTimeAtTopQuality;
+        }
+
+        if (hasOwnProperty(bufferConfig, 'bufferTimeAtTopQualityLongForm')
+            && typeof bufferConfig.bufferTimeAtTopQualityLongForm === 'number') {
+          dashjsConfig.streaming.bufferTimeAtTopQualityLongForm = bufferConfig.bufferTimeAtTopQualityLongForm;
+        }
+
+        if (Object.entries(dashjsConfig.streaming).length > 0) {
+          // Apply settings and refresh this.groups to display changes in settings UI
+          this.playerService.player.updateSettings(dashjsConfig);
+          this.groups = Object.entries(this.processSettings());
+        }
       }
-      // TODO: Handle pre-defined bufferConfig
     }
 
     this.playerService.load(this.inputVarStreamAddr);
