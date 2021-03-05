@@ -84,9 +84,7 @@ export class VideoConfigurationComponent implements OnInit {
   streamsGroupBy: 'type' | 'provider' = 'type';
   settingsSectionIsVisible = false;
 
-  // playerService must be public to access it in the template
-  constructor(public playerService: PlayerService) {
-  }
+  constructor(public playerService: PlayerService) {}
 
   ngOnInit(): void {
     this.groups = Object.entries(this.processSettings());

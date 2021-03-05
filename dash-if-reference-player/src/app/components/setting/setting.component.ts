@@ -45,15 +45,11 @@ export class DrmDialogComponent {
 export class SettingComponent implements OnInit {
   @ViewChild(NgxMasonryComponent) masonry!: NgxMasonryComponent;
   // Intercept input property change
-  @Input() set groups(groups: any) { this.setGroups(groups); }
+  @Input() set groups(groups: Array<any>) { this.setGroups(groups); }
   // tslint:disable-next-line:variable-name
-  _groups: any;
-  @Input() settingGroup: any;
+  _groups: Array<any> = [];
+  @Input() settingGroup: Array<object> = [];
 
-  description: any;
-  tooltip: any;
-  checked = false;
-  closeResult = '';
   radioValues = constants;
   loopSelected = true;
   autoPlaySelected = true;
@@ -102,11 +98,11 @@ export class SettingComponent implements OnInit {
   }
 
   /** Handle incoming groups/settings */
-  setGroups(groups: any): void {
+  setGroups(groups: Array<any>): void {
     // Add hard-coded group DRM SYSTEM
     groups.push(['DRM SYSTEM', {}]);
 
-    if (!this._groups) {
+    if (this._groups.length < 1) {
       this._groups = groups;
     }
     else {
@@ -140,7 +136,6 @@ export class SettingComponent implements OnInit {
    * Check if setting value is a boolean
    */
   isBoo(value: any): boolean {
-    this.checked = value;
     return (typeof value === 'boolean');
   }
 
@@ -314,18 +309,20 @@ export class SettingComponent implements OnInit {
    * Get Api description from SettingGroup
    */
   getApiDescription(groupName: string, setting: any): string {
+    let description: object = {};
+    let tooltip = '';
     Object.entries(this.settingGroup).map(([key, value]) => {
       if (key === groupName) {
-        this.description = value;
+        description = value;
       }
     });
-    Object.entries(this.description).map(([key, value]) => {
+    Object.entries(description).map(([key, value]) => {
       key = key.charAt(0).toUpperCase() + key.replace(/([a-z0-9])([A-Z])/g, '$1 $2').slice(1);
       if (key === setting) {
-        this.tooltip = value;
+        tooltip = value;
       }
     });
-    return this.tooltip;
+    return tooltip;
   }
 
   /**
