@@ -48,7 +48,7 @@ export class SettingComponent implements OnInit {
   @Input() set groups(groups: Array<any>) { this.setGroups(groups); }
   // tslint:disable-next-line:variable-name
   _groups: Array<any> = [];
-  @Input() settingGroup: Array<object> = [];
+  @Input() settingGroup: object = [];
 
   radioValues = constants;
   loopSelected = true;
@@ -121,9 +121,7 @@ export class SettingComponent implements OnInit {
     }
   }
 
-  /**
-   * Check for grouped Settings
-   */
+  /** Check for grouped Settings */
   isGroup(val: any): boolean {
     if (val == null || typeof val === 'string') {
       return false;
@@ -132,37 +130,33 @@ export class SettingComponent implements OnInit {
     }
   }
 
-  /**
-   * Check if setting value is a boolean
-   */
+  /** Check if setting value is a boolean */
   isBoo(value: any): boolean {
     return (typeof value === 'boolean');
   }
 
-  /**
-   * Check if setting value is a number or a string
-   */
+  /** Check if setting value is a number or a string */
   isInput(value: any): boolean {
     return (!this.isBoo(value) && !this.isGroup(value) && !this.isRadio(value));
   }
 
-  /**
-   * Check if value has constants as value
-   */
+  /** Check if value has constants as value */
   isRadio(value: any): boolean {
     return (typeof value === 'string' && value !== 'null');
   }
 
-  /**
-   * Check if value is log level
-   */
+  /** Check if value is log level */
   isLogLevel(value: any): boolean {
     return value === 'Log Level';
   }
 
-  compare(constant: any, setting: any): boolean {
-    const formatted = setting[0].toLowerCase() + setting.replace(/\s/g, '').slice(1);
-    return formatted === constant;
+  /** Compare radio-constants key with setting key */
+  compareRadioKey(constant: any, setting: any): boolean {
+    if (typeof constant === 'string' && typeof setting === 'string') {
+      const formatted = setting[0].toLowerCase() + setting.replace(/\s/g, '').slice(1);
+      return formatted === constant;
+    }
+    return false;
   }
 
   /** If drm has been turned off, remove protection data and do a reload. */
@@ -208,19 +202,19 @@ export class SettingComponent implements OnInit {
     this.playerService.player.setAutoPlay(this.autoPlaySelected);
   }
 
+  /** Apply changed text default setting */
   applyTextDefaultEnabled(): void {
     this.textEnabled = (this.textEnabled === undefined) ? false : this.textEnabled;
     this.playerService.player.setTextDefaultEnabled(this.textEnabled);
   }
 
+  /** Apply forced text setting */
   applyEnableForcedTextStreaming(): void {
     this.playerService.player.enableForcedTextStreaming(this.forcedTextStreaming);
   }
 
-  /**
-   * Update Settings: call dash.js updateSettings function with the path of the setting
-   */
-  update(path: string, value: boolean | string): void {
+  /** Update Settings: call dash.js updateSettings function with the path of the setting */
+  update(path: string, value: string | boolean | number): void {
     // If abrLoLP was selected, change additional options and also apply them to the template
     if (value === 'abrLoLP') {
       this.update('streaming.abr.fetchThroughputCalculationMode', 'abrFetchThroughputCalculationMoofParsing');
@@ -236,12 +230,12 @@ export class SettingComponent implements OnInit {
     if (name === undefined) {
       return;
     }
-    const root: { [index: string]: boolean | string } = {};
+    const root: { [index: string]: string | boolean | number } = {};
     root[name] = value;
+
     const settingObject = parts.reduceRight((obj: any, next: any) => ({
       [next]: obj
-    }), root);
-    console.log(settingObject);
+    }), root) as dashjs.MediaPlayerSettingClass;
     this.playerService.player.updateSettings(settingObject);
   }
 
@@ -305,10 +299,12 @@ export class SettingComponent implements OnInit {
     }
   }
 
-  /**
-   * Get Api description from SettingGroup
-   */
+  /** Get Api description from SettingGroup */
   getApiDescription(groupName: string, setting: any): string {
+    if (typeof setting !== 'string') {
+      return '';
+    }
+
     let description: object = {};
     let tooltip = '';
     Object.entries(this.settingGroup).map(([key, value]) => {
@@ -325,14 +321,17 @@ export class SettingComponent implements OnInit {
     return tooltip;
   }
 
-  /**
-   * Keep original order
-   */
+  /** Keep original order */
   keepOrder = (a: any, b: any) => {
     return a;
   }
 
-  format(value: any): string {
+  /** Format string of radio button option */
+  formatRadioOption(value: any): string {
+    if (typeof value !== 'string') {
+      return '';
+    }
+
     const length = value.split(/(?=[A-Z])/).length;
     // Only format long values that do not fit
     if (length > 4) {

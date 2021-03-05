@@ -168,9 +168,9 @@
                   <div *ngIf="isRadio(subset.value[0]) && !isLogLevel(setting.key)" class="radio">
                     <label class="Radio-Button-Settings">{{subset.key}}:</label>
                     <div *ngFor="let cons of radioValues | keyvalue">
-                      <div *ngIf="compare(cons.key, setting.key)">
+                      <div *ngIf="compareRadioKey(cons.key, setting.key)">
                         <div *ngFor="let subConst of cons.value | keyvalue">
-                          <div *ngIf="compare(subConst.key, subset.key)">
+                          <div *ngIf="compareRadioKey(subConst.key, subset.key)">
                             <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup"
                                              [(ngModel)]="ngRadioBoxes[cons.key + '.' + subConst.key]">
                               <mat-radio-button *ngFor="let option of $any(subConst.value) | keyvalue"
@@ -218,12 +218,12 @@
                 <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
               </a></label>
               <div *ngFor="let cons of radioValues | keyvalue">
-                <div *ngIf="compare(cons.key, setting.key)">
+                <div *ngIf="compareRadioKey(cons.key, setting.key)">
                   <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup"
                                    [(ngModel)]="ngRadioBoxes[cons.key]">
                     <mat-radio-button *ngFor="let option of cons.value | keyvalue" [value]="option.key"
                                       (change)="update(setting.value[1], $any(option.key))">
-                      {{format(option.key)}}
+                      {{formatRadioOption(option.key)}}
                     </mat-radio-button>
                   </mat-radio-group>
                 </div>

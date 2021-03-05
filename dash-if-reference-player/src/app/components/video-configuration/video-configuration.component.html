@@ -43,7 +43,7 @@
                          class="dropdown-item vc-dropdown-item text-truncate"
                          [class.vc-custom-active]="srcItemSelectedJSON === JSON.stringify(subItem)">
                         <span class="badge badge-pill"
-                              [style.background-color]="setBadgeColor(srcProvider[subItem['provider']]['acronym'])"
+                              [style.background-color]="getBadgeColor(srcProvider[subItem['provider']]['acronym'])"
                               matTooltip="{{ srcProvider[subItem['provider']]['name'] }}"
                               matTooltipPosition="above">
                           {{ srcProvider[subItem['provider']]['acronym'] }}

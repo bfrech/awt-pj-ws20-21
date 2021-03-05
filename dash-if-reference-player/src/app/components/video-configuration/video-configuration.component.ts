@@ -68,9 +68,7 @@ import * as sources from '../../../assets/sources.json';
 })
 
 export class VideoConfigurationComponent implements OnInit {
-  groups: any;
-  defaultSettings: any;
-  paths: any;
+  groups: Array<any> = [];
   JSON = JSON;
   orderGroups = settingGroups;
   srcProvider = sources.provider;
@@ -127,7 +125,9 @@ export class VideoConfigurationComponent implements OnInit {
     // Map to custom groups
     const withGroups: any[] = [];
     Object.entries(res).forEach(setting => {
-      if ( this.findGroup(setting[0]) === 'NONE') { return; }
+      if (this.findGroup(setting[0]) === 'NONE') {
+        return;
+      }
       withGroups.push([this.findGroup(setting[0]), setting[0], setting[1]]);
     });
 
@@ -159,9 +159,7 @@ export class VideoConfigurationComponent implements OnInit {
   ////////////////////////////////////////
   // Helper Functions
   ////////////////////////////////////////
-  /**
-   * Traverse Object until leaf node
-   */
+  /** Traverse Object until leaf node */
   flattenObject(obj: { [index: string]: any }): object {
     const result: { [index: string]: any } = {};
     for (const i in obj) {
@@ -190,7 +188,7 @@ export class VideoConfigurationComponent implements OnInit {
    * Find group that Setting should be displayed in according to our custom order
    * defined in settingGroups.js
    */
-  findGroup(name: string): any {
+  findGroup(name: string): string | undefined {
     for (const [groupKey, groupVal] of Object.entries(settingGroups)) {
       if (groupVal.hasOwnProperty(name)) {
         return groupKey;
@@ -290,10 +288,8 @@ export class VideoConfigurationComponent implements OnInit {
     this.settingsSectionIsVisible = !this.settingsSectionIsVisible;
   }
 
-  /**
-   * Checks for provider and set Badge color
-   */
-  setBadgeColor(e: any): any {
+  /** Checks for provider and set Badge color */
+  getBadgeColor(e: string): string {
     switch (e) {
       case 'DASH-IF':
         return '#1F8AF9';
@@ -302,22 +298,23 @@ export class VideoConfigurationComponent implements OnInit {
       case 'BBC':
         return '#1560ae';
       case 'Unified Streaming':
-        return '#62adfa';
+        return '#092e53';
       case 'Axinom':
         return '#186ec7';
       case 'Streamroot':
         return '#506594';
       case 'Wowza':
-        return '#0c3763';
+        return '#093a6d';
       case 'AWS':
         return '#0C83AB';
       case 'CTA':
         return '#62adfa';
       case 'Akamai':
-        return '#8fc4fc';
+        return '#203247';
       case 'Microsoft':
         return '#061b31';
     }
+    return '';
   }
 }
 
