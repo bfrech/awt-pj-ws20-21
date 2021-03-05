@@ -9,7 +9,7 @@
             <h2>{{group[0]}}</h2>
           </mat-expansion-panel-header>
 
-          <!-- PLAYBACK -->
+          <!-- PLAYBACK (hardcoded) -->
           <div *ngIf="group[0] === 'PLAYBACK'">
             <!-- Video Quality -->
             <div class="singleSetting sliderContainer">
@@ -58,7 +58,7 @@
           </div>
           <!-- PLAYBACK END -->
 
-          <!-- DRM -->
+          <!-- DRM (hardcoded) -->
           <div *ngIf="group[0] === 'DRM SYSTEM'">
             <div class="singleSetting">
               <mat-slide-toggle #drmToggleElement [checked]="drmSelected"
@@ -76,7 +76,7 @@
           </div>
           <!-- DRM END -->
 
-          <!-- Text Settings -->
+          <!-- Text Settings (hardcoded) -->
           <div class="singleSetting" *ngIf="group[0] === 'INITIAL'">
             <mat-slide-toggle [(ngModel)]="textEnabled" [labelPosition]="'after'" (change)="applyTextDefaultEnabled()">
               Enable Text At Loading
@@ -117,9 +117,27 @@
           </div>
 
           <div class="singleSetting" *ngFor="let setting of group[1] | keyvalue:keepOrder">
+            <!-- Log Level (hardcoded) -->
+            <div *ngIf="isLogLevel(setting.key)" class="radio">
+              <label class="Radio-Button-Settings">{{setting.key}}:
+                <a [matTooltip]="getApiDescription(group[0], setting.key)" [matTooltipPosition]="'after'"
+                   href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html" target="_blank"
+                >
+                  <img class="set-info" alt="Info Icon with link to setting description"
+                       src="assets/images/question.png">
+                </a>
+              </label>
+              <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup"
+                               [(ngModel)]="ngRadioBoxes['logLevel']">
+                <mat-radio-button *ngFor="let option of radioValues.logLevel | keyvalue" [value]="option.key"
+                                  (change)="updateLogLevel(option.key)">
+                  {{option.key}}
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
 
-            <!-- Checkboxes -->
-            <div *ngIf="isBoo(setting.value[0])">
+            <!-- Checkboxes / Slide Toggle Ungrouped -->
+            <div *ngIf="isBool(setting.value[0])">
               <mat-slide-toggle #slideToggle [checked]="setting.value[0]" [labelPosition]="'after'"
                                 (change)="update(setting.value[1], slideToggle.checked)">
                 {{setting.key}}<a [matTooltip]="getApiDescription(group[0], setting.key)"
@@ -131,14 +149,36 @@
               </mat-slide-toggle>
             </div>
 
-            <!-- Input Fields -->
+            <!-- Input Fields Ungrouped -->
             <div *ngIf="isInput(setting.value[0]) && !isLogLevel(setting.key)" class="fields">
               <mat-form-field [matTooltip]="getApiDescription(group[0], setting.key)">
                 <mat-label>{{setting.key}}</mat-label>
-                <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'" [name]="setting.key"
+                <input #inputField [type]="isNumber(setting.value[0]) ? 'number' : 'text'" [name]="setting.key"
                        [value]="setting.value[0]" matInput placeholder="placeholder"
                        (change)="update(setting.value[1], inputField.value)">
               </mat-form-field>
+            </div>
+
+            <!-- Radio Button Group -->
+            <div *ngIf="isRadio(setting.value[0]) && !isLogLevel(setting.key)" class="radio">
+              <label class="Radio-Button-Settings">{{setting.key}}:<a
+                [matTooltip]="getApiDescription(group[0], setting.key)"
+                [matTooltipPosition]="'after'"
+                href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
+                target="_blank">
+                <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
+              </a></label>
+              <div *ngFor="let cons of radioValues | keyvalue">
+                <div *ngIf="compareRadioKey(cons.key, setting.key)">
+                  <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup"
+                                   [(ngModel)]="ngRadioBoxes[cons.key]">
+                    <mat-radio-button *ngFor="let option of cons.value | keyvalue" [value]="option.key"
+                                      (change)="update(setting.value[1], $any(option.key))">
+                      {{formatRadioOption(option.key)}}
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
             </div>
 
             <!-- Grouped Settings -->
@@ -151,20 +191,23 @@
               </a></h3>
               <div *ngFor="let sub of setting.value">
                 <div class="groupSubSetting" *ngFor="let subset of sub | keyvalue">
+                  <!-- Input Field -->
                   <div *ngIf="isInput(subset.value[0])">
                     <mat-form-field>
                       <mat-label>{{subset.key}}</mat-label>
-                      <input #inputField [type]="(setting.value[0] !== 'null' ) ? 'number' : 'text'"
+                      <input #inputField [type]="isNumber(setting.value[0]) ? 'number' : 'text'"
                              [name]="subset.key" matInput placeholder="placeholder" [value]="subset.value[0]"
                              (change)="update(subset.value[1], inputField.value)">
                     </mat-form-field>
                   </div>
-                  <mat-slide-toggle #slideToggle *ngIf="isBoo(subset.value[0])"
+                  <!-- Checkboxes / Slide Toggle -->
+                  <mat-slide-toggle #slideToggle *ngIf="isBool(subset.value[0])"
                                     [checked]="subset.value[0]" [labelPosition]="'after'"
                                     (change)="update(subset.value[1], slideToggle.checked)">
                     {{subset.key}}
                   </mat-slide-toggle>
 
+                  <!-- Radio Buttons -->
                   <div *ngIf="isRadio(subset.value[0]) && !isLogLevel(setting.key)" class="radio">
                     <label class="Radio-Button-Settings">{{subset.key}}:</label>
                     <div *ngFor="let cons of radioValues | keyvalue">
@@ -184,48 +227,6 @@
                       </div>
                     </div>
                   </div>
-
-                </div>
-              </div>
-            </div>
-
-            <!-- Radio Buttons: Log Level -->
-            <div *ngIf="isLogLevel(setting.key)" class="radio">
-              <label class="Radio-Button-Settings">{{setting.key}}:
-                <a [matTooltip]="getApiDescription(group[0], setting.key)" [matTooltipPosition]="'after'"
-                   href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html" target="_blank"
-                >
-                  <img class="set-info" alt="Info Icon with link to setting description"
-                       src="assets/images/question.png">
-                </a>
-              </label>
-              <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup"
-                               [(ngModel)]="ngRadioBoxes['logLevel']">
-                <mat-radio-button *ngFor="let option of radioValues.logLevel | keyvalue" [value]="option.key"
-                                  (change)="updateLogLevel(option.key)">
-                  {{option.key}}
-                </mat-radio-button>
-              </mat-radio-group>
-            </div>
-
-            <!-- Radio Buttons -->
-            <div *ngIf="isRadio(setting.value[0]) && !isLogLevel(setting.key)" class="radio">
-              <label class="Radio-Button-Settings">{{setting.key}}:<a
-                [matTooltip]="getApiDescription(group[0], setting.key)"
-                [matTooltipPosition]="'after'"
-                href="http://cdn.dashjs.org/latest/jsdoc/module-Settings.html"
-                target="_blank">
-                <img class="set-info" alt="Info Icon with link to setting description" src="assets/images/question.png">
-              </a></label>
-              <div *ngFor="let cons of radioValues | keyvalue">
-                <div *ngIf="compareRadioKey(cons.key, setting.key)">
-                  <mat-radio-group aria-labelledby="Radio-Button-Settings" class="set-radioButtonSettingGroup"
-                                   [(ngModel)]="ngRadioBoxes[cons.key]">
-                    <mat-radio-button *ngFor="let option of cons.value | keyvalue" [value]="option.key"
-                                      (change)="update(setting.value[1], $any(option.key))">
-                      {{formatRadioOption(option.key)}}
-                    </mat-radio-button>
-                  </mat-radio-group>
                 </div>
               </div>
             </div>

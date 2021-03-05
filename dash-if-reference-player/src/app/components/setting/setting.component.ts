@@ -121,6 +121,7 @@ export class SettingComponent implements OnInit {
         }
       }
     }
+    console.log(this._groups);
   }
 
   /** Check for grouped Settings */
@@ -132,19 +133,27 @@ export class SettingComponent implements OnInit {
     }
   }
 
-  /** Check if setting value is a boolean */
-  isBoo(value: any): boolean {
+  /** Check if value is of type boolean */
+  isBool(value: any): boolean {
     return (typeof value === 'boolean');
+  }
+
+  /** Check if value is of type number */
+  isNumber(value: any): boolean {
+    return (typeof value === 'number');
   }
 
   /** Check if setting value is a number or a string */
   isInput(value: any): boolean {
-    return (!this.isBoo(value) && !this.isGroup(value) && !this.isRadio(value));
+    return (!this.isBool(value) && !this.isGroup(value) && !this.isRadio(value));
   }
 
   /** Check if value has constants as value */
   isRadio(value: any): boolean {
-    return (typeof value === 'string' && value !== 'null');
+    if (typeof value === 'string' && Object.keys(this.radioValues).includes(value)) {
+      return true;
+    }
+    return false;
   }
 
   /** Check if value is log level */

@@ -111,7 +111,9 @@ export const settingGroups = {
     sid: 'GUID identifying the current playback session. Should be in UUID format.' +
       'If not specified a UUID will be automatically generated.',
     cid: 'A unique string to identify the current content. If not specified it will be a hash of the MPD url.',
-    did: 'A unique string identifying the current device.'
+    did: 'A unique string identifying the current device.',
+    rtp: 'The requested maximum throughput that the client considers sufficient for delivery of the asset. If not specified this value will be dynamically calculated in the CMCDModel based on the current buffer level.',
+    rtpSafetyFactor: 'This value is used as a factor for the rtp value calculation: rtp = minBandwidth * rtpSafetyFactor If not specified this value defaults to 5. Note that this value is only used when no static rtp value is defined.',
   },
   BUFFER: {
     bufferPruningInterval: 'The interval of pruning buffer in sconds.',
@@ -132,6 +134,16 @@ export const settingGroups = {
     retryIntervals: 'Time in milliseconds of which to reload a failed file load attempt. For low latency mode these values are divided by lowLatencyReductionFactor.',
     retryAttempts: 'Total number of retry attempts that will occur on a file load before it fails. For low latency mode these values are multiplied by lowLatencyMultiplyFactor.',
     fragmentRequestTimeout: 'Time in milliseconds before timing out on loading a media fragment. Fragments that timeout are retried as if they failed',
+  },
+  'UTC SYNCHRONIZATION': {
+    utcSynchronization: 'backgroundAttempts: Number of synchronization attempts to perform in the background after an initial synchronization request has been done. This is used to verify that the derived client-server offset is correct. The background requests are async and done in parallel to the start of the playback. This value is also used to perform a resync after 404 errors on segments.\n' +
+      'timeBetweenSyncAttempts: The time in seconds between two consecutive sync attempts. Note: This value is used as an initial starting value. The internal value of the TimeSyncController is adjusted during playback based on the drift between two consecutive synchronization attempts. Note: A sync is only performed after an MPD update. In case the @minimumUpdatePeriod is larger than this value the sync will be delayed until the next MPD update.\n' +
+      'maximumTimeBetweenSyncAttempts: The maximum time in seconds between two consecutive sync attempts.\n' +
+      'minimumTimeBetweenSyncAttempts: The minimum time in seconds between two consecutive sync attempts.\n' +
+      'timeBetweenSyncAttemptsAdjustmentFactor: The factor used to multiply or divide the timeBetweenSyncAttempts parameter after a sync. The maximumAllowedDrift defines whether this value is used as a factor or a dividend.\n' +
+      'maximumAllowedDrift: The maximum allowed drift specified in milliseconds between two consecutive synchronization attempts.\n' +
+      'enableBackgroundSyncAfterSegmentDownloadError: Enables or disables the background sync after the player ran into a segment download error.',
+    defaultTimingSource: 'The default timing source to be used. The timing sources in the MPD take precedence over this one.',
   },
   NONE: {
     wallclockTimeUpdateInterval: 'How frequently the wallclockTimeUpdated internal event is triggered (in milliseconds).',
