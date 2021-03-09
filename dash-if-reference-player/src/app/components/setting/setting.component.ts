@@ -121,7 +121,6 @@ export class SettingComponent implements OnInit {
         }
       }
     }
-    console.log(this._groups);
   }
 
   /** Check for grouped Settings */
@@ -150,10 +149,7 @@ export class SettingComponent implements OnInit {
 
   /** Check if value has constants as value */
   isRadio(value: any): boolean {
-    if (typeof value === 'string' && Object.keys(this.radioValues).includes(value)) {
-      return true;
-    }
-    return false;
+    return typeof value === 'string' && Object.keys(this.radioValues).includes(value);
   }
 
   /** Check if value is log level */
@@ -250,6 +246,7 @@ export class SettingComponent implements OnInit {
     this.playerService.player.updateSettings(settingObject);
   }
 
+  /** Update Log Level: switch from string to enum value */
   updateLogLevel(value: string): void {
     let level;
     switch (value) {
@@ -315,7 +312,6 @@ export class SettingComponent implements OnInit {
     if (typeof setting !== 'string') {
       return '';
     }
-
     let description: object = {};
     let tooltip = '';
     Object.entries(this.settingGroup).map(([key, value]) => {
@@ -342,7 +338,6 @@ export class SettingComponent implements OnInit {
     if (typeof value !== 'string') {
       return '';
     }
-
     const length = value.split(/(?=[A-Z])/).length;
     // Only format long values that do not fit
     if (length > 4) {

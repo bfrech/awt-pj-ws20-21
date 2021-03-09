@@ -34,13 +34,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="769f4b77-bdac-45f1-96ab-bc2798154698" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dash-if-reference-player/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/video-configuration/video-configuration.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/setting/setting.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/setting/setting.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -69,7 +73,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/constants" />
+        <entry key="$PROJECT_DIR$" value="develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -155,6 +159,8 @@
       <workItem from="1613746068199" duration="13804000" />
       <workItem from="1613770223839" duration="690000" />
       <workItem from="1613819708760" duration="424000" />
+      <workItem from="1614938518687" duration="831000" />
+      <workItem from="1615301374584" duration="855000" />
     </task>
     <task id="LOCAL-00001" summary="Add Formatting of Strings of Settings">
       <created>1608549075780</created>
@@ -233,7 +239,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613761792402</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="fix UNASSIGNED">
+      <created>1614877109307</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1614877109307</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,24 +288,7 @@
     <MESSAGE value="add DRM Key System" />
     <MESSAGE value="change default trackSwitchMode Video" />
     <MESSAGE value="format Long constants" />
-    <option name="LAST_COMMIT_MESSAGE" value="format Long constants" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state width="2291" height="303" key="GridCell.Tab.0.bottom" timestamp="1614761657379">
-      <screen x="0" y="23" width="2560" height="1337" />
-    </state>
-    <state width="2291" height="303" key="GridCell.Tab.0.bottom/0.23.2560.1337@0.23.2560.1337" timestamp="1614761657379" />
-    <state width="2291" height="303" key="GridCell.Tab.0.center" timestamp="1614761657378">
-      <screen x="0" y="23" width="2560" height="1337" />
-    </state>
-    <state width="2291" height="303" key="GridCell.Tab.0.center/0.23.2560.1337@0.23.2560.1337" timestamp="1614761657378" />
-    <state width="2291" height="303" key="GridCell.Tab.0.left" timestamp="1614761657377">
-      <screen x="0" y="23" width="2560" height="1337" />
-    </state>
-    <state width="2291" height="303" key="GridCell.Tab.0.left/0.23.2560.1337@0.23.2560.1337" timestamp="1614761657377" />
-    <state width="2291" height="303" key="GridCell.Tab.0.right" timestamp="1614761657379">
-      <screen x="0" y="23" width="2560" height="1337" />
-    </state>
-    <state width="2291" height="303" key="GridCell.Tab.0.right/0.23.2560.1337@0.23.2560.1337" timestamp="1614761657379" />
+    <MESSAGE value="fix UNASSIGNED" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix UNASSIGNED" />
   </component>
 </project>
