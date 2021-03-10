@@ -220,6 +220,16 @@ export class SettingComponent implements OnInit {
     this.playerService.player.enableForcedTextStreaming(this.forcedTextStreaming);
   }
 
+  /** Add custom ABR Rules if Default Rules are enabled */
+  toggleDefaultABRRules(checked: string | boolean | number): void {
+    if ( !checked ) {
+      // Add custom ABR Rule here
+      // this.playerService.player.addABRCustomRule();
+    } else {
+      this.playerService.player.removeAllABRCustomRule();
+    }
+  }
+
   /** Update Settings: call dash.js updateSettings function with the path of the setting */
   update(path: string, value: string | boolean | number): void {
     // If abrLoLP was selected, change additional options and also apply them to the template
@@ -244,6 +254,11 @@ export class SettingComponent implements OnInit {
       [next]: obj
     }), root) as dashjs.MediaPlayerSettingClass;
     this.playerService.player.updateSettings(settingObject);
+
+    // Check if customABRRules were toggled
+    if (Object.keys(root).toString() === 'useDefaultABRRules') {
+      this.toggleDefaultABRRules(root.useDefaultABRRules);
+    }
   }
 
   /** Update Log Level: switch from string to enum value */

@@ -35,8 +35,8 @@
   <component name="ChangeListManager">
     <list default="true" id="769f4b77-bdac-45f1-96ab-bc2798154698" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/setting/setting.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/components/setting/setting.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash-if-reference-player/src/app/types/dashjs-types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dash-if-reference-player/src/app/types/dashjs-types.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,6 +87,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -160,7 +161,7 @@
       <workItem from="1613770223839" duration="690000" />
       <workItem from="1613819708760" duration="424000" />
       <workItem from="1614938518687" duration="831000" />
-      <workItem from="1615301374584" duration="855000" />
+      <workItem from="1615301374584" duration="6436000" />
     </task>
     <task id="LOCAL-00001" summary="Add Formatting of Strings of Settings">
       <created>1608549075780</created>
@@ -246,7 +247,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614877109307</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Cleanup">
+      <created>1615302335061</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1615302335061</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -277,6 +285,7 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Add Formatting of Strings of Settings" />
     <MESSAGE value="add all settings" />
     <MESSAGE value="changes of values on frontend are applied to player" />
@@ -289,6 +298,7 @@
     <MESSAGE value="change default trackSwitchMode Video" />
     <MESSAGE value="format Long constants" />
     <MESSAGE value="fix UNASSIGNED" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix UNASSIGNED" />
+    <MESSAGE value="Cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleanup" />
   </component>
 </project>
